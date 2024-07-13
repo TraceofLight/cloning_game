@@ -3,10 +3,8 @@
  * @brief 미리 컴파일 처리할 헤더 모음
  */
 
-#ifndef WINDOW_API_DEFAULT_PCH_H_
-#define WINDOW_API_DEFAULT_PCH_H_
-
-#include "targetver.h"
+#ifndef TOUHOU_PCH_H_
+#define TOUHOU_PCH_H_
 
 // Window API from framework.h
 #include <malloc.h>
@@ -16,10 +14,11 @@
 #include <windows.h>
 
 // standard library
-#include <assert.h>
+#include <cassert>
 #include <list>
 #include <map>
+#include <memory>
 #include <string>
 #include <vector>
 
-#endif // WINDOW_API_DEFAULT_PCH_H_
+#endif // TOUHOU_PCH_H_

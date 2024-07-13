@@ -3,8 +3,8 @@
  * @brief program의 시작 지점
  */
 
-#include "base/pch.h"
-#include "base/resource.h"
+#include "common/resource.h"
+#include "common/common_utility.h"
 
 // 전역 변수 설정
 HINSTANCE HANDLE_INSTANCE = nullptr;
@@ -93,14 +93,14 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam) {
   UNREFERENCED_PARAMETER(lParam);
   switch (message) {
   case WM_INITDIALOG:
-    return static_cast<INT_PTR>(TRUE);
+    return TRUE;
 
   case WM_COMMAND:
     if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL) {
       EndDialog(hDlg, LOWORD(wParam));
-      return static_cast<INT_PTR>(TRUE);
+      return TRUE;
     }
     break;
     }
-    return  static_cast<INT_PTR>(FALSE);
+    return  FALSE;
 }
