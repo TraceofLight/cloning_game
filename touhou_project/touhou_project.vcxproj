@@ -141,9 +141,6 @@
     <Image Include="small.ico" />
     <Image Include="touhou_project.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="readme.md" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
