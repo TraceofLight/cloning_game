@@ -18,7 +18,7 @@ public:                                                                        \
                                                                                \
 private:                                                                       \
   class_name();                                                                \
-  class_name(const class_name &other) = delete;                                \
-  ~class_name();
+  ~class_name();                                                               \
+  class_name(const class_name &other) = delete;
 
 #endif // TOUHOU_MACRO_H_

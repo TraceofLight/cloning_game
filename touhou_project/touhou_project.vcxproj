@@ -140,6 +140,7 @@
         <ClInclude Include="common\tools\pch.h" />
         <ClInclude Include="common\tools\struct.h" />
         <ClInclude Include="include\engine\engine.h" />
+        <ClInclude Include="include\manager\time_manager.h" />
     </ItemGroup>
     <ItemGroup>
         <ClCompile Include="main.cpp" />
@@ -217,6 +218,7 @@
             <SDLCheck>true</SDLCheck>
             <LinkCompiled>true</LinkCompiled>
         </ClCompile>
+        <ClCompile Include="src\manager\time_manager.cpp" />
     </ItemGroup>
     <ItemGroup>
         <ResourceCompile Include="touhou_project.rc" />
@@ -224,9 +226,6 @@
     <ItemGroup>
         <Image Include="small.ico" />
         <Image Include="touhou_project.ico" />
-    </ItemGroup>
-    <ItemGroup>
-        <Folder Include="frame\"/>
     </ItemGroup>
     <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>
     <ImportGroup Label="ExtensionTargets">
