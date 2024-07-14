@@ -6,7 +6,7 @@
 #ifndef TOUHOU_ENGINE_H_
 #define TOUHOU_ENGINE_H_
 
-#include "common\common_utility.h"
+#include "common/common_utility.h"
 
 class Engine {
   SINGLE(Engine)

@@ -27,6 +27,9 @@ void Engine::Render() {}
  * @brief Graphic Device Interface를 초기 구축하는 함수
  */
 void Engine::GDIInit() {
+  pen_list_ = std::make_unique<HPEN[]>(static_cast<int>(PEN_TYPE::END));
+  brush_list_ = std::make_unique<HBRUSH[]>(static_cast<int>(BRUSH_TYPE::END));
+
   pen_list_[static_cast<int>(PEN_TYPE::RED)] =
       CreatePen(PS_SOLID, 1, RGB(255, 0, 0));
   pen_list_[static_cast<int>(PEN_TYPE::GREEN)] =
