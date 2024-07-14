@@ -9,7 +9,7 @@
 #include "common\common_utility.h"
 
 class Engine {
-  SINGLE(Engine);
+  SINGLE(Engine)
 
 private:
   HWND main_handle_;
