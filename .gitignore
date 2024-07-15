@@ -481,4 +481,4 @@ FodyWeavers.xsd
 -------- Default Ignore File (MS VisualStudio, JetBrain Rider) --------
 
 # exclude assets
-assets/*
+touhou_project/common/assets/*
