@@ -25,7 +25,7 @@ public:
   UINT height() const { return bitmap_info_.bmHeight; }
 
 private:
-  virtual int Load(const wstring& file_path) override;
+  int Load(const wstring& file_path) override;
   int Create(UINT width, UINT height);
 };
 

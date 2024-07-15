@@ -16,14 +16,14 @@ private:
 public:
   CLONE_DISABLE(Asset)
   Asset() = default;
-  ~Asset() = default;
+  virtual ~Asset() = default;
 
   // Getter & Setter
   const wstring &key() { return key_; }
   const wstring &relative_path() { return relative_path_; }
 
 private:
-  virtual int Load(const wstring& file_path) = 0;
+  virtual int Load(const wstring &file_path) = 0;
 };
 
 #endif // TOUHOU_ASSET_H_
