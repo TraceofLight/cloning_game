@@ -6,19 +6,26 @@
 #ifndef TOUHOU_MACRO_H_
 #define TOUHOU_MACRO_H_
 
-#define SINGLE(class_name)                                                     \
+#define SINGLE(ClassName)                                                      \
 public:                                                                        \
-  static class_name *Get() {                                                   \
-    static class_name manager_;                                                \
+  static ClassName *Get() {                                                    \
+    static ClassName manager_;                                                 \
     return &manager_;                                                          \
   }                                                                            \
                                                                                \
 public:                                                                        \
-  void operator=(const class_name &other) = delete;                            \
+  void operator=(const ClassName &other) = delete;                             \
                                                                                \
 private:                                                                       \
-  class_name();                                                                \
-  ~class_name();                                                               \
-  class_name(const class_name &other) = delete;
+  ClassName();                                                                 \
+  ~ClassName();                                                                \
+  ClassName(const ClassName &other) = delete;
+
+#define CLONE(ClassName)                                                       \
+  ClassName *Clone() { return new ClassName(*this); }
+
+#define CLONE_DISABLE(ClassName)                                               \
+  ClassName *Clone() { return nullptr; }                                       \
+  ClassName(const ClassName &_Other) = delete;
 
 #endif // TOUHOU_MACRO_H_

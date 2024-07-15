@@ -20,8 +20,36 @@ void Engine::Init(HWND main_handle, UINT width, UINT height) {
 }
 
 void Engine::Progress() {}
-void Engine::ChangeResolution(UINT width, UINT height) {}
-void Engine::Render() {}
+void Engine::ChangeResolution(UINT width, UINT height) {
+  // 변경하고자 하는 해상도 정보를 Engine 객체에 저장
+  resolution_ = Vector2(width, height);
+
+  // 크기를 변경하려는 윈도우의 메뉴 존재여부를 확인
+  HMENU menu_handle = GetMenu(main_handle_);
+
+  // 윈도우의 그리기 영역의 해상도를 원하는 수치로 만들기 위해서
+  // 실제 윈도우가 가져야 하는 크기를 계산
+  RECT rt = {0, 0, static_cast<long>(width), static_cast<long>(height)};
+  AdjustWindowRect(&rt, WS_OVERLAPPEDWINDOW,
+                   reinterpret_cast<bool>(menu_handle));
+
+  // 최종으로 계산된 윈도우 크기값으로 윈도우 크기를 변경
+  SetWindowPos(main_handle_, nullptr, 0, 0, rt.right - rt.left,
+               rt.bottom - rt.top, 0);
+}
+HDC Engine::GetBackDC() { return back_buffer_->dc_handle(); }
+
+/**
+ * @brief 1프레임 단위로 렌더링하기 위한 함수
+ */
+void Engine::Render() {
+  // Clearing Screen
+  HBRUSH prev_brush_handle = static_cast<HBRUSH>(SelectObject(
+      GetBackDC(), brush_list_[static_cast<int>(BRUSH_TYPE::GRAY)]));
+  Rectangle(GetBackDC(), -1, -1, static_cast<int>(resolution_.x()) + 1,
+            static_cast<int>(resolution_.y()) + 1);
+  SelectObject(GetBackDC(), prev_brush_handle);
+}
 
 /**
  * @brief Graphic Device Interface를 초기 구축하는 함수
