@@ -6,6 +6,9 @@
 #ifndef TOUHOU_FUNCTION_H_
 #define TOUHOU_FUNCTION_H_
 
+#include <cfloat>
+#include <cmath>
+
 inline bool IsSame(double a, double b) { return fabs(a - b) < LDBL_EPSILON; }
 
 #endif // TOUHOU_FUNCTION_H_

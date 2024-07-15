@@ -7,8 +7,9 @@
 #define TOUHOU_COMMON_UTILITY_H_
 
 #include "tools/enum.h"
+#include "tools/function.h"
 #include "tools/macro.h"
 #include "tools/pch.h"
-#include "tools/function.h"
+#include "tools/struct.h"
 
 #endif // TOUHOU_COMMON_UTILITY_H_

@@ -6,6 +6,19 @@
 #ifndef TOUHOU_PCH_H_
 #define TOUHOU_PCH_H_
 
+// png 로딩
+#include <objidl.h>
+#include <gdiplus.h>
+#pragma comment(lib, "GdiPlus.lib")
+using namespace Gdiplus;
+
+// 사운드
+#include <mmsystem.h>
+#include <dsound.h>
+#include <dinput.h>
+#pragma comment(lib, "winmm.lib")
+#pragma comment(lib, "dsound.lib")
+
 // Window API from framework.h
 #include <malloc.h>
 #include <memory.h>
