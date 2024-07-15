@@ -21,4 +21,6 @@
 #include <string>
 #include <vector>
 
+using namespace std;
+
 #endif // TOUHOU_PCH_H_

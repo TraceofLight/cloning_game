@@ -131,6 +131,7 @@
         </Link>
     </ItemDefinitionGroup>
     <ItemGroup>
+        <ClInclude Include="common\base\base.h" />
         <ClInclude Include="common\common_utility.h" />
         <ClInclude Include="common\resource.h" />
         <ClInclude Include="common\targetver.h" />
@@ -140,9 +141,11 @@
         <ClInclude Include="common\tools\pch.h" />
         <ClInclude Include="common\tools\struct.h" />
         <ClInclude Include="include\engine\engine.h" />
+        <ClInclude Include="include\manager\asset_manager.h" />
         <ClInclude Include="include\manager\time_manager.h" />
     </ItemGroup>
     <ItemGroup>
+        <ClCompile Include="common\base\base.cpp" />
         <ClCompile Include="main.cpp" />
         <ClCompile Include="src\engine\engine.cpp">
             <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
@@ -218,7 +221,9 @@
             <SDLCheck>true</SDLCheck>
             <LinkCompiled>true</LinkCompiled>
         </ClCompile>
+        <ClCompile Include="src\manager\asset_manager.cpp" />
         <ClCompile Include="src\manager\time_manager.cpp" />
+        <ClCompile Include="src\object\object.cpp" />
     </ItemGroup>
     <ItemGroup>
         <ResourceCompile Include="touhou_project.rc" />
@@ -226,6 +231,13 @@
     <ItemGroup>
         <Image Include="small.ico" />
         <Image Include="touhou_project.ico" />
+    </ItemGroup>
+    <ItemGroup>
+      <Content Include="common\assets\sound\player_score.ogg" />
+      <Content Include="common\assets\texture\reimu.png" />
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="include\object\" />
     </ItemGroup>
     <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>
     <ImportGroup Label="ExtensionTargets">
