@@ -7,6 +7,7 @@
 #define TOUHOU_TEXTURE_H_
 
 #include "include/asset/asset.h"
+#include "include/manager/asset_manager.h"
 
 class Texture : public Asset {
 private:
@@ -15,9 +16,11 @@ private:
   BITMAP      bitmap_info_;
 
 public:
+  friend class AssetManager;
+
   // Constructor & Destructor
   Texture();
-  ~Texture();
+  ~Texture() override;
 
   // Getter & Setter
   HDC dc_handle() const { return device_context_handle_; }

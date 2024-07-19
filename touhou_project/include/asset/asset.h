@@ -21,6 +21,8 @@ public:
   // Getter & Setter
   const wstring &key() { return key_; }
   const wstring &relative_path() { return relative_path_; }
+  void set_key(const wstring &key) { key_ = key; }
+  void set_relative_path(const wstring &relative_path) { relative_path_ = relative_path; }
 
 private:
   virtual int Load(const wstring &file_path) = 0;
