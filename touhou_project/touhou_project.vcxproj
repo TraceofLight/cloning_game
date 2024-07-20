@@ -147,7 +147,8 @@
         <ClInclude Include="include\core\engine\engine.h" />
         <ClInclude Include="include\manager\asset_manager.h" />
         <ClInclude Include="include\manager\time_manager.h" />
-        <ClInclude Include="include\object\object.h" />
+        <ClInclude Include="include\object\object_base.h" />
+        <ClInclude Include="include\object\player\player.h" />
     </ItemGroup>
     <ItemGroup>
         <ClCompile Include="common\base\base.cpp" />
@@ -232,7 +233,8 @@
         <ClCompile Include="src\core\engine\engine.cpp" />
         <ClCompile Include="src\manager\asset_manager.cpp" />
         <ClCompile Include="src\manager\time_manager.cpp" />
-        <ClCompile Include="src\object\object.cpp" />
+        <ClCompile Include="src\object\object_base.cpp" />
+        <ClCompile Include="src\object\player\player.cpp" />
     </ItemGroup>
     <ItemGroup>
         <ResourceCompile Include="touhou_project.rc" />

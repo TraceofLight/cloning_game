@@ -20,7 +20,7 @@ public:
   virtual ~ObjectBase();
 
   virtual void Tick() = 0;
-  virtual void FinalTick() = 0;
+  // virtual void FinalTick();
   virtual void Render();
 
   virtual ObjectBase *Clone() = 0;
