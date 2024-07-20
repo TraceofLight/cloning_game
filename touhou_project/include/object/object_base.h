@@ -24,7 +24,11 @@ public:
   virtual ~ObjectBase();
 
   virtual void Tick() = 0;
+<<<<<<< HEAD
   virtual void FinalTick();
+=======
+  // virtual void FinalTick();
+>>>>>>> ba0deab (feat: player init)
   virtual void Render();
 
   virtual ObjectBase *Clone() override = 0;

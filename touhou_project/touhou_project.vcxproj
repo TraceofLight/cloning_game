@@ -152,7 +152,7 @@
         <ClInclude Include="include\manager\time_manager.h" />
         <ClInclude Include="include\module\animation\animation.h" />
         <ClInclude Include="include\module\animation\common\animation_struct.h" />
-        <ClInclude Include="include\object\object.h" />
+        <ClInclude Include="include\object\object_base.h" />
     </ItemGroup>
     <ItemGroup>
         <ClCompile Include="common\base\base.cpp" />
