@@ -241,7 +241,7 @@
         <ClCompile Include="src\manager\key_manager.cpp" />
         <ClCompile Include="src\manager\time_manager.cpp" />
         <ClCompile Include="src\module\animation\animation.cpp" />
-        <ClCompile Include="src\object\object.cpp" />
+        <ClCompile Include="src\object\object_base.cpp" />
     </ItemGroup>
     <ItemGroup>
         <ResourceCompile Include="common\resource\touhou_project.rc" />

@@ -13,7 +13,7 @@ class Animation : public Base {
   friend class Animator;
 
 private:
-  Animator *animator_;
+  Animator *owner_;
   vector<AnimationFrame> frame_vector_;
   Texture *atlas_;
   int current_idx_;
@@ -36,10 +36,10 @@ public:
   void Reset();
 
   // Getter
-  Animator *animator() const { return animator_; }
+  Animator *animator() const { return owner_; }
   AnimationFrame &frame(const int idx) { return frame_vector_[idx]; }
   bool is_finish() const { return is_finish_; }
-  void set_animator(Animator *animator) { animator_ = animator; }
+  void set_animator(Animator *animator) { owner_ = animator; }
 };
 
 #endif // TOUHOU_MODULE_ANIMATION_H_

@@ -10,11 +10,11 @@
 #include "include/manager/time_manager.h"
 
 Animation::Animation()
-    : animator_(nullptr), atlas_(nullptr), current_idx_(0), accumulated_time_(0.f),
+    : owner_(nullptr), atlas_(nullptr), current_idx_(0), accumulated_time_(0.f),
       is_finish_(false) {}
 
 Animation::Animation(const Animation &other)
-    : Base(other), animator_(nullptr), frame_vector_(other.frame_vector_),
+    : Base(other), owner_(nullptr), frame_vector_(other.frame_vector_),
       atlas_(other.atlas_), current_idx_(other.current_idx_),
       accumulated_time_(other.accumulated_time_), is_finish_(other.is_finish_) {
 }
@@ -54,7 +54,7 @@ void Animation::Render() const {
   const HDC device_context = Engine::Get()->GetBackDC();
 
   // Animation을 소유한 오브젝트의 위치
-  Vector2 position = animator_->owner()->position();
+  const Vector2 position = owner_->owner()->position();
 
   TransparentBlt(
       device_context,
