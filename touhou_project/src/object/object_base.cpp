@@ -3,18 +3,18 @@
  * @brief
  */
 
-#include "include/object/object.h"
+#include "include/object/object_base.h"
 #include "common/drawing_handle/drawing_handle.h"
 #include "include/core/engine/engine.h"
 
-Object::Object() = default;
+ObjectBase::ObjectBase() = default;
 
-Object::Object(const Object &other)
+ObjectBase::ObjectBase(const ObjectBase &other)
     : Base(other), position_(other.position()), scale_(other.scale()) {}
 
-Object::~Object() = default;
+ObjectBase::~ObjectBase() = default;
 
-void Object::Render() {
+void ObjectBase::Render() {
   HDC const dc_handle = Engine::Get()->GetBackDC();
 
   DrawingHandle(dc_handle, PEN_TYPE::RED);
