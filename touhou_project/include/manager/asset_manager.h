@@ -10,6 +10,8 @@
 #include "include/asset/sound/sound.h"
 #include "include/asset/texture/texture.h"
 
+class Texture;
+
 class AssetManager {
   SINGLE(AssetManager)
 private:
