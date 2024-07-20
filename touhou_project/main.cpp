@@ -5,7 +5,7 @@
 
 #include "common/common_utility.h"
 #include "common/resource.h"
-#include "include/engine/engine.h"
+#include "include/core/engine/engine.h"
 
 // 전역 변수 설정
 HINSTANCE kInstanceHandle = nullptr;

@@ -3,8 +3,8 @@
  * @brief 기본적인 구조를 담당하는 엔진 모듈의 헤더
  */
 
-#ifndef TOUHOU_ENGINE_H_
-#define TOUHOU_ENGINE_H_
+#ifndef TOUHOU_CORE_ENGINE_H_
+#define TOUHOU_CORE_ENGINE_H_
 
 #include "common/common_utility.h"
 #include "include/asset/texture/texture.h"
@@ -26,14 +26,16 @@ public:
   void ChangeResolution(UINT width, UINT height);
   HDC GetBackDC();
 
-  HWND main_handle() { return main_handle_; }
-  HDC device_context() { return device_context_; }
-  HPEN pen(PEN_TYPE type) { return pen_list_[static_cast<int>(type)]; }
-  HBRUSH brush(BRUSH_TYPE type) { return brush_list_[static_cast<int>(type)]; }
+  HWND main_handle() const { return main_handle_; }
+  HDC device_context() const { return device_context_; }
+  HPEN pen(PEN_TYPE type) const { return pen_list_[static_cast<int>(type)]; }
+  HBRUSH brush(BRUSH_TYPE type) const {
+    return brush_list_[static_cast<int>(type)];
+  }
 
 private:
   void Render();
   void GDIInit();
 };
 
-#endif // TOUHOU_ENGINE_H_
+#endif // TOUHOU_CORE_ENGINE_H_

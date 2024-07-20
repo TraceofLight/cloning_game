@@ -5,7 +5,7 @@
  */
 
 #include "include/asset/texture/texture.h"
-#include "include/engine/engine.h"
+#include "include/core/engine/engine.h"
 
 Texture::Texture()
     : device_context_handle_(nullptr), bitmap_handle_(nullptr), bitmap_info_{} {
