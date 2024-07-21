@@ -25,4 +25,43 @@ enum class BRUSH_TYPE {
   END,
 };
 
+enum class KEY {
+  W,
+  S,
+  A,
+  D,
+
+  LEFT,
+  RIGHT,
+  UP,
+  DOWN,
+
+  SPACE,
+  ENTER,
+
+  NUM_1,
+  NUM_2,
+  NUM_3,
+  NUM_4,
+  NUM_5,
+  NUM_6,
+  NUM_7,
+  NUM_8,
+  NUM_9,
+  NUM_0,
+
+  LBTN,
+  RBTN,
+
+  END,
+};
+
+enum class KEY_STATE {
+  TAP,      // 누른 직후의 상태
+  PRESSED,  // 눌린 상태
+  RELEASED, // 떼어진 직후의 상태
+  NONE,     // 눌리지 않은 상태
+};
+
+
 #endif // TOUHOU_ENUM_H_
