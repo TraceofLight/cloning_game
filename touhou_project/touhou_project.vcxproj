@@ -146,6 +146,7 @@
         <ClInclude Include="include\asset\texture\texture.h" />
         <ClInclude Include="include\core\engine\engine.h" />
         <ClInclude Include="include\manager\asset_manager.h" />
+        <ClInclude Include="include\manager\key_manager.h" />
         <ClInclude Include="include\manager\time_manager.h" />
         <ClInclude Include="include\object\object.h" />
     </ItemGroup>
@@ -231,6 +232,7 @@
         <ClCompile Include="src\asset\texture\texture.cpp" />
         <ClCompile Include="src\core\engine\engine.cpp" />
         <ClCompile Include="src\manager\asset_manager.cpp" />
+        <ClCompile Include="src\manager\key_manager.cpp" />
         <ClCompile Include="src\manager\time_manager.cpp" />
         <ClCompile Include="src\object\object.cpp" />
     </ItemGroup>
