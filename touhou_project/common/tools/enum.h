@@ -63,5 +63,9 @@ enum class KEY_STATE {
   NONE,     // 눌리지 않은 상태
 };
 
+enum class COMPONENT_TYPE {
+  COLLIDER,
+};
+
 
 #endif // TOUHOU_ENUM_H_

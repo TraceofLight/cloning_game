@@ -144,6 +144,7 @@
         <ClInclude Include="include\asset\asset.h" />
         <ClInclude Include="include\asset\sound\sound.h" />
         <ClInclude Include="include\asset\texture\texture.h" />
+        <ClInclude Include="include\component\component.h" />
         <ClInclude Include="include\core\engine\engine.h" />
         <ClInclude Include="include\manager\asset_manager.h" />
         <ClInclude Include="include\manager\key_manager.h" />
@@ -230,6 +231,7 @@
         <ClCompile Include="main.cpp" />
         <ClCompile Include="src\asset\sound\sound.cpp" />
         <ClCompile Include="src\asset\texture\texture.cpp" />
+        <ClCompile Include="src\component\component.cpp" />
         <ClCompile Include="src\core\engine\engine.cpp" />
         <ClCompile Include="src\manager\asset_manager.cpp" />
         <ClCompile Include="src\manager\key_manager.cpp" />
