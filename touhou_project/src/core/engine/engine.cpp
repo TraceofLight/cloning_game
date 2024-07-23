@@ -37,12 +37,12 @@ void Engine::ChangeResolution(UINT width, UINT height) {
   SetWindowPos(main_handle_, nullptr, 0, 0, rt.right - rt.left,
                rt.bottom - rt.top, 0);
 }
-HDC Engine::GetBackDC() { return back_buffer_->dc_handle(); }
+HDC Engine::GetBackDC() const { return back_buffer_->dc_handle(); }
 
 /**
  * @brief 1프레임 단위로 렌더링하기 위한 함수
  */
-void Engine::Render() {
+void Engine::Render() const {
   // Clearing Screen
   HBRUSH prev_brush_handle = static_cast<HBRUSH>(SelectObject(
       GetBackDC(), brush_list_[static_cast<int>(BRUSH_TYPE::GRAY)]));
@@ -55,8 +55,8 @@ void Engine::Render() {
  * @brief Graphic Device Interface를 초기 구축하는 함수
  */
 void Engine::GDIInit() {
-  pen_list_ = std::make_unique<HPEN[]>(static_cast<int>(PEN_TYPE::END));
-  brush_list_ = std::make_unique<HBRUSH[]>(static_cast<int>(BRUSH_TYPE::END));
+  pen_list_.reset(new HPEN[static_cast<int>(PEN_TYPE::END)]);
+  brush_list_.reset(new HBRUSH[static_cast<int>(BRUSH_TYPE::END)]);
 
   pen_list_[static_cast<int>(PEN_TYPE::RED)] =
       CreatePen(PS_SOLID, 1, RGB(255, 0, 0));
