@@ -17,14 +17,14 @@ private:
   HDC device_context_;
   Vector2 resolution_;
   Texture *back_buffer_;
-  std::unique_ptr<HPEN[]> pen_list_;
-  std::unique_ptr<HBRUSH[]> brush_list_;
+  std::unique_ptr<HPEN[], HandleObjectDeleterWrapper> pen_list_;
+  std::unique_ptr<HBRUSH[], HandleObjectDeleterWrapper> brush_list_;
 
 public:
   void Init(HWND main_handle, UINT width, UINT height);
   void Progress();
   void ChangeResolution(UINT width, UINT height);
-  HDC GetBackDC();
+  HDC GetBackDC() const;
 
   HWND main_handle() const { return main_handle_; }
   HDC device_context() const { return device_context_; }
@@ -34,7 +34,7 @@ public:
   }
 
 private:
-  void Render();
+  void Render() const;
   void GDIInit();
 };
 
