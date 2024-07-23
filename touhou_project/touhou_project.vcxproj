@@ -239,11 +239,11 @@
         <ClCompile Include="src\object\object.cpp" />
     </ItemGroup>
     <ItemGroup>
-        <ResourceCompile Include="touhou_project.rc" />
+        <ResourceCompile Include="common\resource\touhou_project.rc" />
     </ItemGroup>
     <ItemGroup>
-        <Image Include="small.ico" />
-        <Image Include="touhou_project.ico" />
+        <Image Include="common\resource\small.ico" />
+        <Image Include="common\resource\touhou_project.ico" />
     </ItemGroup>
     <ItemGroup>
       <Content Include="common\assets\sound\player_score.ogg" />
