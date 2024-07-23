@@ -11,9 +11,9 @@
 
 class Texture : public Asset {
 private:
-  HDC         device_context_handle_;
-  HBITMAP     bitmap_handle_;
-  BITMAP      bitmap_info_;
+  HDC device_context_handle_;
+  HBITMAP bitmap_handle_;
+  BITMAP bitmap_info_;
 
 public:
   friend class AssetManager;
@@ -28,8 +28,8 @@ public:
   UINT height() const { return bitmap_info_.bmHeight; }
 
 private:
-  int Load(const wstring& file_path) override;
-  int Create(UINT width, UINT height);
+  int Create(int width, int height);
+  int Load(const wstring &file_path) override;
 };
 
 #endif // TOUHOU_TEXTURE_H_
