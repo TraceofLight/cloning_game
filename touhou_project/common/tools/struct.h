@@ -52,4 +52,33 @@ public:
   void SetY(float const y) { y_ = y; }
 };
 
+/**
+ * @brief unique ptr로 선언된 list의 자원 해제를 위한 소멸자 래퍼
+ */
+struct HandleListDeleterWrapper {
+  template <typename T> static void HandleListDeleter(T &object_list) {
+    for (int i = 0; object_list[i] != nullptr; ++i) {
+      DeleteObject(object_list[i]);
+    }
+    delete[] object_list;
+  }
+
+  template <typename T> void operator()(T *object) const {
+    HandleListDeleter(object);
+  }
+};
+
+/**
+ * @brief unique ptr로 선언된 obj 자원 해제를 위한 소멸자 래퍼
+ */
+struct HandleObjectDeleterWrapper {
+  template <typename T> static void HandleObjectDeleter(T &object) {
+    DeleteObject(object);
+  }
+
+  template <typename T> void operator()(T *object) const {
+    HandleObjectDeleter(object);
+  }
+};
+
 #endif // TOUHOU_STRUCT_H_
