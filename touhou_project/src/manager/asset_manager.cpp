@@ -32,7 +32,8 @@ Texture *AssetManager::LoadTexture(const wstring &key,
 
   // path를 가지고 직접 load 해보고 불가능하다면 nullptr 반환
   // TODO(KHJ): 임시 Texture를 반환하는 방법은 없을까?
-  auto unique_texture_ptr = make_unique<Texture>();
+  std::unique_ptr<Texture, HandleObjectDeleterWrapper> unique_texture_ptr(
+      new Texture, HandleObjectDeleterWrapper());
   if (FAILED(texture_ptr->Load(file_path))) {
     return nullptr;
   }
@@ -60,6 +61,25 @@ Texture *AssetManager::FindTexture(const wstring &key) {
 }
 
 /**
+ * @brief 파라미터로 받은 크기의 Texture를 생성하는 함수
+ * @param key
+ * @param width
+ * @param height
+ * @return Texture* / nullptr
+ */
+Texture *AssetManager::CreateTexture(const wstring &key, int width,
+                                     int height) {
+  Texture *texture = FindTexture(key);
+  // Create는 존재하지 않는 Texture를 만들기 위한 메서드
+  assert(texture == nullptr);
+
+  texture = new Texture;
+  texture->Create(width, height);
+
+  return texture;
+}
+
+/**
  * @brief Sound를 File로부터 Load하는 함수
  * Key와 Path를 인자로 받는데 해당 Sound가 존재한다면 Key를 통해 불러오고,
  * 없다면 File Path를 통해 불러온 뒤 Key와 연결하여 Map에 넣는다.
@@ -80,7 +100,8 @@ Sound *AssetManager::LoadSound(const wstring &key,
   file_path.append(relative_path);
 
   // path를 가지고 직접 load 해보고 불가능하다면 nullptr 반환
-  auto unique_sound_ptr = make_unique<Sound>();
+  unique_ptr<Sound, HandleObjectDeleterWrapper> unique_sound_ptr(
+      new Sound, HandleObjectDeleterWrapper());
   if (FAILED(sound_ptr->Load(file_path))) {
     return nullptr;
   }
@@ -94,6 +115,7 @@ Sound *AssetManager::LoadSound(const wstring &key,
   sound_ptr = FindSound(key);
   return sound_ptr;
 }
+
 /**
  * @brief Sound Map에서 Key를 통해 Texture를 탐색하는 함수
  * @param key

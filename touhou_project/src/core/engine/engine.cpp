@@ -4,8 +4,11 @@
  */
 
 #include "include/core/engine/engine.h"
+#include "include/manager/key_manager.h"
+#include "include/manager/time_manager.h"
 
-Engine::Engine() : main_handle_(nullptr), device_context_(nullptr) {}
+Engine::Engine()
+    : main_handle_(nullptr), device_context_(nullptr), back_buffer_(nullptr) {}
 Engine::~Engine() { ReleaseDC(main_handle_, device_context_); }
 
 void Engine::Init(HWND main_handle, UINT width, UINT height) {
@@ -16,10 +19,24 @@ void Engine::Init(HWND main_handle, UINT width, UINT height) {
   ChangeResolution(width, height);
   GDIInit();
 
+  // BackBuffer Texture 생성
+  back_buffer_ = AssetManager::Get()->CreateTexture(
+      L"BackBufferTexture", static_cast<int>(width), static_cast<int>(height));
+
   // Manager 초기화
+  TimeManager::Get()->Init();
+  KeyManager::Get()->Init();
 }
 
-void Engine::Progress() {}
+void Engine::Progress() const {
+  // Manager Tick
+  TimeManager::Get()->Tick();
+  KeyManager::Get()->Tick();
+
+  // Render
+  Render();
+}
+
 void Engine::ChangeResolution(UINT width, UINT height) {
   // 변경하고자 하는 해상도 정보를 Engine 객체에 저장
   resolution_ = Vector2(width, height);
@@ -37,6 +54,7 @@ void Engine::ChangeResolution(UINT width, UINT height) {
   SetWindowPos(main_handle_, nullptr, 0, 0, rt.right - rt.left,
                rt.bottom - rt.top, 0);
 }
+
 HDC Engine::GetBackDC() const { return back_buffer_->dc_handle(); }
 
 /**
