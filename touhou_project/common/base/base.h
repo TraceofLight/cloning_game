@@ -25,7 +25,7 @@ public:
 
   // Getter & Setter
   const wstring &name() { return name_; }
-  void SetName(const wstring &name) { name_ = name; }
+  void set_name(const wstring &name) { name_ = name; }
   UINT id() const { return id_; }
 };
 

@@ -48,8 +48,8 @@ public:
   // Getter & Setter
   double x() const { return x_; }
   double y() const { return y_; }
-  void SetX(float const x) { x_ = x; }
-  void SetY(float const y) { y_ = y; }
+  void set_x(float const x) { x_ = x; }
+  void set_y(float const y) { y_ = y; }
 };
 
 /**
