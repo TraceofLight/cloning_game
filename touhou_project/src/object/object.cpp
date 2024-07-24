@@ -9,16 +9,42 @@
 
 Object::Object() = default;
 
+/**
+ * @brief Object 복사 생성자
+ * @param other
+ * component 포인터들도 복사하여 복사된 객체에 넣어준다
+ */
 Object::Object(const Object &other)
-    : Base(other), position_(other.position()), scale_(other.scale()) {}
+    : Base(other), position_(other.position()), scale_(other.scale()) {
+  for (int i = 0; i < static_cast<int>(component_vector_.size()); ++i) {
+    component_vector_.emplace_back(other.component_vector_[i]->Clone());
+  }
+}
 
-Object::~Object() = default;
+/**
+ * @brief Object 소멸자
+ * component vector가 가리키는 값들 자원도 해제
+ */
+Object::~Object() { ReleaseVector(component_vector_); }
 
+/**
+ * @brief Object가 가진 모든 Component도 동작하도록 하는 메서드
+ */
+void Object::FinalTick() {
+  for (Component *component_element : component_vector_) {
+    component_element->FinalTick();
+  }
+}
+
+/**
+ * @brief Object 기본 Render 메서드. Asset 등이 존재하지 않는다면 사각형으로
+ * 표시된다.
+ */
 void Object::Render() {
   HDC const dc_handle = Engine::Get()->GetBackDC();
 
-  DrawingHandle(dc_handle, PEN_TYPE::RED);
-  DrawingHandle(dc_handle, BRUSH_TYPE::BLUE);
+  DrawingHandle select_pen(dc_handle, PEN_TYPE::RED);
+  DrawingHandle select_brush(dc_handle, BRUSH_TYPE::BLUE);
 
   Rectangle(dc_handle, static_cast<int>(position().x() - (scale_.x() / 2.f)),
             static_cast<int>(position().y() - (scale_.y() / 2.f)),

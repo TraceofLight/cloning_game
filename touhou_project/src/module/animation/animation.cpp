@@ -5,14 +5,19 @@
 
 #include "include/module/animation/animation.h"
 
+#include "include/component/animator/animator.h"
 #include "include/core/engine/engine.h"
 #include "include/manager/time_manager.h"
 
 Animation::Animation()
-    : atlas_(nullptr), current_idx_(0), accumulated_time_(0.f),
+    : animator_(nullptr), atlas_(nullptr), current_idx_(0), accumulated_time_(0.f),
       is_finish_(false) {}
 
-Animation::Animation(const Animation &other) = default;
+Animation::Animation(const Animation &other)
+    : Base(other), animator_(nullptr), frame_vector_(other.frame_vector_),
+      atlas_(other.atlas_), current_idx_(other.current_idx_),
+      accumulated_time_(other.accumulated_time_), is_finish_(other.is_finish_) {
+}
 
 Animation::~Animation() = default;
 
@@ -49,16 +54,15 @@ void Animation::Render() const {
   const HDC device_context = Engine::Get()->GetBackDC();
 
   // Animation을 소유한 오브젝트의 위치
-  // TODO(KHJ): 해당 오브젝트를 가진 owner 개념 추가 필요
-  Vector2 *position = new Vector2(0, 0);
+  Vector2 position = animator_->owner()->position();
 
   TransparentBlt(
       device_context,
       static_cast<int>(
-          position->x() -
+          position.x() -
           static_cast<float>(frame_vector_[current_idx_].slice_.x()) / 2.f +
           frame_vector_[current_idx_].offset_.x()),
-      static_cast<int>(position->y() -
+      static_cast<int>(position.y() -
                        frame_vector_[current_idx_].slice_.y() / 2.f +
                        frame_vector_[current_idx_].offset_.y()),
       static_cast<int>(frame_vector_[current_idx_].slice_.x()),
