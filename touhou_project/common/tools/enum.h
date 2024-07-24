@@ -65,7 +65,7 @@ enum class KEY_STATE {
 
 enum class COMPONENT_TYPE {
   COLLIDER,
+  ANIMATOR,
 };
-
 
 #endif // TOUHOU_ENUM_H_

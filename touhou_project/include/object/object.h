@@ -8,22 +8,26 @@
 
 #include "common/base/base.h"
 #include "common/common_utility.h"
+#include "include/component/component.h"
+
+class Component;
 
 class Object : public Base {
 private:
   Vector2 position_;
   Vector2 scale_;
+  vector<Component *> component_vector_;
 
 public:
   Object();
   explicit Object(const Object &other);
-  virtual ~Object();
+  virtual ~Object() override;
 
   virtual void Tick() = 0;
-  virtual void FinalTick() = 0;
+  virtual void FinalTick();
   virtual void Render();
 
-  virtual Object *Clone() = 0;
+  virtual Object *Clone() override = 0;
 
   // Getter & Setter
   Vector2 position() const { return position_; }

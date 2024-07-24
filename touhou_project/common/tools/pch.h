@@ -36,4 +36,7 @@ using namespace Gdiplus;
 
 using namespace std;
 
+// transparent bit lock transfer
+#pragma comment(lib, "Msimg32.lib")
+
 #endif // TOUHOU_PCH_H_
