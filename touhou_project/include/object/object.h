@@ -1,10 +1,10 @@
 ﻿/**
- * @file object_base.h
+ * @file object.h
  * @brief 전체 오브젝트들의 베이스 헤더
  */
 
-#ifndef TOUHOU_OBJECT_BASE_H_
-#define TOUHOU_OBJECT_BASE_H_
+#ifndef TOUHOU_OBJECT_H_
+#define TOUHOU_OBJECT_H_
 
 #include "common/base/base.h"
 #include "common/common_utility.h"
@@ -12,26 +12,22 @@
 
 class Component;
 
-class ObjectBase : public Base {
+class Object : public Base {
 private:
   Vector2 position_;
   Vector2 scale_;
   vector<Component *> component_vector_;
 
 public:
-  ObjectBase();
-  explicit ObjectBase(const ObjectBase &other);
-  virtual ~ObjectBase();
+  Object();
+  explicit Object(const Object &other);
+  virtual ~Object() override;
 
   virtual void Tick() = 0;
-<<<<<<< HEAD
   virtual void FinalTick();
-=======
-  // virtual void FinalTick();
->>>>>>> ba0deab (feat: player init)
   virtual void Render();
 
-  virtual ObjectBase *Clone() override = 0;
+  virtual Object *Clone() override = 0;
 
   // Getter & Setter
   Vector2 position() const { return position_; }
@@ -40,4 +36,4 @@ public:
   void set_scale(const Vector2 scale) { scale_ = scale; }
 };
 
-#endif // TOUHOU_OBJECT_BASE_H_
+#endif // TOUHOU_OBJECT_H_

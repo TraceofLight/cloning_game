@@ -37,7 +37,7 @@ void TimeManager::Tick() {
 
     // 윈도우 타이틀에 FPS 랑 DeltaTime 표시
     wchar_t buf[256] = {};
-    swprintf_s(buf, 256, L"FPS : %d, DeltaTime : %f", fps_, float_delta_time_);
+    (void)swprintf_s(buf, 256, L"FPS : %d, DeltaTime : %f", fps_, float_delta_time_);
     SetWindowText(Engine::Get()->main_handle(), buf);
 
     fps_ = 0;

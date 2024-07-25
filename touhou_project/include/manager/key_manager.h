@@ -29,7 +29,7 @@ public:
 
   // Getter & Setter
   KEY_STATE key_state(const KEY key) const {
-    return key_info_vector_[static_cast<int>(key)].get()->state_;
+    return key_info_vector_[static_cast<int>(key)]->state_;
   }
   Vector2 mouse_position() const { return mouse_position_; }
 };

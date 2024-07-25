@@ -20,20 +20,20 @@ public:
   ~Sound() override = default;
 
   // 재생 관련 옵션
-  void Play(bool loop = false);
+  void Play(bool loop = false) const;
   void PlayToBGM(bool loop = false);
-  void Stop(bool reset = false);
+  void Stop(bool reset = false) const;
 
-  int GetDecibel(float volume);
   int Load(const wstring &file_path) override;
 
   // Setter
-  void SetVolume(const float volume);     // 0 ~ 100
-  void SetPosition(const float position); // 0 ~ 100
+  void set_volume(float volume);
+
+  void SetSoundBufferVolume(float volume); // 0 ~ 100
+  void SetPosition(float position) const;  // 0 ~ 100
 
 private:
   bool LoadWaveSound(const wstring &file_path);
-
 };
 
 #endif // TOUHOU_SOUND_H_

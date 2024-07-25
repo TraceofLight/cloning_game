@@ -152,7 +152,7 @@
         <ClInclude Include="include\manager\time_manager.h" />
         <ClInclude Include="include\module\animation\animation.h" />
         <ClInclude Include="include\module\animation\common\animation_struct.h" />
-        <ClInclude Include="include\object\object_base.h" />
+        <ClInclude Include="include\object\object.h" />
     </ItemGroup>
     <ItemGroup>
         <ClCompile Include="common\base\base.cpp" />
@@ -241,7 +241,7 @@
         <ClCompile Include="src\manager\key_manager.cpp" />
         <ClCompile Include="src\manager\time_manager.cpp" />
         <ClCompile Include="src\module\animation\animation.cpp" />
-        <ClCompile Include="src\object\object_base.cpp" />
+        <ClCompile Include="src\object\object.cpp" />
     </ItemGroup>
     <ItemGroup>
         <ResourceCompile Include="common\resource\touhou_project.rc" />
@@ -253,6 +253,10 @@
     <ItemGroup>
       <Content Include="common\assets\sound\player_score.ogg" />
       <Content Include="common\assets\texture\reimu.png" />
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="include\object\player\" />
+      <Folder Include="src\object\player\" />
     </ItemGroup>
     <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>
     <ImportGroup Label="ExtensionTargets">

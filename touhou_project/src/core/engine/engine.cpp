@@ -62,7 +62,7 @@ HDC Engine::GetBackDC() const { return back_buffer_->dc_handle(); }
  */
 void Engine::Render() const {
   // Clearing Screen
-  HBRUSH prev_brush_handle = static_cast<HBRUSH>(SelectObject(
+  const HBRUSH prev_brush_handle = static_cast<HBRUSH>(SelectObject(
       GetBackDC(), brush_list_[static_cast<int>(BRUSH_TYPE::GRAY)]));
   Rectangle(GetBackDC(), -1, -1, static_cast<int>(resolution_.x()) + 1,
             static_cast<int>(resolution_.y()) + 1);

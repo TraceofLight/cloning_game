@@ -82,7 +82,7 @@ void Animation::Render() const {
  */
 void Animation::Save(const wstring &folder_path) const {
   // TODO(KHJ): name 받아올 수 있도록 할 것
-  wstring animation_name = L"foo";
+  const wstring animation_name = L"foo";
   const wstring file_path = folder_path + animation_name + L".animation";
 
   FILE *file = nullptr;
