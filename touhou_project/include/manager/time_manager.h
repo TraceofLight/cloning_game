@@ -25,8 +25,8 @@ public:
   void Init();
   void Tick();
 
-  double delta_time() { return delta_time_; }
-  float float_delta_time() { return float_delta_time_; }
+  double delta_time() const { return delta_time_; }
+  float float_delta_time() const { return float_delta_time_; }
 };
 
 #endif //TOUHOU_TIME_MANAGER_H_

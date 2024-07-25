@@ -6,15 +6,15 @@
 #ifndef TOUHOU_COMPONENT_H_
 #define TOUHOU_COMPONENT_H_
 
+#include "include/object/object.h"
 #include "common/base/base.h"
-#include "include/object/object_base.h"
 
 class Component : public Base {
-  friend class ObjectBase;
+  friend class Object;
 
 private:
   const COMPONENT_TYPE component_type_;
-  ObjectBase *owner_;
+  Object *owner_;
 
 public:
   Component(COMPONENT_TYPE type);
@@ -26,7 +26,7 @@ public:
 
   // Getter & Setter
   COMPONENT_TYPE component_type() const { return component_type_; }
-  ObjectBase *owner() const { return owner_; }
+  Object *owner() const { return owner_; }
 };
 
 #endif // TOUHOU_COMPONENT_H_

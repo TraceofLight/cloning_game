@@ -87,7 +87,7 @@ bool Sound::LoadWaveSound(const wstring &file_path) {
   mmioClose(file_handle, 0);
 
   // Default
-  SetVolume(50.f);
+  SetSoundBufferVolume(50.f);
 
   return true;
 }
@@ -96,7 +96,7 @@ bool Sound::LoadWaveSound(const wstring &file_path) {
  * @brief 재생 함수
  * @param loop 반복 재생할지 선택하는 인자
  */
-void Sound::Play(bool loop) {
+void Sound::Play(bool loop) const {
   sound_buffer_->SetCurrentPosition(0);
 
   if (loop)
@@ -123,7 +123,7 @@ void Sound::PlayToBGM(const bool loop) {
  * @brief 현재 사운드 버퍼를 정지하는 함수
  * @param reset 해당 변수값이 true라면 position 0로 이동
  */
-void Sound::Stop(const bool reset) {
+void Sound::Stop(const bool reset) const {
   sound_buffer_->Stop();
   if (reset)
     sound_buffer_->SetCurrentPosition(0);
@@ -131,10 +131,10 @@ void Sound::Stop(const bool reset) {
 
 /**
  * @brief 볼륨 설정 함수
- * @param volume 해당 인자값을 변경 -> 데시별 변환 후 버퍼에 변환값 세팅
+ * @param volume setter로 멤버 세팅 -> 멤버값을 버퍼에 세팅
  */
-void Sound::SetVolume(float volume) {
-  volume_ = GetDecibel(volume);
+void Sound::SetSoundBufferVolume(float volume) {
+  set_volume(volume);
   sound_buffer_->SetVolume(volume_);
 }
 
@@ -142,19 +142,19 @@ void Sound::SetVolume(float volume) {
  * @brief 재생 지점 설정 함수
  * @param position 지점 정보를 받아와서 buffer에 값 세팅
  */
-void Sound::SetPosition(float position) {
+void Sound::SetPosition(float position) const {
   Stop(true);
 
-  DWORD dw_bytes = static_cast<DWORD>(
+  const DWORD dw_bytes = static_cast<DWORD>(
       position / 100.f * static_cast<float>(buffer_info_.dwBufferBytes));
   sound_buffer_->SetCurrentPosition(dw_bytes);
 }
 
 /**
- * @brief 데시벨값 계산 함수
+ * @brief 볼륨값을 받아서 데시벨 치환된 볼륨을 세팅하는 함수
  * @param volume 여기서 입력한 값을 변환
  */
-int Sound::GetDecibel(float volume) {
+void Sound::set_volume(float volume) {
   if (volume > 100.f)
     volume = 100.f;
   else if (volume <= 0.f)
@@ -165,6 +165,6 @@ int Sound::GetDecibel(float volume) {
 
   if (decibel_volume < -10000)
     decibel_volume = -10000;
-	return decibel_volume;
+	volume_ = decibel_volume;
 }
 

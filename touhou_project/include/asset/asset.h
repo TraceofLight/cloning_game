@@ -16,7 +16,7 @@ private:
 public:
   CLONE_DISABLE(Asset)
   Asset() = default;
-  virtual ~Asset() = default;
+  virtual ~Asset() override = default;
 
   // Getter & Setter
   const wstring &key() { return key_; }
