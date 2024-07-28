@@ -17,8 +17,8 @@ private:
   HDC device_context_;
   Vector2 resolution_;
   Texture *back_buffer_;
-  std::unique_ptr<HPEN[], HandleListDeleterWrapper> pen_list_;
-  std::unique_ptr<HBRUSH[], HandleListDeleterWrapper> brush_list_;
+  unique_ptr<HPEN[], HandleListDeleterWrapper> pen_list_;
+  unique_ptr<HBRUSH[], HandleListDeleterWrapper> brush_list_;
 
 public:
   void Init(HWND main_handle, UINT width, UINT height);
