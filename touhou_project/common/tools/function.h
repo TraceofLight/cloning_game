@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file function.h
  * @brief 전역에서 사용할 function 모을 헤더
  */

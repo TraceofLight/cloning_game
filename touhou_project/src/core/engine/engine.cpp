@@ -47,8 +47,7 @@ void Engine::ChangeResolution(UINT width, UINT height) {
   // 윈도우의 그리기 영역의 해상도를 원하는 수치로 만들기 위해서
   // 실제 윈도우가 가져야 하는 크기를 계산
   RECT rt = {0, 0, static_cast<long>(width), static_cast<long>(height)};
-  AdjustWindowRect(&rt, WS_OVERLAPPEDWINDOW,
-                   reinterpret_cast<bool>(menu_handle));
+  AdjustWindowRect(&rt, WS_OVERLAPPEDWINDOW, static_cast<bool>(menu_handle));
 
   // 최종으로 계산된 윈도우 크기값으로 윈도우 크기를 변경
   SetWindowPos(main_handle_, nullptr, 0, 0, rt.right - rt.left,

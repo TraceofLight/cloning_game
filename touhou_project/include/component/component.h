@@ -6,8 +6,8 @@
 #ifndef TOUHOU_COMPONENT_H_
 #define TOUHOU_COMPONENT_H_
 
-#include "include/object/object.h"
 #include "common/base/base.h"
+#include "include/object/object.h"
 
 class Component : public Base {
   friend class Object;
@@ -25,6 +25,7 @@ public:
   virtual void FinalTick() = 0;
 
   // Getter & Setter
+  void set_owner(Object *owner) { owner_ = owner; }
   COMPONENT_TYPE component_type() const { return component_type_; }
   Object *owner() const { return owner_; }
 };

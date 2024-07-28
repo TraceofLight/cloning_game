@@ -165,14 +165,16 @@ void Animation::Load(const wstring &file_path) {
         }
 
         if (!wcscmp(L"Left_Top", frame_buffer)) {
-          (void)fwscanf_s(file, L"%f %f", frame.left_top_.x(),
-                          frame.left_top_.y());
+          (void)fwscanf_s(file, L"%f %f", &frame.left_top_.float_x(),
+                          &frame.left_top_.float_y());
         } else if (!wcscmp(L"Offset", frame_buffer)) {
-          (void)fwscanf_s(file, L"%f %f", frame.offset_.x(), frame.offset_.y());
+          (void)fwscanf_s(file, L"%f %f", &frame.offset_.float_x(),
+                          &frame.offset_.float_y());
         } else if (!wcscmp(L"Slice", frame_buffer)) {
-          (void)fwscanf_s(file, L"%f %f", frame.slice_.x(), frame.slice_.y());
+          (void)fwscanf_s(file, L"%f %f", &frame.slice_.float_x(),
+                          &frame.slice_.float_y());
         } else if (!wcscmp(L"Duration", frame_buffer)) {
-          (void)fwscanf_s(file, L"%f", frame.duration_);
+          (void)fwscanf_s(file, L"%f", &frame.duration_);
           frame_vector_.push_back(frame);
         }
       }
