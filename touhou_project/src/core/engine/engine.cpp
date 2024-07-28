@@ -4,6 +4,8 @@
  */
 
 #include "include/core/engine/engine.h"
+
+#include "common/drawing_handle/drawing_handle.h"
 #include "include/manager/key_manager.h"
 #include "include/manager/time_manager.h"
 
@@ -42,7 +44,7 @@ void Engine::ChangeResolution(UINT width, UINT height) {
   resolution_ = Vector2(width, height);
 
   // 크기를 변경하려는 윈도우의 메뉴 존재여부를 확인
-  HMENU menu_handle = GetMenu(main_handle_);
+  const HMENU menu_handle = GetMenu(main_handle_);
 
   // 윈도우의 그리기 영역의 해상도를 원하는 수치로 만들기 위해서
   // 실제 윈도우가 가져야 하는 크기를 계산
@@ -61,11 +63,11 @@ HDC Engine::GetBackDC() const { return back_buffer_->dc_handle(); }
  */
 void Engine::Render() const {
   // Clearing Screen
-  const HBRUSH prev_brush_handle = static_cast<HBRUSH>(SelectObject(
-      GetBackDC(), brush_list_[static_cast<int>(BRUSH_TYPE::GRAY)]));
+  DrawingHandle drawing_handle(GetBackDC(), BRUSH_TYPE::GRAY);
   Rectangle(GetBackDC(), -1, -1, static_cast<int>(resolution_.x()) + 1,
             static_cast<int>(resolution_.y()) + 1);
-  SelectObject(GetBackDC(), prev_brush_handle);
+  BitBlt(device_context_, 0, 0, static_cast<int>(resolution_.x()),
+         static_cast<int>(resolution_.y()), GetBackDC(), 0, 0, SRCCOPY);
 }
 
 /**
@@ -75,27 +77,19 @@ void Engine::GDIInit() {
   pen_list_.reset(new HPEN[static_cast<int>(PEN_TYPE::END)]);
   brush_list_.reset(new HBRUSH[static_cast<int>(BRUSH_TYPE::END)]);
 
-  pen_list_[static_cast<int>(PEN_TYPE::RED)] =
-      CreatePen(PS_SOLID, 1, RGB(255, 0, 0));
-  pen_list_[static_cast<int>(PEN_TYPE::GREEN)] =
-      CreatePen(PS_SOLID, 1, RGB(0, 255, 0));
-  pen_list_[static_cast<int>(PEN_TYPE::BLUE)] =
-      CreatePen(PS_SOLID, 1, RGB(0, 0, 255));
-  pen_list_[static_cast<int>(PEN_TYPE::YELLOW)] =
-      CreatePen(PS_SOLID, 1, RGB(255, 255, 0));
-  pen_list_[static_cast<int>(PEN_TYPE::MAGENTA)] =
-      CreatePen(PS_SOLID, 1, RGB(255, 0, 255));
+  ADD_PEN(PEN_TYPE::RED, 255, 0, 0);
+  ADD_PEN(PEN_TYPE::GREEN, 0, 255, 0);
+  ADD_PEN(PEN_TYPE::BLUE, 0, 0, 255);
+  ADD_PEN(PEN_TYPE::YELLOW, 255, 255, 0);
+  ADD_PEN(PEN_TYPE::MAGENTA, 255, 0, 255);
 
-  brush_list_[static_cast<int>(BRUSH_TYPE::RED)] =
-      CreateSolidBrush(RGB(255, 0, 0));
-  brush_list_[static_cast<int>(BRUSH_TYPE::GREEN)] =
-      CreateSolidBrush(RGB(0, 255, 0));
-  brush_list_[static_cast<int>(BRUSH_TYPE::BLUE)] =
-      CreateSolidBrush(RGB(0, 0, 255));
-  brush_list_[static_cast<int>(BRUSH_TYPE::GRAY)] =
-      CreateSolidBrush(RGB(100, 100, 100));
-  brush_list_[static_cast<int>(BRUSH_TYPE::TURQUOISE)] =
-      CreateSolidBrush(RGB(57, 215, 237));
+  ADD_BRUSH(BRUSH_TYPE::RED, 255, 0, 0);
+  ADD_BRUSH(BRUSH_TYPE::GREEN, 0, 255, 0);
+  ADD_BRUSH(BRUSH_TYPE::BLUE, 0, 0, 255);
+  ADD_BRUSH(BRUSH_TYPE::GRAY, 100, 100, 100);
+  ADD_BRUSH(BRUSH_TYPE::TURQUOISE, 57, 215, 237);
+
+  // 투명 브러쉬
   brush_list_[static_cast<int>(BRUSH_TYPE::HOLLOW)] =
       static_cast<HBRUSH>(GetStockObject(HOLLOW_BRUSH));
 }
