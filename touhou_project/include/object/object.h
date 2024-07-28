@@ -34,6 +34,30 @@ public:
   Vector2 scale() const { return scale_; }
   void set_position(const Vector2 position) { position_ = position; }
   void set_scale(const Vector2 scale) { scale_ = scale; }
+
+  /**
+   * @brief 컴포넌트를 오브젝트에 추가하는 함수
+   * @tparam T 컴포넌트 타입 전체
+   * @param component 컴포넌트의 ptr
+   */
+  template <typename T> inline void set_component(T *component) {
+    component_vector_.push_back(move(component));
+    component->set_owner(this);
+  }
+
+  /**
+   * @brief 오브젝트가 가진 특정 속성의 컴포넌트를 탐색하는 함수
+   * @tparam T componenent
+   * @return 해당 타입에 해당하는 component의 ptr / nullptr
+   */
+  template <typename T> inline T *component() {
+    for (auto iter : component_vector_) {
+      if (iter->component_type() == T::type_) {
+        return static_cast<T *>(iter);
+      }
+    }
+    return nullptr;
+  }
 };
 
 #endif // TOUHOU_OBJECT_H_

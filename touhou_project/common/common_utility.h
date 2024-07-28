@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file common_utility.h
  * @brief 여러 곳에서 필요한 유틸을 모으는 헤더
  */

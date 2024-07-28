@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file struct.h
  * @brief 개발하면서 공용으로 사용할 자료구조를 모아둔 헤더
  */
@@ -15,10 +15,13 @@ class Vector2 {
 private:
   double x_;
   double y_;
+  float float_x_;
+  float float_y_;
 
 public:
-  Vector2() : x_(0), y_(0) {}
-  Vector2(double const x, double const y) : x_(x), y_(y) {}
+  Vector2() : x_(0), y_(0), float_x_(0), float_y_(0) {}
+  Vector2(double const x, double const y)
+      : x_(x), y_(y), float_x_(0), float_y_(0) {}
 
   double Length() const { return std::sqrt(pow(x_, 2) + pow(y_, 2)); }
 
@@ -50,6 +53,17 @@ public:
   double y() const { return y_; }
   void set_x(float const x) { x_ = x; }
   void set_y(float const y) { y_ = y; }
+
+  // fwscanf_s 대응을 위한 Getter
+  // float 값을 여기를 제외하면 사용하지 않기 때문에 여기서 lazy하게 sync한다
+  float &float_x() {
+    float_x_ = static_cast<float>(x_);
+    return float_x_;
+  }
+  float &float_y() {
+    float_y_ = static_cast<float>(y_);
+    return float_y_;
+  }
 };
 
 /**

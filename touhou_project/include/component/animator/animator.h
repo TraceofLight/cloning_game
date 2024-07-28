@@ -16,6 +16,7 @@ private:
   bool is_repeat_;
 
 public:
+  MAKE_COMPONENT_TYPE(ANIMATOR)
   CLONE(Animator)
   Animator();
   Animator(const Animator &other);
