@@ -32,8 +32,8 @@ public:
   // Getter & Setter
   Vector2 position() const { return position_; }
   Vector2 scale() const { return scale_; }
-  void set_position(const Vector2 position) { position_ = position; }
-  void set_scale(const Vector2 scale) { scale_ = scale; }
+  void set_position(const Vector2 &position) { position_ = position; }
+  void set_scale(const Vector2 &scale) { scale_ = scale; }
 
   /**
    * @brief 컴포넌트를 오브젝트에 추가하는 함수

@@ -32,7 +32,7 @@ public:
     y_ /= length;
   }
 
-  double Distance(Vector2 const &other) const {
+  double Distance(const Vector2 &other) const {
     return std::sqrt(pow(x_ - other.x(), 2) + pow(y_ - other.y(), 2));
   }
 
@@ -42,7 +42,12 @@ public:
     return *this;
   }
 
-  bool operator==(Vector2 const &other) const {
+  void operator+=(const Vector2 &other) {
+    x_ += other.x();
+    y_ += other.y();
+  }
+
+  bool operator==(const Vector2 &other) const {
     if (IsSame(x_, other.x()) && IsSame(y_, other.y()))
       return true;
     return false;
