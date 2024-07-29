@@ -72,7 +72,7 @@ LRESULT CALLBACK WndProc(HWND window_handle, UINT message, WPARAM w_param,
                          LPARAM l_param) {
   switch (message) {
   case WM_COMMAND: {
-    int wmId = LOWORD(w_param);
+    const int wmId = LOWORD(w_param);
     // 메뉴 선택을 구문 분석합니다:
     switch (wmId) {
     case IDM_ABOUT:
@@ -111,7 +111,7 @@ ATOM WindowClassInfo(HINSTANCE instance_handle) {
   wcex.hInstance = instance_handle;
   wcex.hIcon = LoadIcon(instance_handle, MAKEINTRESOURCE(IDI_TOUHOUPROJECT));
   wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
-  wcex.hbrBackground = reinterpret_cast<HBRUSH>(COLOR_WINDOW + 1);
+  wcex.hbrBackground = GetSysColorBrush(COLOR_WINDOW);
   wcex.lpszMenuName = nullptr; // MAKEINTRESOURCEW(IDC_WINAPI);
   wcex.lpszClassName = kClassName;
   wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
