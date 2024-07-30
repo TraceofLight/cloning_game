@@ -26,26 +26,26 @@ public:
   UI(const UI &other);
   virtual UI *Clone() override = 0;
 
-  virtual void Tick() override final;
-  virtual void FinalTick() override;
-  virtual void Render() override final;
+  void Tick() final;
+  void FinalTick() override;
+  void Render() final;
 
   virtual void TickUI() = 0;
   virtual void RenderUI();
 
-  virtual void BeginHover(); // 마우스가 UI 위에 막 올라왔을 때
-  virtual void OnHover();    // 마우스 UI 위에 있을 때
-  virtual void EndHover();   // 마우스가 UI를 빠져 나가는 순간
+  virtual void BeginHover() {} // 마우스가 UI 위에 막 올라왔을 때
+  virtual void OnHover() {}    // 마우스 UI 위에 있을 때
+  virtual void EndHover() {}   // 마우스가 UI를 빠져 나가는 순간
 
-  virtual void LeftButtonDown();
-  virtual void LeftButtonUp();
-  virtual void LeftButtonClicked();
+  virtual void LeftButtonDown() {}
+  virtual void LeftButtonUp() {}
+  virtual void LeftButtonClicked() {}
 
   // Getter & Setter
   UI *parent() const { return parent_; }
   const vector<UI *> &child_vector() const { return child_vector_; }
   Vector2 final_position() const { return final_position_; }
-  bool is_mouse_hover() const { return is_mouse_on_; }
+  bool is_mouse_on() const { return is_mouse_on_; }
   bool is_left_button_down() const { return is_left_button_down_; }
   void set_parent(UI *parent) { parent_ = parent; }
   void add_child(UI *child) {

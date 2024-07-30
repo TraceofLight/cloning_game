@@ -154,6 +154,7 @@
         <ClInclude Include="include\module\animation\common\animation_struct.h" />
         <ClInclude Include="include\object\object.h" />
         <ClInclude Include="include\object\player\player.h" />
+        <ClInclude Include="include\object\ui\ui.h" />
     </ItemGroup>
     <ItemGroup>
         <ClCompile Include="common\base\base.cpp" />
@@ -244,6 +245,8 @@
         <ClCompile Include="src\module\animation\animation.cpp" />
         <ClCompile Include="src\object\object.cpp" />
         <ClCompile Include="src\object\player\player.cpp" />
+        <ClCompile Include="src\object\ui\button\button.cpp" />
+        <ClCompile Include="src\object\ui\ui.cpp" />
     </ItemGroup>
     <ItemGroup>
         <ResourceCompile Include="common\resource\touhou_project.rc" />
@@ -255,6 +258,7 @@
     <ItemGroup>
       <Content Include="common\assets\sound\player_score.ogg" />
       <Content Include="common\assets\texture\reimu.png" />
+      <Content Include="include\object\ui\button\button.h" />
     </ItemGroup>
     <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>
     <ImportGroup Label="ExtensionTargets">
