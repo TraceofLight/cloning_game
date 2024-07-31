@@ -68,4 +68,10 @@ enum class COMPONENT_TYPE {
   ANIMATOR,
 };
 
+enum class LAYER_TYPE {
+  DEFAULT,
+  UI,
+  END,
+};
+
 #endif // TOUHOU_ENUM_H_
