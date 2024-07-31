@@ -7,6 +7,7 @@
 
 #include "common/drawing_handle/drawing_handle.h"
 #include "include/manager/key_manager.h"
+#include "include/manager/level_manager.h"
 #include "include/manager/time_manager.h"
 
 Engine::Engine()
@@ -28,12 +29,14 @@ void Engine::Init(HWND main_handle, UINT width, UINT height) {
   // Manager 초기화
   TimeManager::Get()->Init();
   KeyManager::Get()->Init();
+  LevelManager::Get()->Init();
 }
 
-void Engine::Progress() const {
+void Engine::Progress() {
   // Manager Tick
   TimeManager::Get()->Tick();
   KeyManager::Get()->Tick();
+  LevelManager::Get()->Tick();
 
   // Render
   Render();

@@ -22,7 +22,7 @@ private:
 
 public:
   void Init(HWND main_handle, UINT width, UINT height);
-  void Progress() const;
+  void Progress();
   void ChangeResolution(UINT width, UINT height);
   HDC GetBackDC() const;
 

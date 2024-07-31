@@ -150,6 +150,7 @@
         <ClInclude Include="include\level\level.h" />
         <ClInclude Include="include\manager\asset_manager.h" />
         <ClInclude Include="include\manager\key_manager.h" />
+        <ClInclude Include="include\manager\level_manager.h" />
         <ClInclude Include="include\manager\time_manager.h" />
         <ClInclude Include="include\module\animation\animation.h" />
         <ClInclude Include="include\module\animation\common\animation_struct.h" />
@@ -243,6 +244,7 @@
         <ClCompile Include="src\level\level.cpp" />
         <ClCompile Include="src\manager\asset_manager.cpp" />
         <ClCompile Include="src\manager\key_manager.cpp" />
+        <ClCompile Include="src\manager\level_manager.cpp" />
         <ClCompile Include="src\manager\time_manager.cpp" />
         <ClCompile Include="src\module\animation\animation.cpp" />
         <ClCompile Include="src\object\object.cpp" />
