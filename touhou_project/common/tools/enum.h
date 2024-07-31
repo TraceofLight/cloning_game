@@ -74,4 +74,10 @@ enum class LAYER_TYPE {
   END,
 };
 
+enum class LEVEL_TYPE {
+  START,
+  EDITOR,
+  END,
+};
+
 #endif // TOUHOU_ENUM_H_
