@@ -12,7 +12,7 @@
 
 class Level : public Base {
 private:
-  vector<Object *> layer_list_[LAYER_TYPE::END];
+  vector<Object *> layer_list_[static_cast<int>(LAYER_TYPE::END)];
   Player *current_player_;
 
 public:
