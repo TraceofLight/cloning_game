@@ -10,7 +10,6 @@
 #include "include/object/ui/ui.h"
 
 class Button : public UI {
-  CLONE(Button)
 private:
   Base *instance_;
   void (*call_back_ptr_)(void);
@@ -25,6 +24,7 @@ private:
   // Texture *pressed_image_;
 
 public:
+  CLONE(Button)
   Button() = default;
 
   void TickUI() override {}
