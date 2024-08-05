@@ -35,7 +35,7 @@ public:
     return layer_list_[static_cast<int>(type)];
   }
   void set_current_player(Player *player) { current_player_ = player; }
-  void add_object_to_layer(Object *object, const LAYER_TYPE type) {
+  void AddObjectToLayer(Object *object, const LAYER_TYPE type) {
     object->set_layer_type(type);
     layer_list_->push_back(std::move(object));
   }
