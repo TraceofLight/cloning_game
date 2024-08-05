@@ -5,6 +5,8 @@
 
 #include "include/manager/level_manager.h"
 
+#include "include/level/editor/editor.h"
+
 LevelManager::LevelManager() = default;
 
 LevelManager::~LevelManager() {
@@ -15,8 +17,7 @@ LevelManager::~LevelManager() {
 }
 
 void LevelManager::Init() {
-  // TODO(KHJ): 에디터 레벨 내용 추가하기
-  level_arr_[static_cast<int>(LEVEL_TYPE::EDITOR)] = nullptr;
+  level_arr_[static_cast<int>(LEVEL_TYPE::EDITOR)] = new EditorLevel;
 
   current_level_ = level_arr_[static_cast<int>(LEVEL_TYPE::EDITOR)];
   current_level_->Init();

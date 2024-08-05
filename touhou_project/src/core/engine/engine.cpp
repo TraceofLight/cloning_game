@@ -69,6 +69,9 @@ void Engine::Render() const {
   DrawingHandle drawing_handle(GetBackDC(), BRUSH_TYPE::GRAY);
   Rectangle(GetBackDC(), -1, -1, static_cast<int>(resolution_.x()) + 1,
             static_cast<int>(resolution_.y()) + 1);
+
+  LevelManager::Get()->Render();
+
   BitBlt(device_context_, 0, 0, static_cast<int>(resolution_.x()),
          static_cast<int>(resolution_.y()), GetBackDC(), 0, 0, SRCCOPY);
 }

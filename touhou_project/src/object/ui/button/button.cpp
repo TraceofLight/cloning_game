@@ -10,6 +10,8 @@
 
 void Button::RenderUI() {
   PEN_TYPE pen_type = PEN_TYPE::GREEN;
+  BRUSH_TYPE brush_type = BRUSH_TYPE::BLUE;
+
   if (is_mouse_on()) {
     pen_type = PEN_TYPE::BLUE;
   }
@@ -18,7 +20,7 @@ void Button::RenderUI() {
   }
 
   DrawingHandle drawing_pen(Engine::Get()->GetBackDC(), pen_type);
-  DrawingHandle drawing_brush(Engine::Get()->GetBackDC(), BRUSH_TYPE::GRAY);
+  DrawingHandle drawing_brush(Engine::Get()->GetBackDC(), brush_type);
 
   const Vector2 final_position = UI::final_position();
   const Vector2 scale = Object::scale();
