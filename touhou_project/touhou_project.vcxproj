@@ -150,6 +150,7 @@
         <ClInclude Include="include\level\editor\editor.h" />
         <ClInclude Include="include\level\level.h" />
         <ClInclude Include="include\manager\asset_manager.h" />
+        <ClInclude Include="include\manager\debug_manager.h" />
         <ClInclude Include="include\manager\key_manager.h" />
         <ClInclude Include="include\manager\level_manager.h" />
         <ClInclude Include="include\manager\time_manager.h" />
@@ -233,7 +234,7 @@
           <DisableAnalyzeExternal>false</DisableAnalyzeExternal>
           <PreprocessorDefinitions>_DEBUG;_WINDOWS;_UNICODE;UNICODE;</PreprocessorDefinitions>
           <SDLCheck>true</SDLCheck>
-          <AdditionalIncludeDirectories>C:\Users\HEEJUN KIM\source\repos\touhou_clone\touhou_project\</AdditionalIncludeDirectories>
+          <AdditionalIncludeDirectories>$(ProjectDir)</AdditionalIncludeDirectories>
           <LinkCompiled>true</LinkCompiled>
         </ClCompile>
         <ClCompile Include="main.cpp" />
@@ -245,6 +246,7 @@
         <ClCompile Include="src\level\editor\editor.cpp" />
         <ClCompile Include="src\level\level.cpp" />
         <ClCompile Include="src\manager\asset_manager.cpp" />
+        <ClCompile Include="src\manager\debug_manager.cpp" />
         <ClCompile Include="src\manager\key_manager.cpp" />
         <ClCompile Include="src\manager\level_manager.cpp" />
         <ClCompile Include="src\manager\time_manager.cpp" />

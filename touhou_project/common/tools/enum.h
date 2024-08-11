@@ -80,4 +80,11 @@ enum class LEVEL_TYPE {
   END,
 };
 
+enum class DEBUG_SHAPE {
+  RECTANGLE,
+  CIRCLE,
+  CROSS,
+  LINE,
+};
+
 #endif // TOUHOU_ENUM_H_

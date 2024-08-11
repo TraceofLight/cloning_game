@@ -96,4 +96,14 @@ struct HandleObjectDeleterWrapper {
   }
 };
 
+struct DebugShapeInfo {
+  DEBUG_SHAPE shape;
+  Vector2 position;
+  Vector2 scale;
+  PEN_TYPE pen;
+  BRUSH_TYPE brush;
+  float duration;	// DebugShape 유지 시간
+  float time; // 현재 진행 시간
+};
+
 #endif // TOUHOU_STRUCT_H_
