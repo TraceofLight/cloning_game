@@ -154,6 +154,7 @@
         <ClInclude Include="include\manager\key_manager.h" />
         <ClInclude Include="include\manager\level_manager.h" />
         <ClInclude Include="include\manager\time_manager.h" />
+        <ClInclude Include="include\manager\ui_manager.h" />
         <ClInclude Include="include\module\animation\animation.h" />
         <ClInclude Include="include\module\animation\common\animation_struct.h" />
         <ClInclude Include="include\object\object.h" />
@@ -250,6 +251,7 @@
         <ClCompile Include="src\manager\key_manager.cpp" />
         <ClCompile Include="src\manager\level_manager.cpp" />
         <ClCompile Include="src\manager\time_manager.cpp" />
+        <ClCompile Include="src\manager\ui_manager.cpp" />
         <ClCompile Include="src\module\animation\animation.cpp" />
         <ClCompile Include="src\object\object.cpp" />
         <ClCompile Include="src\object\player\player.cpp" />

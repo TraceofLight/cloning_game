@@ -9,16 +9,16 @@
 #include "include/object/object.h"
 
 class UI : public Object {
-  // TODO(KHJ): UI 처리할 수 있는 Manager 추가 필요
-  // friend class UIManager;
+  friend class UIManager;
+
 private:
   UI *parent_ = nullptr;
   vector<UI *> child_vector_;
   Vector2 final_position_;
 
-  bool is_mouse_on_ = false;          // 현재 마우스가 UI 위에 있는지
+  bool is_mouse_on_ = false; // 현재 마우스가 UI 위에 있는지
   bool is_mouse_on_previous_ = false; // 이전 프레임에 마우스가 UI 위에 있었는지
-  bool is_left_button_down_ = false;  // UI가 마우스 왼쪽 버튼이 눌린 상태인지
+  bool is_left_button_down_ = false; // UI가 마우스 왼쪽 버튼이 눌린 상태인지
 
 public:
   UI();
@@ -46,7 +46,9 @@ public:
   const vector<UI *> &child_vector() const { return child_vector_; }
   Vector2 final_position() const { return final_position_; }
   bool is_mouse_on() const { return is_mouse_on_; }
+  bool is_mouse_on_previous() const { return is_mouse_on_previous_; }
   bool is_left_button_down() const { return is_left_button_down_; }
+  void set_left_button_down(const bool state) { is_left_button_down_ = state; }
   void set_parent(UI *parent) { parent_ = parent; }
   void add_child(UI *child) {
     child->set_parent(this);
