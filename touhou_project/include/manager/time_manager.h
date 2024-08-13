@@ -29,4 +29,4 @@ public:
   float float_delta_time() const { return float_delta_time_; }
 };
 
-#endif //TOUHOU_TIME_MANAGER_H_
+#endif // TOUHOU_TIME_MANAGER_H_
