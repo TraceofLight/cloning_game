@@ -482,3 +482,6 @@ FodyWeavers.xsd
 
 # exclude assets
 touhou_project/common/assets/*
+
+# jetbrain idea
+.idea/
