@@ -7,15 +7,15 @@
 #define TOUHOU_PCH_H_
 
 // png 로딩
-#include <objidl.h>
 #include <gdiplus.h>
+#include <objidl.h>
 #pragma comment(lib, "GdiPlus.lib")
 using namespace Gdiplus;
 
 // 사운드
-#include <mmsystem.h>
-#include <dsound.h>
 #include <dinput.h>
+#include <dsound.h>
+#include <mmsystem.h>
 #pragma comment(lib, "winmm.lib")
 #pragma comment(lib, "dsound.lib")
 

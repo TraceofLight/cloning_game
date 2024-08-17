@@ -28,7 +28,9 @@ void LevelManager::Tick() {
   current_level_->FinalTick();
 }
 
-void LevelManager::Render() { current_level_->Render(); }
+void LevelManager::Render() {
+  current_level_->Render();
+}
 
 void LevelManager::SetLevel(LEVEL_TYPE type) {
   if (current_level_ != nullptr)

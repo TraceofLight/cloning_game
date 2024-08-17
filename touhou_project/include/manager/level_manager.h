@@ -11,19 +11,19 @@
 
 class LevelManager {
   SINGLE(LevelManager)
-private:
-  Level *level_arr_[static_cast<int>(LEVEL_TYPE::END)];
-  Level *current_level_;
+ private:
+  Level* level_arr_[static_cast<int>(LEVEL_TYPE::END)];
+  Level* current_level_;
 
-public:
+ public:
   void Init();
   void Tick();
   void Render();
 
   // Getter
-  Level *current_level() const { return current_level_; }
+  Level* current_level() const { return current_level_; }
 
-private:
+ private:
   void SetLevel(LEVEL_TYPE type);
 };
 

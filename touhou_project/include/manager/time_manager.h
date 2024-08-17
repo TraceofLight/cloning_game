@@ -11,7 +11,7 @@
 class TimeManager {
   SINGLE(TimeManager)
 
-private:
+ private:
   LARGE_INTEGER frequency_;
   LARGE_INTEGER current_count_;
   LARGE_INTEGER prev_count_;
@@ -21,11 +21,12 @@ private:
   double second_;
   UINT fps_;
 
-public:
+ public:
   void Init();
   void Tick();
 
   double delta_time() const { return delta_time_; }
+
   float float_delta_time() const { return float_delta_time_; }
 };
 

@@ -9,16 +9,16 @@
 #include "include/level/level.h"
 
 class EditorLevel : public Level {
-private:
+ private:
   HMENU menu_handle_;
 
-public:
+ public:
   EditorLevel();
   ~EditorLevel() override;
   void SaveFrame();
   void LoadFrame();
 
-private:
+ private:
   virtual void Init() override;
   virtual void Exit() override;
   virtual void Tick() override;

@@ -10,8 +10,8 @@
 
 // TODO(KHJ): 해당 자료구조를 따로 분리할 클래스를 만드는 것 고민
 struct KeyInformation {
-  KEY_STATE state_;  // 현재 상태를 보여주는 멤버
-  bool was_pressed_; // 상태 변화 적용할 때 기존 상태 확인용 멤버
+  KEY_STATE state_;   // 현재 상태를 보여주는 멤버
+  bool was_pressed_;  // 상태 변화 적용할 때 기존 상태 확인용 멤버
 
   // 생성자 구축
   KeyInformation() : state_(KEY_STATE::NONE), was_pressed_(false) {}
@@ -19,11 +19,11 @@ struct KeyInformation {
 
 class KeyManager {
   SINGLE(KeyManager)
-private:
+ private:
   vector<unique_ptr<KeyInformation>> key_info_vector_;
   Vector2 mouse_position_;
 
-public:
+ public:
   void Init();
   void Tick();
 

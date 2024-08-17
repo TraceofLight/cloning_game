@@ -42,14 +42,14 @@ void KeyManager::Tick() {
 
     if (GetAsyncKeyState(key_value_hash[i]) & 0x8001) {
       if (!key_info_vector_[i]->was_pressed_) {
-        key_info_vector_[i]->state_ = KEY_STATE::TAP; // CASE1
+        key_info_vector_[i]->state_ = KEY_STATE::TAP;  // CASE1
       } else {
-        key_info_vector_[i]->state_ = KEY_STATE::PRESSED; // CASE2
+        key_info_vector_[i]->state_ = KEY_STATE::PRESSED;  // CASE2
       }
       key_info_vector_[i]->was_pressed_ = true;
     } else {
       if (key_info_vector_[i]->was_pressed_) {
-        key_info_vector_[i]->state_ = KEY_STATE::RELEASED; // CASE3
+        key_info_vector_[i]->state_ = KEY_STATE::RELEASED;  // CASE3
       } else {
         key_info_vector_[i]->state_ = KEY_STATE::NONE; // CASE4
       }

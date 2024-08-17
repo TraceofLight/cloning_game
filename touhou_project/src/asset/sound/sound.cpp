@@ -7,12 +7,11 @@
 #include "include/asset/sound/sound.h"
 #include "include/core/engine/engine.h"
 
-int Sound::Load(const wstring &file_path) {
+int Sound::Load(const wstring& file_path) {
   // assert(SoundManager::Get()->GetSoundDevice() != nullptr);
 
   wchar_t szExt[10] = {0};
-  _wsplitpath_s(file_path.c_str(), nullptr, 0, nullptr, 0, nullptr, 0, szExt,
-                10);
+  _wsplitpath_s(file_path.c_str(), nullptr, 0, nullptr, 0, nullptr, 0, szExt, 10);
 
   if (!wcscmp(szExt, L".wav")) {
     if (false == LoadWaveSound(file_path))
@@ -23,11 +22,10 @@ int Sound::Load(const wstring &file_path) {
   return true;
 }
 
-bool Sound::LoadWaveSound(const wstring &file_path) {
+bool Sound::LoadWaveSound(const wstring& file_path) {
 
   // Open File
-  const HMMIO file_handle =
-      mmioOpen(const_cast<wchar_t *>(file_path.c_str()), nullptr, MMIO_READ);
+  const HMMIO file_handle = mmioOpen(const_cast<wchar_t*>(file_path.c_str()), nullptr, MMIO_READ);
 
   // Fail Assert
   if (file_handle == nullptr) {
@@ -48,7 +46,7 @@ bool Sound::LoadWaveSound(const wstring &file_path) {
 
   WAVEFORMATEX wft;
   memset(&wft, 0, sizeof(wft));
-  mmioRead(file_handle, reinterpret_cast<char *>(&wft), sizeof(wft));
+  mmioRead(file_handle, reinterpret_cast<char*>(&wft), sizeof(wft));
 
   mmioAscend(file_handle, &child, 0);
   child.ckid = mmioFOURCC('d', 'a', 't', 'a');
@@ -57,8 +55,7 @@ bool Sound::LoadWaveSound(const wstring &file_path) {
   memset(&buffer_info_, 0, sizeof(DSBUFFERDESC));
   buffer_info_.dwBufferBytes = child.cksize;
   buffer_info_.dwSize = sizeof(DSBUFFERDESC);
-  buffer_info_.dwFlags =
-      DSBCAPS_STATIC | DSBCAPS_LOCSOFTWARE | DSBCAPS_CTRLVOLUME;
+  buffer_info_.dwFlags = DSBCAPS_STATIC | DSBCAPS_LOCSOFTWARE | DSBCAPS_CTRLVOLUME;
   buffer_info_.lpwfxFormat = &wft;
 
   // TODO SoundManager 개발 시 처리할 것
@@ -68,19 +65,16 @@ bool Sound::LoadWaveSound(const wstring &file_path) {
   //   return false;
   // }
 
-  void *write1 = nullptr;
-  void *write2 = nullptr;
+  void* write1 = nullptr;
+  void* write2 = nullptr;
   DWORD dwlength1, dwlength2;
 
-  sound_buffer_->Lock(0, child.cksize, &write1, &dwlength1, &write2, &dwlength2,
-                      0L);
+  sound_buffer_->Lock(0, child.cksize, &write1, &dwlength1, &write2, &dwlength2, 0L);
 
   if (write1 != nullptr)
-    mmioRead(file_handle, static_cast<char *>(write1),
-             static_cast<LONG>(dwlength1));
+    mmioRead(file_handle, static_cast<char*>(write1), static_cast<LONG>(dwlength1));
   if (write2 != nullptr)
-    mmioRead(file_handle, static_cast<char *>(write2),
-             static_cast<LONG>(dwlength2));
+    mmioRead(file_handle, static_cast<char*>(write2), static_cast<LONG>(dwlength2));
 
   sound_buffer_->Unlock(write1, dwlength1, write2, dwlength2);
 
@@ -145,8 +139,8 @@ void Sound::SetSoundBufferVolume(float volume) {
 void Sound::SetPosition(float position) const {
   Stop(true);
 
-  const DWORD dw_bytes = static_cast<DWORD>(
-      position / 100.f * static_cast<float>(buffer_info_.dwBufferBytes));
+  const DWORD dw_bytes =
+      static_cast<DWORD>(position / 100.f * static_cast<float>(buffer_info_.dwBufferBytes));
   sound_buffer_->SetCurrentPosition(dw_bytes);
 }
 

@@ -7,8 +7,14 @@
 #include "include/core/engine/engine.h"
 
 TimeManager::TimeManager()
-    : frequency_{}, current_count_{}, prev_count_{}, delta_time_(0),
-      float_delta_time_(0), time_(0), second_(0), fps_(0) {}
+    : frequency_{},
+      current_count_{},
+      prev_count_{},
+      delta_time_(0),
+      float_delta_time_(0),
+      time_(0),
+      second_(0),
+      fps_(0) {}
 
 TimeManager::~TimeManager() = default;
 
@@ -20,9 +26,8 @@ void TimeManager::Init() {
 void TimeManager::Tick() {
   QueryPerformanceCounter(&current_count_);
 
-  delta_time_ =
-      static_cast<double>(current_count_.QuadPart - prev_count_.QuadPart) /
-      static_cast<double>(frequency_.QuadPart);
+  delta_time_ = static_cast<double>(current_count_.QuadPart - prev_count_.QuadPart) /
+                static_cast<double>(frequency_.QuadPart);
   float_delta_time_ = static_cast<float>(delta_time_);
 
   // 시간 누적

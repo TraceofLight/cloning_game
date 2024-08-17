@@ -11,19 +11,18 @@
 
 class UIManager {
   SINGLE(UIManager)
-private:
+ private:
   int prevent_frame_;
-  list<UI *> process_queue_;
+  list<UI*> process_queue_;
 
-public:
+ public:
   void Tick();
-  void set_prevent_frame(const int frame_count) {
-    prevent_frame_ = frame_count;
-  }
 
-private:
-  UI *GetPriorityUI(UI *parent_ui);
-  void StatusCheck(UI *parent_ui);
+  void set_prevent_frame(const int frame_count) { prevent_frame_ = frame_count; }
+
+ private:
+  UI* GetPriorityUI(UI* parent_ui);
+  void StatusCheck(UI* parent_ui);
 };
 
 #endif // TOUHOU_UI_MANAGER_H_

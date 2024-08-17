@@ -12,34 +12,37 @@
 class Animation : public Base {
   friend class Animator;
 
-private:
-  Animator *owner_;
+ private:
+  Animator* owner_;
   vector<AnimationFrame> frame_vector_;
-  Texture *atlas_;
+  Texture* atlas_;
   int current_idx_;
   float accumulated_time_;
   bool is_finish_;
 
-public:
+ public:
   CLONE(Animation)
   Animation();
-  Animation(const Animation &other);
+  Animation(const Animation& other);
   ~Animation() override;
 
   void FinalTick();
   void Render() const;
 
-  void Save(const wstring &folder_path) const;
-  void Load(const wstring &file_path);
+  void Save(const wstring& folder_path) const;
+  void Load(const wstring& file_path);
 
-  void Create(const AnimationDescription &info);
+  void Create(const AnimationDescription& info);
   void Reset();
 
   // Getter
-  Animator *animator() const { return owner_; }
-  AnimationFrame &frame(const int idx) { return frame_vector_[idx]; }
+  Animator* animator() const { return owner_; }
+
+  AnimationFrame& frame(const int idx) { return frame_vector_[idx]; }
+
   bool is_finish() const { return is_finish_; }
-  void set_animator(Animator *animator) { owner_ = animator; }
+
+  void set_animator(Animator* animator) { owner_ = animator; }
 };
 
 #endif // TOUHOU_MODULE_ANIMATION_H_

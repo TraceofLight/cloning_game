@@ -10,8 +10,8 @@
 #include "include/object/ui/ui.h"
 
 class Button : public UI {
-private:
-  Base *instance_;
+ private:
+  Base* instance_;
   void (*call_back_ptr_)(void);
   void (Base::*base_function_ptr_)(void);
   // TODO(KHJ): 필요성 잘 모르겠음 추후 필요하면 활성화
@@ -23,21 +23,22 @@ private:
   // Texture *hover_image_;
   // Texture *pressed_image_;
 
-public:
+ public:
   CLONE(Button)
   Button() = default;
 
   void TickUI() override {}
+
   void RenderUI() override;
 
   void LeftButtonDown() override {}
+
   void LeftButtonClicked() override;
 
   // Setter
-  void set_call_back(void (*call_back_ptr)(void)) {
-    call_back_ptr_ = call_back_ptr;
-  }
-  void set_delegate(Base *instance, void (Base::*base_function)(void)) {
+  void set_call_back(void (*call_back_ptr)(void)) { call_back_ptr_ = call_back_ptr; }
+
+  void set_delegate(Base* instance, void (Base::*base_function)(void)) {
     instance_ = instance;
     base_function_ptr_ = base_function;
   }

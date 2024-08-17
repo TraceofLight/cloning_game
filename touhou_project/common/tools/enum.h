@@ -57,10 +57,10 @@ enum class KEY {
 };
 
 enum class KEY_STATE {
-  TAP,      // 누른 직후의 상태
-  PRESSED,  // 눌린 상태
-  RELEASED, // 떼어진 직후의 상태
-  NONE,     // 눌리지 않은 상태
+  TAP,       // 누른 직후의 상태
+  PRESSED,   // 눌린 상태
+  RELEASED,  // 떼어진 직후의 상태
+  NONE,      // 눌리지 않은 상태
 };
 
 enum class COMPONENT_TYPE {

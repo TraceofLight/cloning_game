@@ -9,7 +9,7 @@
 #include "common/common_utility.h"
 
 class Base {
-private:
+ private:
   // 프로그램 전역에서 관리하는 값
   static UINT global_serial_number_;
 
@@ -17,15 +17,16 @@ private:
   const UINT id_;
   wstring name_;
 
-public:
+ public:
   Base();
-  Base(const Base &other);
+  Base(const Base& other);
   virtual ~Base() = default;
-  virtual Base *Clone() = 0;
+  virtual Base* Clone() = 0;
 
   // Getter & Setter
-  const wstring &name() { return name_; }
-  void set_name(const wstring &name) { name_ = name; }
+  const wstring& name() { return name_; }
+
+  void set_name(const wstring& name) { name_ = name; }
   UINT id() const { return id_; }
 };
 

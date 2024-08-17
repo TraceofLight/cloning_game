@@ -25,8 +25,7 @@ DrawingHandle::DrawingHandle(HDC dc_handle, PEN_TYPE pen_type)
  */
 DrawingHandle::DrawingHandle(HDC dc_handle, BRUSH_TYPE brush_type)
     : dc_handle_(dc_handle), previous_gdi_handle_(nullptr) {
-  previous_gdi_handle_ =
-      SelectObject(dc_handle_, Engine::Get()->brush(brush_type));
+  previous_gdi_handle_ = SelectObject(dc_handle_, Engine::Get()->brush(brush_type));
 }
 
 /**

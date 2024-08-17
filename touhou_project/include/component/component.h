@@ -12,22 +12,24 @@
 class Component : public Base {
   friend class Object;
 
-private:
+ private:
   const COMPONENT_TYPE component_type_;
-  Object *owner_;
+  Object* owner_;
 
-public:
+ public:
   Component(COMPONENT_TYPE type);
-  Component(const Component &other);
+  Component(const Component& other);
   ~Component() override = default;
 
-  virtual Component *Clone() override = 0;
+  virtual Component* Clone() override = 0;
   virtual void FinalTick() = 0;
 
   // Getter & Setter
-  void set_owner(Object *owner) { owner_ = owner; }
+  void set_owner(Object* owner) { owner_ = owner; }
+
   COMPONENT_TYPE component_type() const { return component_type_; }
-  Object *owner() const { return owner_; }
+
+  Object* owner() const { return owner_; }
 };
 
 #endif // TOUHOU_COMPONENT_H_

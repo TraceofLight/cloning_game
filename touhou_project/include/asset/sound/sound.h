@@ -9,12 +9,12 @@
 #include "include/asset/asset.h"
 
 class Sound : public Asset {
-private:
+ private:
   LPDIRECTSOUNDBUFFER sound_buffer_;
   DSBUFFERDESC buffer_info_;
   int volume_;
 
-public:
+ public:
   CLONE_DISABLE(Sound)
   Sound() = default;
   ~Sound() override = default;
@@ -24,15 +24,15 @@ public:
   void PlayToBGM(bool loop = false);
   void Stop(bool reset = false) const;
 
-  int Load(const wstring &file_path) override;
+  int Load(const wstring& file_path) override;
 
   // Setter
   void set_volume(float volume);
 
-  void SetSoundBufferVolume(float volume); // 0 ~ 100
-  void SetPosition(float position) const;  // 0 ~ 100
+  void SetSoundBufferVolume(float volume);  // 0 ~ 100
+  void SetPosition(float position) const;   // 0 ~ 100
 
-private:
+ private:
   bool LoadWaveSound(const wstring &file_path);
 };
 

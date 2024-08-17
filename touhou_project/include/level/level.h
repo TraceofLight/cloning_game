@@ -11,11 +11,11 @@
 #include "include/object/player/player.h"
 
 class Level : public Base {
-private:
-  vector<Object *> layer_list_[static_cast<int>(LAYER_TYPE::END)];
-  Player *current_player_;
+ private:
+  vector<Object*> layer_list_[static_cast<int>(LAYER_TYPE::END)];
+  Player* current_player_;
 
-public:
+ public:
   CLONE_DISABLE(Level)
   Level() = default;
   ~Level() override;
@@ -30,12 +30,13 @@ public:
   void DeleteAllObjects();
 
   // Getter & Setter
-  Player *current_player() const { return current_player_; }
-  vector<Object *> &layer(const LAYER_TYPE type) {
-    return layer_list_[static_cast<int>(type)];
-  }
-  void set_current_player(Player *player) { current_player_ = player; }
-  void AddObjectToLayer(Object *object, const LAYER_TYPE type) {
+  Player* current_player() const { return current_player_; }
+
+  vector<Object*>& layer(const LAYER_TYPE type) { return layer_list_[static_cast<int>(type)]; }
+
+  void set_current_player(Player* player) { current_player_ = player; }
+
+  void AddObjectToLayer(Object* object, const LAYER_TYPE type) {
     object->set_layer_type(type);
     layer_list_->push_back(std::move(object));
   }

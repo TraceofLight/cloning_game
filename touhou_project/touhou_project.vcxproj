@@ -131,144 +131,144 @@
         </Link>
     </ItemDefinitionGroup>
     <ItemGroup>
-        <ClInclude Include="common\base\base.h" />
-        <ClInclude Include="common\common_utility.h" />
-        <ClInclude Include="common\drawing_handle\drawing_handle.h" />
-        <ClInclude Include="common\resource.h" />
-        <ClInclude Include="common\targetver.h" />
-        <ClInclude Include="common\tools\enum.h" />
-        <ClInclude Include="common\tools\function.h" />
-        <ClInclude Include="common\tools\macro.h" />
-        <ClInclude Include="common\tools\pch.h" />
-        <ClInclude Include="common\tools\struct.h" />
-        <ClInclude Include="include\asset\asset.h" />
-        <ClInclude Include="include\asset\sound\sound.h" />
-        <ClInclude Include="include\asset\texture\texture.h" />
-        <ClInclude Include="include\component\animator\animator.h" />
-        <ClInclude Include="include\component\component.h" />
-        <ClInclude Include="include\core\engine\engine.h" />
-        <ClInclude Include="include\level\editor\editor.h" />
-        <ClInclude Include="include\level\level.h" />
-        <ClInclude Include="include\manager\asset_manager.h" />
-        <ClInclude Include="include\manager\debug_manager.h" />
-        <ClInclude Include="include\manager\key_manager.h" />
-        <ClInclude Include="include\manager\level_manager.h" />
-        <ClInclude Include="include\manager\time_manager.h" />
-        <ClInclude Include="include\manager\ui_manager.h" />
-        <ClInclude Include="include\module\animation\animation.h" />
-        <ClInclude Include="include\module\animation\common\animation_struct.h" />
-        <ClInclude Include="include\object\object.h" />
-        <ClInclude Include="include\object\player\player.h" />
-        <ClInclude Include="include\object\ui\ui.h" />
+        <ClInclude Include="common\base\base.h"/>
+        <ClInclude Include="common\common_utility.h"/>
+        <ClInclude Include="common\drawing_handle\drawing_handle.h"/>
+        <ClInclude Include="common\resource.h"/>
+        <ClInclude Include="common\targetver.h"/>
+        <ClInclude Include="common\tools\enum.h"/>
+        <ClInclude Include="common\tools\function.h"/>
+        <ClInclude Include="common\tools\macro.h"/>
+        <ClInclude Include="common\tools\pch.h"/>
+        <ClInclude Include="common\tools\struct.h"/>
+        <ClInclude Include="include\asset\asset.h"/>
+        <ClInclude Include="include\asset\sound\sound.h"/>
+        <ClInclude Include="include\asset\texture\texture.h"/>
+        <ClInclude Include="include\component\animator\animator.h"/>
+        <ClInclude Include="include\component\component.h"/>
+        <ClInclude Include="include\core\engine\engine.h"/>
+        <ClInclude Include="include\level\editor\editor.h"/>
+        <ClInclude Include="include\level\level.h"/>
+        <ClInclude Include="include\manager\asset_manager.h"/>
+        <ClInclude Include="include\manager\debug_manager.h"/>
+        <ClInclude Include="include\manager\key_manager.h"/>
+        <ClInclude Include="include\manager\level_manager.h"/>
+        <ClInclude Include="include\manager\time_manager.h"/>
+        <ClInclude Include="include\manager\ui_manager.h"/>
+        <ClInclude Include="include\module\animation\animation.h"/>
+        <ClInclude Include="include\module\animation\common\animation_struct.h"/>
+        <ClInclude Include="include\object\object.h"/>
+        <ClInclude Include="include\object\player\player.h"/>
+        <ClInclude Include="include\object\ui\ui.h"/>
     </ItemGroup>
     <ItemGroup>
-        <ClCompile Include="common\base\base.cpp" />
+        <ClCompile Include="common\base\base.cpp"/>
         <ClCompile Include="common\drawing_handle\drawing_handle.cpp">
-          <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
-          <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-          <Optimization>Disabled</Optimization>
-          <SupportJustMyCode>true</SupportJustMyCode>
-          <AssemblerOutput>NoListing</AssemblerOutput>
-          <AssemblerListingLocation>x64\Debug\</AssemblerListingLocation>
-          <UndefineAllPreprocessorDefinitions>false</UndefineAllPreprocessorDefinitions>
-          <BrowseInformation>false</BrowseInformation>
-          <BrowseInformationFile>x64\Debug\</BrowseInformationFile>
-          <CompileAs>Default</CompileAs>
-          <ConformanceMode>true</ConformanceMode>
-          <DiagnosticsFormat>Column</DiagnosticsFormat>
-          <DisableLanguageExtensions>false</DisableLanguageExtensions>
-          <ErrorReporting>Prompt</ErrorReporting>
-          <ExpandAttributedSource>false</ExpandAttributedSource>
-          <ExceptionHandling>Sync</ExceptionHandling>
-          <EnableASAN>false</EnableASAN>
-          <EnableFuzzer>false</EnableFuzzer>
-          <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>
-          <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
-          <FloatingPointModel>Precise</FloatingPointModel>
-          <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
-          <GenerateModuleDependencies>false</GenerateModuleDependencies>
-          <GenerateSourceDependencies>false</GenerateSourceDependencies>
-          <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
-          <InlineFunctionExpansion>Default</InlineFunctionExpansion>
-          <IntrinsicFunctions>false</IntrinsicFunctions>
-          <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
-          <LanguageStandard>Default</LanguageStandard>
-          <LanguageStandard_C>Default</LanguageStandard_C>
-          <MinimalRebuild>false</MinimalRebuild>
-          <ModuleDependenciesFile>x64\Debug\</ModuleDependenciesFile>
-          <ModuleOutputFile>x64\Debug\</ModuleOutputFile>
-          <OmitDefaultLibName>false</OmitDefaultLibName>
-          <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
-          <WholeProgramOptimization>false</WholeProgramOptimization>
-          <ObjectFileName>x64\Debug\</ObjectFileName>
-          <CallingConvention>Cdecl</CallingConvention>
-          <ProgramDataBaseFileName>x64\Debug\vc143.pdb</ProgramDataBaseFileName>
-          <PrecompiledHeader>NotUsing</PrecompiledHeader>
-          <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
-          <PrecompiledHeaderOutputFile>x64\Debug\touhou_project.pch</PrecompiledHeaderOutputFile>
-          <PreprocessToFile>false</PreprocessToFile>
-          <PreprocessKeepComments>false</PreprocessKeepComments>
-          <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
-          <RemoveUnreferencedCodeData>true</RemoveUnreferencedCodeData>
-          <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
-          <ShowIncludes>false</ShowIncludes>
-          <SourceDependenciesFile>x64\Debug\</SourceDependenciesFile>
-          <SuppressStartupBanner>true</SuppressStartupBanner>
-          <BufferSecurityCheck>true</BufferSecurityCheck>
-          <SmallerTypeCheck>false</SmallerTypeCheck>
-          <SpectreMitigation>false</SpectreMitigation>
-          <StructMemberAlignment>Default</StructMemberAlignment>
-          <TrackerLogDirectory>x64\Debug\touhou_project.tlog\</TrackerLogDirectory>
-          <TranslateIncludes>false</TranslateIncludes>
-          <MinimalRebuildFromTracking>true</MinimalRebuildFromTracking>
-          <TreatWarningAsError>false</TreatWarningAsError>
-          <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-          <UseFullPaths>true</UseFullPaths>
-          <WarningLevel>Level3</WarningLevel>
-          <XMLDocumentationFileName>x64\Debug\</XMLDocumentationFileName>
-          <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-          <IntelJCCErratum>false</IntelJCCErratum>
-          <BuildStlModules>false</BuildStlModules>
-          <TreatAngleIncludeAsExternal>false</TreatAngleIncludeAsExternal>
-          <ExternalWarningLevel>InheritWarningLevel</ExternalWarningLevel>
-          <TreatExternalTemplatesAsInternal>true</TreatExternalTemplatesAsInternal>
-          <DisableAnalyzeExternal>false</DisableAnalyzeExternal>
-          <PreprocessorDefinitions>_DEBUG;_WINDOWS;_UNICODE;UNICODE;</PreprocessorDefinitions>
-          <SDLCheck>true</SDLCheck>
-          <AdditionalIncludeDirectories>$(ProjectDir)</AdditionalIncludeDirectories>
-          <LinkCompiled>true</LinkCompiled>
+            <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
+            <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+            <Optimization>Disabled</Optimization>
+            <SupportJustMyCode>true</SupportJustMyCode>
+            <AssemblerOutput>NoListing</AssemblerOutput>
+            <AssemblerListingLocation>x64\Debug\</AssemblerListingLocation>
+            <UndefineAllPreprocessorDefinitions>false</UndefineAllPreprocessorDefinitions>
+            <BrowseInformation>false</BrowseInformation>
+            <BrowseInformationFile>x64\Debug\</BrowseInformationFile>
+            <CompileAs>Default</CompileAs>
+            <ConformanceMode>true</ConformanceMode>
+            <DiagnosticsFormat>Column</DiagnosticsFormat>
+            <DisableLanguageExtensions>false</DisableLanguageExtensions>
+            <ErrorReporting>Prompt</ErrorReporting>
+            <ExpandAttributedSource>false</ExpandAttributedSource>
+            <ExceptionHandling>Sync</ExceptionHandling>
+            <EnableASAN>false</EnableASAN>
+            <EnableFuzzer>false</EnableFuzzer>
+            <EnableFiberSafeOptimizations>false</EnableFiberSafeOptimizations>
+            <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+            <FloatingPointModel>Precise</FloatingPointModel>
+            <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+            <GenerateModuleDependencies>false</GenerateModuleDependencies>
+            <GenerateSourceDependencies>false</GenerateSourceDependencies>
+            <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
+            <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+            <IntrinsicFunctions>false</IntrinsicFunctions>
+            <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
+            <LanguageStandard>Default</LanguageStandard>
+            <LanguageStandard_C>Default</LanguageStandard_C>
+            <MinimalRebuild>false</MinimalRebuild>
+            <ModuleDependenciesFile>x64\Debug\</ModuleDependenciesFile>
+            <ModuleOutputFile>x64\Debug\</ModuleOutputFile>
+            <OmitDefaultLibName>false</OmitDefaultLibName>
+            <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+            <WholeProgramOptimization>false</WholeProgramOptimization>
+            <ObjectFileName>x64\Debug\</ObjectFileName>
+            <CallingConvention>Cdecl</CallingConvention>
+            <ProgramDataBaseFileName>x64\Debug\vc143.pdb</ProgramDataBaseFileName>
+            <PrecompiledHeader>NotUsing</PrecompiledHeader>
+            <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+            <PrecompiledHeaderOutputFile>x64\Debug\touhou_project.pch</PrecompiledHeaderOutputFile>
+            <PreprocessToFile>false</PreprocessToFile>
+            <PreprocessKeepComments>false</PreprocessKeepComments>
+            <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
+            <RemoveUnreferencedCodeData>true</RemoveUnreferencedCodeData>
+            <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+            <ShowIncludes>false</ShowIncludes>
+            <SourceDependenciesFile>x64\Debug\</SourceDependenciesFile>
+            <SuppressStartupBanner>true</SuppressStartupBanner>
+            <BufferSecurityCheck>true</BufferSecurityCheck>
+            <SmallerTypeCheck>false</SmallerTypeCheck>
+            <SpectreMitigation>false</SpectreMitigation>
+            <StructMemberAlignment>Default</StructMemberAlignment>
+            <TrackerLogDirectory>x64\Debug\touhou_project.tlog\</TrackerLogDirectory>
+            <TranslateIncludes>false</TranslateIncludes>
+            <MinimalRebuildFromTracking>true</MinimalRebuildFromTracking>
+            <TreatWarningAsError>false</TreatWarningAsError>
+            <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+            <UseFullPaths>true</UseFullPaths>
+            <WarningLevel>Level3</WarningLevel>
+            <XMLDocumentationFileName>x64\Debug\</XMLDocumentationFileName>
+            <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+            <IntelJCCErratum>false</IntelJCCErratum>
+            <BuildStlModules>false</BuildStlModules>
+            <TreatAngleIncludeAsExternal>false</TreatAngleIncludeAsExternal>
+            <ExternalWarningLevel>InheritWarningLevel</ExternalWarningLevel>
+            <TreatExternalTemplatesAsInternal>true</TreatExternalTemplatesAsInternal>
+            <DisableAnalyzeExternal>false</DisableAnalyzeExternal>
+            <PreprocessorDefinitions>_DEBUG;_WINDOWS;_UNICODE;UNICODE;</PreprocessorDefinitions>
+            <SDLCheck>true</SDLCheck>
+            <AdditionalIncludeDirectories>$(ProjectDir)</AdditionalIncludeDirectories>
+            <LinkCompiled>true</LinkCompiled>
         </ClCompile>
-        <ClCompile Include="main.cpp" />
-        <ClCompile Include="src\asset\sound\sound.cpp" />
-        <ClCompile Include="src\asset\texture\texture.cpp" />
-        <ClCompile Include="src\component\animator\animator.cpp" />
-        <ClCompile Include="src\component\component.cpp" />
-        <ClCompile Include="src\core\engine\engine.cpp" />
-        <ClCompile Include="src\level\editor\editor.cpp" />
-        <ClCompile Include="src\level\level.cpp" />
-        <ClCompile Include="src\manager\asset_manager.cpp" />
-        <ClCompile Include="src\manager\debug_manager.cpp" />
-        <ClCompile Include="src\manager\key_manager.cpp" />
-        <ClCompile Include="src\manager\level_manager.cpp" />
-        <ClCompile Include="src\manager\time_manager.cpp" />
-        <ClCompile Include="src\manager\ui_manager.cpp" />
-        <ClCompile Include="src\module\animation\animation.cpp" />
-        <ClCompile Include="src\object\object.cpp" />
-        <ClCompile Include="src\object\player\player.cpp" />
-        <ClCompile Include="src\object\ui\button\button.cpp" />
-        <ClCompile Include="src\object\ui\ui.cpp" />
+        <ClCompile Include="main.cpp"/>
+        <ClCompile Include="src\asset\sound\sound.cpp"/>
+        <ClCompile Include="src\asset\texture\texture.cpp"/>
+        <ClCompile Include="src\component\animator\animator.cpp"/>
+        <ClCompile Include="src\component\component.cpp"/>
+        <ClCompile Include="src\core\engine\engine.cpp"/>
+        <ClCompile Include="src\level\editor\editor.cpp"/>
+        <ClCompile Include="src\level\level.cpp"/>
+        <ClCompile Include="src\manager\asset_manager.cpp"/>
+        <ClCompile Include="src\manager\debug_manager.cpp"/>
+        <ClCompile Include="src\manager\key_manager.cpp"/>
+        <ClCompile Include="src\manager\level_manager.cpp"/>
+        <ClCompile Include="src\manager\time_manager.cpp"/>
+        <ClCompile Include="src\manager\ui_manager.cpp"/>
+        <ClCompile Include="src\module\animation\animation.cpp"/>
+        <ClCompile Include="src\object\object.cpp"/>
+        <ClCompile Include="src\object\player\player.cpp"/>
+        <ClCompile Include="src\object\ui\button\button.cpp"/>
+        <ClCompile Include="src\object\ui\ui.cpp"/>
     </ItemGroup>
     <ItemGroup>
-        <ResourceCompile Include="common\resource\touhou_project.rc" />
+        <ResourceCompile Include="common\resource\touhou_project.rc"/>
     </ItemGroup>
     <ItemGroup>
-        <Image Include="common\resource\small.ico" />
-        <Image Include="common\resource\touhou_project.ico" />
+        <Image Include="common\resource\small.ico"/>
+        <Image Include="common\resource\touhou_project.ico"/>
     </ItemGroup>
     <ItemGroup>
-      <Content Include="common\assets\sound\player_score.ogg" />
-      <Content Include="common\assets\texture\reimu.png" />
-      <Content Include="include\object\ui\button\button.h" />
+        <Content Include="common\assets\sound\player_score.ogg"/>
+        <Content Include="common\assets\texture\reimu.png"/>
+        <Content Include="include\object\ui\button\button.h"/>
     </ItemGroup>
     <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>
     <ImportGroup Label="ExtensionTargets">

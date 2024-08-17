@@ -15,7 +15,7 @@ Player::Player() : speed_(300) {
   // animator_->Play();
 }
 
-Player::Player(const Player &other) : Object(other), speed_(other.speed()) {
+Player::Player(const Player& other) : Object(other), speed_(other.speed()) {
   animator_ = other.animator_->Clone();
 }
 

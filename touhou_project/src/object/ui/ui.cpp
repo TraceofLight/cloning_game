@@ -11,9 +11,11 @@
 
 UI::UI() = default;
 
-UI::~UI() { ReleaseVector(child_vector_); }
+UI::~UI() {
+  ReleaseVector(child_vector_);
+}
 
-UI::UI(const UI &other) : Object(other) {
+UI::UI(const UI& other) : Object(other) {
   for (const auto iter : other.child_vector())
     add_child(iter->Clone());
 }
@@ -56,6 +58,7 @@ void UI::RenderUI() {
             static_cast<int>(scale.x()) + static_cast<int>(scale.x()),
             static_cast<int>(scale.y()) + static_cast<int>(scale.y()));
 }
+
 void UI::CheckMouseOn() {
   // 마우스가 UI 위에 올라와있는지 확인한다.
   is_mouse_on_previous_ = is_mouse_on_;
@@ -63,11 +66,10 @@ void UI::CheckMouseOn() {
   const Vector2 mouse_position = KeyManager::Get()->mouse_position();
   const Vector2 scale = Object::scale();
 
-  const bool is_in_condition =
-      final_position_.x() <= mouse_position.x() &&
-      mouse_position.x() <= final_position_.x() + scale.x() &&
-      final_position_.y() <= mouse_position.y() &&
-      mouse_position.y() <= final_position_.y() + scale.y();
+  const bool is_in_condition = final_position_.x() <= mouse_position.x() &&
+                               mouse_position.x() <= final_position_.x() + scale.x() &&
+                               final_position_.y() <= mouse_position.y() &&
+                               mouse_position.y() <= final_position_.y() + scale.y();
 
   if (is_in_condition)
     is_mouse_on_ = true;

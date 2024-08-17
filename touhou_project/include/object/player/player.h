@@ -11,17 +11,17 @@
 #include "include/object/object.h"
 
 class Player : public Object {
-private:
+ private:
   // TODO(KHJ): texture의 제어를 animator로 넘겨서 필요 없지 않나?
   // Texture *texture_;
   float speed_;
 
-  Animator *animator_;
+  Animator* animator_;
 
-public:
-  CLONE(Player) // player가 컨트롤할 object는 다수가 될 수 있음
+ public:
+  CLONE(Player)  // player가 컨트롤할 object는 다수가 될 수 있음
   Player();
-  Player(const Player &other);
+  Player(const Player& other);
   ~Player() override;
 
   virtual void Tick() override;
@@ -29,6 +29,7 @@ public:
 
   // Getter & Setter
   float speed() const { return speed_; }
+
   void set_speed(const float speed) { speed_ = speed; }
 };
 

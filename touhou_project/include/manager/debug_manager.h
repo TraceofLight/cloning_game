@@ -10,11 +10,11 @@
 
 class DebugManager {
   SINGLE(DebugManager)
-private:
+ private:
   vector<DebugShapeInfo> debug_display_list_;
   bool debug_mode_on_;
 
-public:
+ public:
   void Tick();
   void AddDebugInfo(const DebugShapeInfo& debug_info);
 };

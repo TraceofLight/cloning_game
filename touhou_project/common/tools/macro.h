@@ -6,30 +6,34 @@
 #ifndef TOUHOU_MACRO_H_
 #define TOUHOU_MACRO_H_
 
-#define SINGLE(ClassName)                                                      \
-public:                                                                        \
-  static ClassName *Get() {                                                    \
-    static ClassName manager_;                                                 \
-    return &manager_;                                                          \
-  }                                                                            \
-                                                                               \
-public:                                                                        \
-  void operator=(const ClassName &other) = delete;                             \
-                                                                               \
-private:                                                                       \
-  ClassName();                                                                 \
-  ~ClassName();                                                                \
-  ClassName(const ClassName &other) = delete;
+#define SINGLE(ClassName)                          \
+ public:                                           \
+  static ClassName* Get() {                        \
+    static ClassName manager_;                     \
+    return &manager_;                              \
+  }                                                \
+                                                   \
+ public:                                           \
+  void operator=(const ClassName& other) = delete; \
+                                                   \
+ private:                                          \
+  ClassName();                                     \
+  ~ClassName();                                    \
+  ClassName(const ClassName& other) = delete;
 
-#define CLONE(ClassName)                                                       \
-  ClassName *Clone() { return new ClassName(*this); }
+#define CLONE(ClassName)         \
+  ClassName* Clone() {           \
+    return new ClassName(*this); \
+  }
 
-#define CLONE_DISABLE(ClassName)                                               \
-  ClassName *Clone() { return nullptr; }                                       \
-  ClassName(const ClassName &_Other) = delete;
+#define CLONE_DISABLE(ClassName) \
+  ClassName* Clone() {           \
+    return nullptr;              \
+  }                              \
+  ClassName(const ClassName& _Other) = delete;
 
 // 컴포넌트 속성 주입
-#define MAKE_COMPONENT_TYPE(ComponentName)                                     \
+#define MAKE_COMPONENT_TYPE(ComponentName) \
   static constexpr COMPONENT_TYPE type_ = COMPONENT_TYPE::ComponentName;
 
 // Key Checker
@@ -43,7 +47,7 @@ private:                                                                       \
 #define KEY_CHECK(key, state) KeyManager::Get()->key_state(key) == state
 
 // GDI Macro
-#define ADD_PEN(BrushColor, R, G, B)                                           \
+#define ADD_PEN(BrushColor, R, G, B) \
   pen_list_[static_cast<int>(BrushColor)] = CreatePen(PS_SOLID, 1, RGB(R, G, B))
 #define ADD_BRUSH(BrushColor, R, G, B)                                         \
   brush_list_[static_cast<int>(BrushColor)] = CreateSolidBrush(RGB(R, G, B))

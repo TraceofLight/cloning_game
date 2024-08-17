@@ -10,9 +10,11 @@
 #include "include/manager/level_manager.h"
 #include "include/manager/time_manager.h"
 
-Engine::Engine()
-    : main_handle_(nullptr), device_context_(nullptr), back_buffer_(nullptr) {}
-Engine::~Engine() { ReleaseDC(main_handle_, device_context_); }
+Engine::Engine() : main_handle_(nullptr), device_context_(nullptr), back_buffer_(nullptr) {}
+
+Engine::~Engine() {
+  ReleaseDC(main_handle_, device_context_);
+}
 
 void Engine::Init(HWND main_handle, UINT width, UINT height) {
   main_handle_ = main_handle;
@@ -23,8 +25,8 @@ void Engine::Init(HWND main_handle, UINT width, UINT height) {
   GDIInit();
 
   // BackBuffer Texture 생성
-  back_buffer_ = AssetManager::Get()->CreateTexture(
-      L"BackBufferTexture", static_cast<int>(width), static_cast<int>(height));
+  back_buffer_ = AssetManager::Get()->CreateTexture(L"BackBufferTexture", static_cast<int>(width),
+                                                    static_cast<int>(height));
 
   // Manager 초기화
   TimeManager::Get()->Init();
@@ -55,11 +57,12 @@ void Engine::ChangeResolution(UINT width, UINT height) {
   AdjustWindowRect(&rt, WS_OVERLAPPEDWINDOW, static_cast<bool>(menu_handle));
 
   // 최종으로 계산된 윈도우 크기값으로 윈도우 크기를 변경
-  SetWindowPos(main_handle_, nullptr, 0, 0, rt.right - rt.left,
-               rt.bottom - rt.top, 0);
+  SetWindowPos(main_handle_, nullptr, 0, 0, rt.right - rt.left, rt.bottom - rt.top, 0);
 }
 
-HDC Engine::GetBackDC() const { return back_buffer_->dc_handle(); }
+HDC Engine::GetBackDC() const {
+  return back_buffer_->dc_handle();
+}
 
 /**
  * @brief 1프레임 단위로 렌더링하기 위한 함수

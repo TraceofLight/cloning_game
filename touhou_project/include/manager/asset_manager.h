@@ -15,18 +15,18 @@ class Sound;
 
 class AssetManager {
   SINGLE(AssetManager)
-private:
+ private:
   map<wstring, unique_ptr<Texture, HandleObjectDeleterWrapper>> texture_hash_;
   map<wstring, unique_ptr<Sound, HandleObjectDeleterWrapper>> sound_hash_;
 
-public:
+ public:
   void Init();
 
-  Texture *LoadTexture(const wstring &key, const wstring &relative_path);
-  Texture *FindTexture(const wstring &key);
-  Texture *CreateTexture(const wstring &key, int width, int height);
-  Sound *LoadSound(const wstring &key, const wstring &relative_path);
-  Sound *FindSound(const wstring &key);
+  Texture* LoadTexture(const wstring& key, const wstring& relative_path);
+  Texture* FindTexture(const wstring& key);
+  Texture* CreateTexture(const wstring& key, int width, int height);
+  Sound* LoadSound(const wstring& key, const wstring& relative_path);
+  Sound* FindSound(const wstring& key);
 };
 
-#endif // TOUHOU_ASSET_MANAGER_H_
+#endif  // TOUHOU_ASSET_MANAGER_H_

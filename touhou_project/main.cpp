@@ -13,14 +13,11 @@ constexpr wchar_t kClassName[255] = L"touhou_project";
 
 // 순환 종속성 방지용 전방 선언
 ATOM WindowClassInfo(HINSTANCE instance_handle);
-LRESULT CALLBACK WndProc(HWND window_handle, UINT message, WPARAM w_param,
-                         LPARAM l_param);
-INT_PTR CALLBACK About(HWND h_dialog, UINT message, WPARAM w_param,
-                       LPARAM l_param);
+LRESULT CALLBACK WndProc(HWND window_handle, UINT message, WPARAM w_param, LPARAM l_param);
+INT_PTR CALLBACK About(HWND h_dialog, UINT message, WPARAM w_param, LPARAM l_param);
 
-int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
-                      _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine,
-                      _In_ int nCmdShow) {
+int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
+                      _In_ LPWSTR lpCmdLine, _In_ int nCmdShow) {
   UNREFERENCED_PARAMETER(hPrevInstance);
   UNREFERENCED_PARAMETER(lpCmdLine);
 
@@ -28,9 +25,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
   // setting된 window class 호출
   WindowClassInfo(kInstanceHandle);
-  const HWND window_handle = CreateWindowW(
-      kClassName, L"Touhou Project Clone", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT,
-      0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+  const HWND window_handle =
+      CreateWindowW(kClassName, L"Touhou Project Clone", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, 0,
+                    CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
 
   // 여기서 null이면 작동하지 않는다
   assert(window_handle != nullptr);
@@ -68,29 +65,27 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
  * @param l_param
  */
 
-LRESULT CALLBACK WndProc(HWND window_handle, UINT message, WPARAM w_param,
-                         LPARAM l_param) {
+LRESULT CALLBACK WndProc(HWND window_handle, UINT message, WPARAM w_param, LPARAM l_param) {
   switch (message) {
-  case WM_COMMAND: {
-    const int wmId = LOWORD(w_param);
-    // 메뉴 선택을 구문 분석합니다:
-    switch (wmId) {
-    case IDM_ABOUT:
-      DialogBox(kInstanceHandle, MAKEINTRESOURCE(IDD_ABOUTBOX), window_handle,
-                About);
-      break;
-    case IDM_EXIT:
-      DestroyWindow(window_handle);
+    case WM_COMMAND: {
+      const int wmId = LOWORD(w_param);
+      // 메뉴 선택을 구문 분석합니다:
+      switch (wmId) {
+        case IDM_ABOUT:
+          DialogBox(kInstanceHandle, MAKEINTRESOURCE(IDD_ABOUTBOX), window_handle, About);
+          break;
+        case IDM_EXIT:
+          DestroyWindow(window_handle);
+          break;
+        default:
+          return DefWindowProc(window_handle, message, w_param, l_param);
+      }
+    } break;
+    case WM_DESTROY:
+      PostQuitMessage(0);
       break;
     default:
       return DefWindowProc(window_handle, message, w_param, l_param);
-    }
-  } break;
-  case WM_DESTROY:
-    PostQuitMessage(0);
-    break;
-  default:
-    return DefWindowProc(window_handle, message, w_param, l_param);
   }
   return 0;
 }
@@ -112,7 +107,7 @@ ATOM WindowClassInfo(HINSTANCE instance_handle) {
   wcex.hIcon = LoadIcon(instance_handle, MAKEINTRESOURCE(IDI_TOUHOUPROJECT));
   wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
   wcex.hbrBackground = GetSysColorBrush(COLOR_WINDOW);
-  wcex.lpszMenuName = nullptr; // MAKEINTRESOURCEW(IDC_WINAPI);
+  wcex.lpszMenuName = nullptr;  // MAKEINTRESOURCEW(IDC_WINAPI);
   wcex.lpszClassName = kClassName;
   wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
@@ -122,14 +117,13 @@ ATOM WindowClassInfo(HINSTANCE instance_handle) {
 /**
  * @brief About 정보 MsgHandler
  */
-INT_PTR CALLBACK About(HWND h_dialog, UINT message, WPARAM w_param,
-                       LPARAM l_param) {
+INT_PTR CALLBACK About(HWND h_dialog, UINT message, WPARAM w_param, LPARAM l_param) {
   UNREFERENCED_PARAMETER(l_param);
   switch (message) {
-  case WM_INITDIALOG:
-    return TRUE;
+    case WM_INITDIALOG:
+      return TRUE;
 
-  case WM_COMMAND:
+    case WM_COMMAND:
     if (LOWORD(w_param) == IDOK || LOWORD(w_param) == IDCANCEL) {
       EndDialog(h_dialog, LOWORD(w_param));
       return TRUE;

@@ -6,15 +6,12 @@
 #include "include/component/animator/animator.h"
 
 Animator::Animator()
-    : Component(COMPONENT_TYPE::ANIMATOR), current_animation_(nullptr),
-      is_repeat_(false) {}
+    : Component(COMPONENT_TYPE::ANIMATOR), current_animation_(nullptr), is_repeat_(false) {}
 
-Animator::Animator(const Animator &other)
-    : Component(other), current_animation_(nullptr),
-      is_repeat_(other.is_repeat_) {
-  for (auto iter = other.animation_map_.begin();
-       iter != other.animation_map_.end(); ++iter) {
-    Animation *clone_animation = iter->second->Clone();
+Animator::Animator(const Animator& other)
+    : Component(other), current_animation_(nullptr), is_repeat_(other.is_repeat_) {
+  for (auto iter = other.animation_map_.begin(); iter != other.animation_map_.end(); ++iter) {
+    Animation* clone_animation = iter->second->Clone();
 
     clone_animation->set_animator(this);
     animation_map_.insert(make_pair(iter->first, clone_animation));
@@ -25,14 +22,16 @@ Animator::Animator(const Animator &other)
   }
 }
 
-Animator::~Animator() { ReleaseMap(animation_map_); }
+Animator::~Animator() {
+  ReleaseMap(animation_map_);
+}
 
 /**
  * @brief 이름에 해당하는 animation을 찾아서 current 지정하는 메서드
  * @param name
  * @param is_repeat
  */
-void Animator::Play(const wstring &name, const bool is_repeat) {
+void Animator::Play(const wstring& name, const bool is_repeat) {
   current_animation_ = FindAnimation(name);
   current_animation_->Reset();
 
@@ -64,7 +63,7 @@ void Animator::Render() const {
  * @param name
  * @return Animation * / nullptr
  */
-Animation *Animator::FindAnimation(const wstring &name) {
+Animation* Animator::FindAnimation(const wstring& name) {
   auto const pair_info = animation_map_.find(name);
   if (pair_info == animation_map_.end())
     return nullptr;
@@ -75,8 +74,8 @@ Animation *Animator::FindAnimation(const wstring &name) {
  * @brief animation의 정보를 통해 animation을 생성하는 메서드
  * @param info 
  */
-void Animator::CreateAnimation(const AnimationDescription &info) {
-  Animation *animation = FindAnimation(info.name_);
+void Animator::CreateAnimation(const AnimationDescription& info) {
+  Animation* animation = FindAnimation(info.name_);
   // 동일 이름의 animation이 존재하고 있으면 만들 수 없다.
   assert(animation == nullptr);
 
@@ -87,7 +86,6 @@ void Animator::CreateAnimation(const AnimationDescription &info) {
 
   animation_map_.insert({info.name_, animation});
 }
-
 
 void Animator::SaveAnimation(const wstring &relative_folder) {
   // TODO(KHJ): path 받아와서 처리하는 기능 필요

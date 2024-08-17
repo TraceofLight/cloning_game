@@ -10,14 +10,20 @@
 #include "include/manager/time_manager.h"
 
 Animation::Animation()
-    : owner_(nullptr), atlas_(nullptr), current_idx_(0), accumulated_time_(0.f),
+    : owner_(nullptr),
+      atlas_(nullptr),
+      current_idx_(0),
+      accumulated_time_(0.f),
       is_finish_(false) {}
 
-Animation::Animation(const Animation &other)
-    : Base(other), owner_(nullptr), frame_vector_(other.frame_vector_),
-      atlas_(other.atlas_), current_idx_(other.current_idx_),
-      accumulated_time_(other.accumulated_time_), is_finish_(other.is_finish_) {
-}
+Animation::Animation(const Animation& other)
+    : Base(other),
+      owner_(nullptr),
+      frame_vector_(other.frame_vector_),
+      atlas_(other.atlas_),
+      current_idx_(other.current_idx_),
+      accumulated_time_(other.accumulated_time_),
+      is_finish_(other.is_finish_) {}
 
 Animation::~Animation() = default;
 
@@ -56,23 +62,18 @@ void Animation::Render() const {
   // Animation을 소유한 오브젝트의 위치
   const Vector2 position = owner_->owner()->position();
 
-  TransparentBlt(
-      device_context,
-      static_cast<int>(
-          position.x() -
-          static_cast<float>(frame_vector_[current_idx_].slice_.x()) / 2.f +
-          frame_vector_[current_idx_].offset_.x()),
-      static_cast<int>(position.y() -
-                       frame_vector_[current_idx_].slice_.y() / 2.f +
-                       frame_vector_[current_idx_].offset_.y()),
-      static_cast<int>(frame_vector_[current_idx_].slice_.x()),
-      static_cast<int>(frame_vector_[current_idx_].slice_.y()),
-      atlas_->dc_handle(),
-      static_cast<int>(frame_vector_[current_idx_].left_top_.x()),
-      static_cast<int>(frame_vector_[current_idx_].left_top_.y()),
-      static_cast<int>(frame_vector_[current_idx_].slice_.x()),
-      static_cast<int>(frame_vector_[current_idx_].slice_.y()),
-      RGB(255, 0, 255));
+  TransparentBlt(device_context,
+                 static_cast<int>(position.x() -
+                                  static_cast<float>(frame_vector_[current_idx_].slice_.x()) / 2.f +
+                                  frame_vector_[current_idx_].offset_.x()),
+                 static_cast<int>(position.y() - frame_vector_[current_idx_].slice_.y() / 2.f +
+                                  frame_vector_[current_idx_].offset_.y()),
+                 static_cast<int>(frame_vector_[current_idx_].slice_.x()),
+                 static_cast<int>(frame_vector_[current_idx_].slice_.y()), atlas_->dc_handle(),
+                 static_cast<int>(frame_vector_[current_idx_].left_top_.x()),
+                 static_cast<int>(frame_vector_[current_idx_].left_top_.y()),
+                 static_cast<int>(frame_vector_[current_idx_].slice_.x()),
+                 static_cast<int>(frame_vector_[current_idx_].slice_.y()), RGB(255, 0, 255));
 }
 
 /**
@@ -80,12 +81,12 @@ void Animation::Render() const {
  * @param folder_path
  * TODO(KHJ): IO Manager를 따로 만들어서 로드만 시키는 것도 괜찮을 듯?
  */
-void Animation::Save(const wstring &folder_path) const {
+void Animation::Save(const wstring& folder_path) const {
   // TODO(KHJ): name 받아올 수 있도록 할 것
   const wstring animation_name = L"foo";
   const wstring file_path = folder_path + animation_name + L".animation";
 
-  FILE *file = nullptr;
+  FILE* file = nullptr;
   _wfopen_s(&file, file_path.c_str(), L"w");
 
   // 애니메이션 이름 기재
@@ -107,13 +108,11 @@ void Animation::Save(const wstring &folder_path) const {
 
   // 각 프레임별 데이터 기재
   (void)fwprintf_s(file, L"[FRAME_DATA]\n");
-  (void)fwprintf_s(file, L"Frame_Count %d\n\n",
-                   static_cast<int>(frame_vector_.size()));
+  (void)fwprintf_s(file, L"Frame_Count %d\n\n", static_cast<int>(frame_vector_.size()));
 
   for (int i = 0; i < static_cast<int>(frame_vector_.size()); ++i) {
     (void)fwprintf_s(file, L"Frame_Index %d\n", i);
-    (void)fwprintf_s(file, L"Left_Top    %f %f\n",
-                     frame_vector_[i].left_top_.x(),
+    (void)fwprintf_s(file, L"Left_Top    %f %f\n", frame_vector_[i].left_top_.x(),
                      frame_vector_[i].left_top_.y());
     (void)fwprintf_s(file, L"Offset      %f %f\n", frame_vector_[i].offset_.x(),
                      frame_vector_[i].offset_.y());
@@ -129,8 +128,8 @@ void Animation::Save(const wstring &folder_path) const {
  * @brief 파일로부터 애니메이션 정보를 불러오는 메서드
  * @param file_path
  */
-void Animation::Load(const wstring &file_path) {
-  FILE *file = nullptr;
+void Animation::Load(const wstring& file_path) {
+  FILE* file = nullptr;
   _wfopen_s(&file, file_path.c_str(), L"r");
 
   wchar_t file_read_buf[255] = {};
@@ -165,14 +164,11 @@ void Animation::Load(const wstring &file_path) {
         }
 
         if (!wcscmp(L"Left_Top", frame_buffer)) {
-          (void)fwscanf_s(file, L"%f %f", &frame.left_top_.float_x(),
-                          &frame.left_top_.float_y());
+          (void)fwscanf_s(file, L"%f %f", &frame.left_top_.float_x(), &frame.left_top_.float_y());
         } else if (!wcscmp(L"Offset", frame_buffer)) {
-          (void)fwscanf_s(file, L"%f %f", &frame.offset_.float_x(),
-                          &frame.offset_.float_y());
+          (void)fwscanf_s(file, L"%f %f", &frame.offset_.float_x(), &frame.offset_.float_y());
         } else if (!wcscmp(L"Slice", frame_buffer)) {
-          (void)fwscanf_s(file, L"%f %f", &frame.slice_.float_x(),
-                          &frame.slice_.float_y());
+          (void)fwscanf_s(file, L"%f %f", &frame.slice_.float_x(), &frame.slice_.float_y());
         } else if (!wcscmp(L"Duration", frame_buffer)) {
           (void)fwscanf_s(file, L"%f", &frame.duration_);
           frame_vector_.push_back(frame);
@@ -188,7 +184,7 @@ void Animation::Load(const wstring &file_path) {
  * @brief Animation의 정보를 가지고 Animation 구조체를 세팅하는 메서드
  * @param info
  */
-void Animation::Create(const AnimationDescription &info) {
+void Animation::Create(const AnimationDescription& info) {
   set_name(info.name_);
   atlas_ = info.atlas_;
 

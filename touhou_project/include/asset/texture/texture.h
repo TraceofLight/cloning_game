@@ -10,12 +10,12 @@
 #include "include/manager/asset_manager.h"
 
 class Texture : public Asset {
-private:
+ private:
   HDC device_context_handle_;
   HBITMAP bitmap_handle_;
   BITMAP bitmap_info_;
 
-public:
+ public:
   friend class AssetManager;
 
   // Constructor & Destructor
@@ -24,12 +24,14 @@ public:
 
   // Getter & Setter
   HDC dc_handle() const { return device_context_handle_; }
+
   UINT width() const { return bitmap_info_.bmWidth; }
+
   UINT height() const { return bitmap_info_.bmHeight; }
 
-private:
+ private:
   int Create(int width, int height);
-  int Load(const wstring &file_path) override;
+  int Load(const wstring&file_path) override;
 };
 
 #endif // TOUHOU_TEXTURE_H_

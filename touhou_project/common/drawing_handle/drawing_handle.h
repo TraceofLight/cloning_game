@@ -9,14 +9,14 @@
 #include "common/common_utility.h"
 
 class DrawingHandle {
-private:
+ private:
   HDC dc_handle_;
   HGDIOBJ previous_gdi_handle_;
 
-public:
+ public:
   DrawingHandle(HDC dc_handle, PEN_TYPE pen_type);
   DrawingHandle(HDC dc_handle, BRUSH_TYPE brush_type);
   ~DrawingHandle();
 };
 
-#endif // TOUHOU_CORE_DRAWING_HANDLE_H_
+#endif  // TOUHOU_CORE_DRAWING_HANDLE_H_

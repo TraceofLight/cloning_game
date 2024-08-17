@@ -12,7 +12,7 @@ class Texture;
 
 struct AnimationDescription {
   wstring name_;
-  Texture *atlas_;
+  Texture* atlas_;
   Vector2 start_left_top_;
   Vector2 slice_size_;
   int frame_count_;
@@ -26,4 +26,4 @@ struct AnimationFrame {
   float duration_;
 };
 
-#endif // TOUHOU_MODULE_COMMON_ANIMATION_STRUCT_H_
+#endif  // TOUHOU_MODULE_COMMON_ANIMATION_STRUCT_H_

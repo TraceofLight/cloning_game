@@ -20,17 +20,15 @@ void UIManager::Tick() {
 
   // current status check
   KEY_STATE left_button_state = KeyManager::Get()->key_state(KEY::LBTN);
-  Level *current_level = LevelManager::Get()->current_level();
+  Level* current_level = LevelManager::Get()->current_level();
 
-  vector<UI *> &ui_vector =
-      reinterpret_cast<vector<UI *> &>(current_level->layer(LAYER_TYPE::UI));
+  vector<UI*>& ui_vector = reinterpret_cast<vector<UI*>&>(current_level->layer(LAYER_TYPE::UI));
 
   // case1 - 타깃 없음: 부모 UI로부터 재탐색
   // case2 - TAP: 단순 TAP만으로 판단 불가능한 동작이 있으므로 다음 Tick Action Check
   // case3 - RELEASED: 동작 확정 지은 뒤 타깃 UI 재탐색
-  for (auto parent_ui = ui_vector.rbegin(); parent_ui != ui_vector.rend();
-       ++parent_ui) {
-    UI *priority_ui = GetPriorityUI(*parent_ui);
+  for (auto parent_ui = ui_vector.rbegin(); parent_ui != ui_vector.rend(); ++parent_ui) {
+    UI* priority_ui = GetPriorityUI(*parent_ui);
 
     if (priority_ui == nullptr) {
       StatusCheck(*parent_ui);
@@ -64,14 +62,14 @@ void UIManager::Tick() {
  * @param parent_ui 체크 대상들이 포함된 UI 중 가장 큰 범위의 UI
  * @return 현재 마우스가 올라와 있는 UI의 포인터를 반환
  */
-UI *UIManager::GetPriorityUI(UI *parent_ui) {
-  UI *result_ui = nullptr;
+UI* UIManager::GetPriorityUI(UI* parent_ui) {
+  UI* result_ui = nullptr;
 
   // start from this ui
   process_queue_.push_back(parent_ui);
 
   while (!process_queue_.empty()) {
-    UI *check_ui = process_queue_.front();
+    UI* check_ui = process_queue_.front();
     process_queue_.pop_front();
 
     if (check_ui->is_mouse_on())
@@ -97,7 +95,7 @@ UI *UIManager::GetPriorityUI(UI *parent_ui) {
  *
  * @param parent_ui 변경 진행할 ui 중 가장 parent인 ui, 이하는 BFS 탐색
  */
-void UIManager::StatusCheck(UI *parent_ui) {
+void UIManager::StatusCheck(UI* parent_ui) {
   KEY_STATE left_button_state = KeyManager::Get()->key_state(KEY::LBTN);
 
   // BFS

@@ -14,7 +14,7 @@ Object::Object() = default;
  * @param other
  * component 포인터들도 복사하여 복사된 객체에 넣어준다
  */
-Object::Object(const Object &other)
+Object::Object(const Object& other)
     : Base(other), position_(other.position()), scale_(other.scale()) {
   for (int i = 0; i < static_cast<int>(component_vector_.size()); ++i) {
     component_vector_.emplace_back(other.component_vector_[i]->Clone());
@@ -25,13 +25,15 @@ Object::Object(const Object &other)
  * @brief ObjectBase 소멸자
  * component vector가 가리키는 값들 자원도 해제
  */
-Object::~Object() { ReleaseVector(component_vector_); }
+Object::~Object() {
+  ReleaseVector(component_vector_);
+}
 
 /**
  * @brief ObjectBase가 가진 모든 Component도 동작하도록 하는 메서드
  */
 void Object::FinalTick() {
-  for (Component *component_element : component_vector_) {
+  for (Component* component_element : component_vector_) {
     component_element->FinalTick();
   }
 }
