@@ -87,4 +87,12 @@ enum class DEBUG_SHAPE {
   LINE,
 };
 
+enum class LOG_LEVEL
+{
+  LOG,
+  WARNING,
+  BUG,
+  STATUS,
+};
+
 #endif // TOUHOU_ENUM_H_

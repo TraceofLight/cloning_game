@@ -191,7 +191,7 @@ void Animation::Create(const AnimationDescription& info) {
   for (int i = 0; i < info.frame_count_; ++i) {
     AnimationFrame frame = {};
     frame.left_top_.set_x(static_cast<float>(info.start_left_top_.x() +
-                                             info.slice_size_.x() * i));
+      info.slice_size_.x() * i));
     frame.left_top_.set_y(static_cast<float>(info.start_left_top_.y()));
     frame.slice_ = info.slice_size_;
     frame.duration_ = 1.f / static_cast<float>(info.fps_);

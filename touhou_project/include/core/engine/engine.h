@@ -22,7 +22,7 @@ class Engine {
 
  public:
   void Init(HWND main_handle, UINT width, UINT height);
-  void Progress();
+  void Progress() const;
   void ChangeResolution(UINT width, UINT height);
   HDC GetBackDC() const;
 

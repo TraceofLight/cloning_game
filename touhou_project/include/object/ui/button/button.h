@@ -6,7 +6,6 @@
 #ifndef TOUHOU_OBJECT_UI_BUTTON_H_
 #define TOUHOU_OBJECT_UI_BUTTON_H_
 
-#include "include/asset/texture/texture.h"
 #include "include/object/ui/ui.h"
 
 class Button : public UI {
@@ -15,7 +14,7 @@ class Button : public UI {
   void (*call_back_ptr_)(void);
   void (Base::*base_function_ptr_)(void);
   // TODO(KHJ): 필요성 잘 모르겠음 추후 필요하면 활성화
-  // void (Base::*function_ptr_type1_)(DWORD_PTR
+  // void (Base::*function_ptr_type1_)(DWORD_PTR);
   // void (Base::*function_ptr_type2_)(DWORD_PTR, DWORD_PTR);
 
   // TODO(KHJ): 버튼 외관 추가 시 활성화
@@ -27,13 +26,13 @@ class Button : public UI {
   CLONE(Button)
   Button() = default;
 
-  void TickUI() override {}
+  void TickSelf() override {}
 
-  void RenderUI() override;
+  void RenderSelf() override;
 
-  void LeftButtonDown() override {}
+  void LeftButtonDownAction() override {}
 
-  void LeftButtonClicked() override;
+  void LeftButtonClickedAction() override;
 
   // Setter
   void set_call_back(void (*call_back_ptr)(void)) { call_back_ptr_ = call_back_ptr; }

@@ -12,11 +12,15 @@ class DebugManager {
   SINGLE(DebugManager)
  private:
   vector<DebugShapeInfo> debug_display_list_;
+  list<LogInfo> log_list_;
   bool debug_mode_on_;
 
  public:
-  void Tick();
+  void Render();
+
   void AddDebugInfo(const DebugShapeInfo& debug_info);
+
+  void AddLog(const LogInfo& log);
 };
 
 #endif // TOUHOU_DEBUG_MANAGER_H_

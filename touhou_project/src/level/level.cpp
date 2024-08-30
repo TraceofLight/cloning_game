@@ -6,26 +6,26 @@
 #include "include/level/level.h"
 
 Level::~Level() {
-  for (vector<Object*>& single_layer : layer_list_)
+  for (vector<Object*>& single_layer : layer_vector_)
     ReleaseVector(single_layer);
 }
 
 void Level::Tick() {
-  for (vector<Object*>& single_layer : layer_list_) {
+  for (vector<Object*>& single_layer : layer_vector_) {
     for (Object* layer_object : single_layer)
       layer_object->Tick();
   }
 }
 
 void Level::FinalTick() {
-  for (vector<Object*>& single_layer : layer_list_) {
+  for (vector<Object*>& single_layer : layer_vector_) {
     for (Object* layer_object : single_layer)
       layer_object->FinalTick();
   }
 }
 
 void Level::Render() {
-  for (vector<Object*>& single_layer : layer_list_) {
+  for (vector<Object*>& single_layer : layer_vector_) {
     for (Object* layer_object : single_layer)
       layer_object->Render();
   }

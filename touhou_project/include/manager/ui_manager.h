@@ -13,7 +13,9 @@ class UIManager {
   SINGLE(UIManager)
  private:
   int prevent_frame_;
-  list<UI*> process_queue_;
+  list<UI*> process_list_;
+  bool is_left_button_down_;
+  bool is_left_button_clicked_;
 
  public:
   void Tick();
@@ -22,7 +24,8 @@ class UIManager {
 
  private:
   UI* GetPriorityUI(UI* parent_ui);
-  void StatusCheck(UI* parent_ui);
+  void ResetUI(UI* parent_ui);
+  void SetMouseState();
 };
 
 #endif // TOUHOU_UI_MANAGER_H_

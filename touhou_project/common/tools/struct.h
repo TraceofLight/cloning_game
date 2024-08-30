@@ -8,6 +8,7 @@
 
 #include <cassert>
 #include <valarray>
+#include "enum.h"
 #include "function.h"
 #include "windef.h"
 
@@ -109,8 +110,14 @@ struct DebugShapeInfo {
   Vector2 scale;
   PEN_TYPE pen;
   BRUSH_TYPE brush;
-  float duration;	// DebugShape 유지 시간
+  float duration;  // DebugShape 유지 시간
   float time; // 현재 진행 시간
+};
+
+struct LogInfo {
+  wstring log_text; // 출력할 메세지
+  LOG_LEVEL log_level; // 로그 수준
+  float time; // 현재 시간
 };
 
 #endif // TOUHOU_STRUCT_H_

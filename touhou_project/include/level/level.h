@@ -12,7 +12,7 @@
 
 class Level : public Base {
  private:
-  vector<Object*> layer_list_[static_cast<int>(LAYER_TYPE::END)];
+  vector<Object*> layer_vector_[static_cast<int>(LAYER_TYPE::END)];
   Player* current_player_;
 
  public:
@@ -32,13 +32,13 @@ class Level : public Base {
   // Getter & Setter
   Player* current_player() const { return current_player_; }
 
-  vector<Object*>& layer(const LAYER_TYPE type) { return layer_list_[static_cast<int>(type)]; }
+  vector<Object*>& layer(const LAYER_TYPE type) { return layer_vector_[static_cast<int>(type)]; }
 
   void set_current_player(Player* player) { current_player_ = player; }
 
   void AddObjectToLayer(Object* object, const LAYER_TYPE type) {
     object->set_layer_type(type);
-    layer_list_->push_back(std::move(object));
+    layer_vector_[static_cast<int>(type)].push_back(object);
   }
 };
 

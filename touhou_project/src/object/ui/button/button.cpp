@@ -8,7 +8,7 @@
 #include "common/drawing_handle/drawing_handle.h"
 #include "include/core/engine/engine.h"
 
-void Button::RenderUI() {
+void Button::RenderSelf() {
   PEN_TYPE pen_type = PEN_TYPE::GREEN;
   BRUSH_TYPE brush_type = BRUSH_TYPE::BLUE;
 
@@ -30,7 +30,7 @@ void Button::RenderUI() {
             static_cast<int>(final_position.y()) + static_cast<int>(scale.y()));
 }
 
-void Button::LeftButtonClicked() {
+void Button::LeftButtonClickedAction() {
   if (call_back_ptr_)
     call_back_ptr_();
 

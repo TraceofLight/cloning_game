@@ -6,19 +6,6 @@
 #ifndef TOUHOU_PCH_H_
 #define TOUHOU_PCH_H_
 
-// png 로딩
-#include <gdiplus.h>
-#include <objidl.h>
-#pragma comment(lib, "GdiPlus.lib")
-using namespace Gdiplus;
-
-// 사운드
-#include <dinput.h>
-#include <dsound.h>
-#include <mmsystem.h>
-#pragma comment(lib, "winmm.lib")
-#pragma comment(lib, "dsound.lib")
-
 // Window API from framework.h
 #include <malloc.h>
 #include <memory.h>
@@ -33,8 +20,22 @@ using namespace Gdiplus;
 #include <memory>
 #include <string>
 #include <vector>
+#include <deque>
 
 using namespace std;
+
+// png 로딩
+#include <gdiplus.h>
+#include <objidl.h>
+#pragma comment(lib, "GdiPlus.lib")
+using namespace Gdiplus;
+
+// 사운드
+#include <dinput.h>
+#include <dsound.h>
+#include <mmsystem.h>
+#pragma comment(lib, "winmm.lib")
+#pragma comment(lib, "dsound.lib")
 
 // transparent bit lock transfer
 #pragma comment(lib, "Msimg32.lib")

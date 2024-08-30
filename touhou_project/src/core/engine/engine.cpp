@@ -6,9 +6,11 @@
 #include "include/core/engine/engine.h"
 
 #include "common/drawing_handle/drawing_handle.h"
+#include "include/manager/debug_manager.h"
 #include "include/manager/key_manager.h"
 #include "include/manager/level_manager.h"
 #include "include/manager/time_manager.h"
+#include "include/manager/ui_manager.h"
 
 Engine::Engine() : main_handle_(nullptr), device_context_(nullptr), back_buffer_(nullptr) {}
 
@@ -34,10 +36,11 @@ void Engine::Init(HWND main_handle, UINT width, UINT height) {
   LevelManager::Get()->Init();
 }
 
-void Engine::Progress() {
+void Engine::Progress() const {
   // Manager Tick
   TimeManager::Get()->Tick();
   KeyManager::Get()->Tick();
+  UIManager::Get()->Tick();
   LevelManager::Get()->Tick();
 
   // Render
@@ -73,7 +76,9 @@ void Engine::Render() const {
   Rectangle(GetBackDC(), -1, -1, static_cast<int>(resolution_.x()) + 1,
             static_cast<int>(resolution_.y()) + 1);
 
+  // Rendering Here
   LevelManager::Get()->Render();
+  DebugManager::Get()->Render();
 
   BitBlt(device_context_, 0, 0, static_cast<int>(resolution_.x()),
          static_cast<int>(resolution_.y()), GetBackDC(), 0, 0, SRCCOPY);
@@ -99,6 +104,6 @@ void Engine::GDIInit() {
   ADD_BRUSH(BRUSH_TYPE::TURQUOISE, 57, 215, 237);
 
   // 투명 브러쉬
-  brush_list_[static_cast<int>(BRUSH_TYPE::HOLLOW)] =
-      static_cast<HBRUSH>(GetStockObject(HOLLOW_BRUSH));
+  brush_list_[static_cast<int>(BRUSH_TYPE::HOLLOW)]
+      = static_cast<HBRUSH>(GetStockObject(HOLLOW_BRUSH));
 }

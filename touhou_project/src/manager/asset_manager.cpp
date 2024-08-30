@@ -40,7 +40,7 @@ Texture* AssetManager::LoadTexture(const wstring& key, const wstring& relative_p
   // 여기서 hash_로 unique_ptr의 소유권이 넘어간다.
   unique_texture_ptr->set_key(key);
   unique_texture_ptr->set_relative_path(relative_path);
-  texture_hash_.emplace(key, move(unique_texture_ptr));
+  texture_hash_.emplace(key, std::move(unique_texture_ptr));
 
   // 새로 Find를 진행해서 받아온 원시 포인터를 반환
   texture_ptr = FindTexture(key);
@@ -106,7 +106,7 @@ Sound* AssetManager::LoadSound(const wstring& key, const wstring& relative_path)
   // 여기서 hash_로 unique_ptr의 소유권이 넘어간다.
   unique_sound_ptr->set_key(key);
   unique_sound_ptr->set_relative_path(relative_path);
-  sound_hash_.emplace(key, move(unique_sound_ptr));
+  sound_hash_.emplace(key, std::move(unique_sound_ptr));
 
   // 새로 Find를 진행해서 받아온 원시 포인터를 반환
   sound_ptr = FindSound(key);
