@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @file ui_manager.cpp
  * @brief
  */

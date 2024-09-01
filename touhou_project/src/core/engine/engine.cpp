@@ -9,6 +9,7 @@
 #include "include/manager/debug_manager.h"
 #include "include/manager/key_manager.h"
 #include "include/manager/level_manager.h"
+#include "include/manager/path_manager.h"
 #include "include/manager/time_manager.h"
 #include "include/manager/ui_manager.h"
 
@@ -31,6 +32,7 @@ void Engine::Init(HWND main_handle, UINT width, UINT height) {
                                                     static_cast<int>(height));
 
   // Manager 초기화
+  PathManager::Get()->Init();
   TimeManager::Get()->Init();
   KeyManager::Get()->Init();
   LevelManager::Get()->Init();
