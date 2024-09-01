@@ -4,6 +4,7 @@
  */
 
 #include "include/component/animator/animator.h"
+#include "include/manager/path_manager.h"
 
 Animator::Animator()
     : Component(COMPONENT_TYPE::ANIMATOR), current_animation_(nullptr), is_repeat_(false) {}
@@ -87,10 +88,30 @@ void Animator::CreateAnimation(const AnimationDescription& info) {
   animation_map_.insert({info.name_, animation});
 }
 
-void Animator::SaveAnimation(const wstring &relative_folder) {
-  // TODO(KHJ): path 받아와서 처리하는 기능 필요
+/**
+ * 해당 경로에 animation을 저장하는 함수
+ * @param relative_path 프로젝트 path 기준 상대 경로
+ */
+void Animator::SaveAnimation(const wstring &relative_path) {
+  filesystem::path file_path = PathManager::Get()->content_path();
+  file_path += relative_path;
+
+  for (auto iter = animation_map_.begin(); iter != animation_map_.end(); ++iter)
+    iter->second->Save(file_path);
 }
 
+/**
+ * 해당 경로에 위치한 animation을 불러오는 함수
+ * @param relative_path 프로젝트 path 기준 상대 경로
+ */
 void Animator::LoadAnimation(const wstring &relative_path) {
-  // TODO(KHJ): path 받아와서 처리하는 기능 필요
+  filesystem::path file_path = PathManager::Get()->content_path();
+  file_path += relative_path;
+
+  Animation *new_animation = new Animation;
+  new_animation->Load(file_path);
+  assert(!FindAnimation(new_animation->name()));
+
+  new_animation->owner_ = this;
+  animation_map_.insert({new_animation->name(), new_animation});
 }

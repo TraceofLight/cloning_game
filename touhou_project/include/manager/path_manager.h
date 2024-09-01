@@ -7,7 +7,6 @@
 #define TOUHOU_PATH_MANAGER_H_
 
 #include "common/common_utility.h"
-#include <filesystem>
 
 class PathManager {
   SINGLE(PathManager)

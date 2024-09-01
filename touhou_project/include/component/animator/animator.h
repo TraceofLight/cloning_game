@@ -29,7 +29,7 @@ class Animator : public Component {
   Animation* FindAnimation(const wstring& name);
 
   void CreateAnimation(const AnimationDescription& info);
-  void SaveAnimation(const wstring& relative_folder);
+  void SaveAnimation(const wstring& relative_path);
   void LoadAnimation(const wstring& relative_path);
 };
 

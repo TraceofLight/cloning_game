@@ -79,6 +79,7 @@ void Animation::Render() const {
 /**
  * @brief 파일에 애니메이션 정보를 기록하는 메서드
  * @param folder_path
+ * TODO(KHJ): File IO 과정 전반 개선할 것
  * TODO(KHJ): IO Manager를 따로 만들어서 로드만 시키는 것도 괜찮을 듯?
  */
 void Animation::Save(const wstring& folder_path) const {
@@ -127,6 +128,7 @@ void Animation::Save(const wstring& folder_path) const {
 /**
  * @brief 파일로부터 애니메이션 정보를 불러오는 메서드
  * @param file_path
+ * TODO(KHJ): File IO 과정 전반 개선할 것
  */
 void Animation::Load(const wstring& file_path) {
   FILE* file = nullptr;

@@ -30,7 +30,6 @@
 #include <memory.h>
 #include <stdlib.h>
 #include <tchar.h>
-// #include <windows.h>
 
 // standard library
 #include <cassert>
@@ -41,11 +40,11 @@
 #include <string>
 #include <vector>
 #include <deque>
+#include <filesystem>
 
 using namespace std;
 
 // png 로딩
-// #include <gdiplus.h>
 #include <objidl.h>
 #pragma comment(lib, "GdiPlus.lib")
 using namespace Gdiplus;
