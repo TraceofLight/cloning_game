@@ -28,7 +28,7 @@ void Engine::Init(HWND main_handle, UINT width, UINT height) {
   GDIInit();
 
   // BackBuffer Texture 생성
-  back_buffer_ = AssetManager::Get()->CreateTexture(L"BackBufferTexture", static_cast<int>(width),
+  back_buffer_ = AssetManager::Get()->CreateTexture("BackBufferTexture", static_cast<int>(width),
                                                     static_cast<int>(height));
 
   // Manager 초기화

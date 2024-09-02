@@ -15,7 +15,7 @@ class Base {
 
   // 각 인스턴스가 발급 받는 값
   const UINT id_;
-  wstring name_;
+  string name_;
 
  public:
   Base();
@@ -24,9 +24,9 @@ class Base {
   virtual Base* Clone() = 0;
 
   // Getter & Setter
-  const wstring& name() { return name_; }
+  const string& name() { return name_; }
 
-  void set_name(const wstring& name) { name_ = name; }
+  void set_name(const string& name) { name_ = name; }
   UINT id() const { return id_; }
 };
 

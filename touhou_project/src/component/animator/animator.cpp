@@ -32,7 +32,7 @@ Animator::~Animator() {
  * @param name
  * @param is_repeat
  */
-void Animator::Play(const wstring& name, const bool is_repeat) {
+void Animator::Play(const string& name, const bool is_repeat) {
   current_animation_ = FindAnimation(name);
   current_animation_->Reset();
 
@@ -64,7 +64,7 @@ void Animator::Render() const {
  * @param name
  * @return Animation * / nullptr
  */
-Animation* Animator::FindAnimation(const wstring& name) {
+Animation* Animator::FindAnimation(const string& name) {
   auto const pair_info = animation_map_.find(name);
   if (pair_info == animation_map_.end())
     return nullptr;
@@ -92,24 +92,24 @@ void Animator::CreateAnimation(const AnimationDescription& info) {
  * 해당 경로에 animation을 저장하는 함수
  * @param relative_path 프로젝트 path 기준 상대 경로
  */
-void Animator::SaveAnimation(const wstring &relative_path) {
+void Animator::SaveAnimation(const string &relative_path) {
   filesystem::path file_path = PathManager::Get()->content_path();
   file_path += relative_path;
 
   for (auto iter = animation_map_.begin(); iter != animation_map_.end(); ++iter)
-    iter->second->Save(file_path);
+    iter->second->Save(file_path.string());
 }
 
 /**
  * 해당 경로에 위치한 animation을 불러오는 함수
  * @param relative_path 프로젝트 path 기준 상대 경로
  */
-void Animator::LoadAnimation(const wstring &relative_path) {
+void Animator::LoadAnimation(const string&relative_path) {
   filesystem::path file_path = PathManager::Get()->content_path();
   file_path += relative_path;
 
   Animation *new_animation = new Animation;
-  new_animation->Load(file_path);
+  new_animation->Load(file_path.string());
   assert(!FindAnimation(new_animation->name()));
 
   new_animation->owner_ = this;

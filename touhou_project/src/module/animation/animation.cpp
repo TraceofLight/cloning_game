@@ -5,6 +5,9 @@
 
 #include "include/module/animation/animation.h"
 
+#include <fstream>
+#include <sstream>
+
 #include "include/component/animator/animator.h"
 #include "include/core/engine/engine.h"
 #include "include/manager/time_manager.h"
@@ -82,47 +85,50 @@ void Animation::Render() const {
  * TODO(KHJ): File IO 과정 전반 개선할 것
  * TODO(KHJ): IO Manager를 따로 만들어서 로드만 시키는 것도 괜찮을 듯?
  */
-void Animation::Save(const wstring& folder_path) const {
+void Animation::Save(const string& folder_path) const {
   // TODO(KHJ): name 받아올 수 있도록 할 것
-  const wstring animation_name = L"foo";
-  const wstring file_path = folder_path + animation_name + L".animation";
+  const string animation_name = "foo";
+  filesystem::path file_path = filesystem::path(folder_path) / (animation_name + ".animation");
 
-  FILE* file = nullptr;
-  _wfopen_s(&file, file_path.c_str(), L"w");
+  std::ofstream file(file_path, std::ios::out | std::ios::binary);
+  if (!file) {
+    throw std::runtime_error("Failed to open file for writing: " + file_path.string());
+  }
+
+  // UTF-8 BOM 추가
+  file.write("\xEF\xBB\xBF", 3);
 
   // 애니메이션 이름 기재
-  (void)fwprintf_s(file, L"[ANIMATION_NAME]\n");
-  (void)fwprintf_s(file, animation_name.c_str());
-  (void)fwprintf_s(file, L"\n\n");
+  file << "[ANIMATION_NAME]\n";
+  file << animation_name << "\n\n";
 
   // 참조하던 아틀라스 텍스쳐 정보 기재
-  (void)fwprintf_s(file, L"[ATLAS_TEXTURE]\n");
-
+  file << "[ATLAS_TEXTURE]\n";
   if (atlas_) {
-    (void)fwprintf_s(file, L"%s\n", atlas_->key().c_str());
-    (void)fwprintf_s(file, L"%s\n", atlas_->relative_path().c_str());
+    file << atlas_->key() << "\n";
+    file << atlas_->relative_path() << "\n";
   } else {
-    (void)fwprintf_s(file, L"None\n");
-    (void)fwprintf_s(file, L"None\n");
+    file << "None\n";
+    file << "None\n";
   }
-  (void)fwprintf_s(file, L"\n");
+  file << "\n";
 
   // 각 프레임별 데이터 기재
-  (void)fwprintf_s(file, L"[FRAME_DATA]\n");
-  (void)fwprintf_s(file, L"Frame_Count %d\n\n", static_cast<int>(frame_vector_.size()));
+  file << "[FRAME_DATA]\n";
+  file << "Frame_Count " << frame_vector_.size() << "\n\n";
 
-  for (int i = 0; i < static_cast<int>(frame_vector_.size()); ++i) {
-    (void)fwprintf_s(file, L"Frame_Index %d\n", i);
-    (void)fwprintf_s(file, L"Left_Top    %f %f\n", frame_vector_[i].left_top_.x(),
-                     frame_vector_[i].left_top_.y());
-    (void)fwprintf_s(file, L"Offset      %f %f\n", frame_vector_[i].offset_.x(),
-                     frame_vector_[i].offset_.y());
-    (void)fwprintf_s(file, L"Slice       %f %f\n", frame_vector_[i].slice_.x(),
-                     frame_vector_[i].slice_.y());
-    (void)fwprintf_s(file, L"Duration    %f\n\n", frame_vector_[i].duration_);
+  for (size_t i = 0; i < frame_vector_.size(); ++i) {
+    file << "Frame_Index " << i << "\n";
+    file << std::fixed << std::setprecision(6);  // 부동 소수점 정밀도 설정
+    file << "Left_Top    " << frame_vector_[i].left_top_.x() << " " << frame_vector_[i].left_top_.y() << "\n";
+    file << "Offset      " << frame_vector_[i].offset_.x() << " " << frame_vector_[i].offset_.y() << "\n";
+    file << "Slice       " << frame_vector_[i].slice_.x() << " " << frame_vector_[i].slice_.y() << "\n";
+    file << "Duration    " << frame_vector_[i].duration_ << "\n\n";
   }
 
-  (void)fclose(file);
+  if (!file) {
+    throw std::runtime_error("Error occurred while writing to file: " + file_path.string());
+  }
 }
 
 /**
@@ -130,56 +136,107 @@ void Animation::Save(const wstring& folder_path) const {
  * @param file_path
  * TODO(KHJ): File IO 과정 전반 개선할 것
  */
-void Animation::Load(const wstring& file_path) {
-  FILE* file = nullptr;
-  _wfopen_s(&file, file_path.c_str(), L"r");
+void Animation::Load(const string& file_path) {
+  ifstream file(file_path, std::ios::in | std::ios::binary);
+  if (!file) {
+    throw std::runtime_error("Failed to open file: " + file_path);
+  }
 
-  wchar_t file_read_buf[255] = {};
-  while (true) {
-    if (fwscanf_s(file, L"%s", file_read_buf, 255) == EOF)
-      break;
+  string line;
+  while (getline(file, line)) {
+    // BOM 체크 및 제거 (UTF-8 파일의 경우)
+    if (line.size() >= 3 && line[0] == '\xEF' && line[1] == '\xBB' && line[2] == '\xBF') {
+      line.erase(0, 3);
+    }
 
-    wstring str = file_read_buf;
+    std::istringstream iss(line);
+    std::string key;
+    iss >> key;
 
-    if (str == L"[ANIMATION_NAME]") {
-      (void)fwscanf_s(file, L"%s", file_read_buf, 255);
-      set_name(file_read_buf);
-    } else if (str == L"[ATLAS_TEXTURE]") {
-      wstring strKey, strRelativePath;
-      (void)fwscanf_s(file, L"%s", file_read_buf, 255);
-      strKey = file_read_buf;
-
-      (void)fwscanf_s(file, L"%s", file_read_buf, 255);
-      strRelativePath = file_read_buf;
-
-      if (strKey != L"None") {
-        atlas_ = AssetManager::Get()->LoadTexture(strKey, strRelativePath);
+    if (key == "[ANIMATION_NAME]") {
+      std::string name;
+      iss >> name;
+      set_name(name);
+    }
+    else if (key == "[ATLAS_TEXTURE]") {
+      std::string key, relative_path;
+      iss >> key >> relative_path;
+      if (key != "None") {
+        atlas_ = AssetManager::Get()->LoadTexture(key, relative_path);
       }
-    } else if (str == L"[FRAME_DATA]") {
-      wchar_t frame_buffer[255] = {};
+    }
+    else if (key == "[FRAME_DATA]") {
+      AnimationFrame frame;
+      while (std::getline(file, line) && !line.empty()) {
+        std::istringstream frame_iss(line);
+        std::string frame_key;
+        frame_iss >> frame_key;
 
-      AnimationFrame frame = {};
-
-      while (true) {
-        if (fwscanf_s(file, L"%s", frame_buffer, 255) == EOF) {
-          break;
+        if (frame_key == "Left_Top") {
+          frame_iss >> frame.left_top_.float_x() >> frame.left_top_.float_y();
         }
-
-        if (!wcscmp(L"Left_Top", frame_buffer)) {
-          (void)fwscanf_s(file, L"%f %f", &frame.left_top_.float_x(), &frame.left_top_.float_y());
-        } else if (!wcscmp(L"Offset", frame_buffer)) {
-          (void)fwscanf_s(file, L"%f %f", &frame.offset_.float_x(), &frame.offset_.float_y());
-        } else if (!wcscmp(L"Slice", frame_buffer)) {
-          (void)fwscanf_s(file, L"%f %f", &frame.slice_.float_x(), &frame.slice_.float_y());
-        } else if (!wcscmp(L"Duration", frame_buffer)) {
-          (void)fwscanf_s(file, L"%f", &frame.duration_);
+        else if (frame_key == "Offset") {
+          frame_iss >> frame.offset_.float_x() >> frame.offset_.float_y();
+        }
+        else if (frame_key == "Slice") {
+          frame_iss >> frame.slice_.float_x() >> frame.slice_.float_y();
+        }
+        else if (frame_key == "Duration") {
+          frame_iss >> frame.duration_;
           frame_vector_.push_back(frame);
         }
       }
     }
   }
-
-  (void)fclose(file);
+  // FILE* file = nullptr;
+  // _wfopen_s(&file, file_path.c_str(), L"r");
+  //
+  // wchar_t file_read_buf[255] = {};
+  // while (true) {
+  //   if (fwscanf_s(file, L"%s", file_read_buf, 255) == EOF)
+  //     break;
+  //
+  //   wstring str = file_read_buf;
+  //
+  //   if (str == L"[ANIMATION_NAME]") {
+  //     (void)fwscanf_s(file, L"%s", file_read_buf, 255);
+  //     set_name(file_read_buf);
+  //   } else if (str == L"[ATLAS_TEXTURE]") {
+  //     wstring strKey, strRelativePath;
+  //     (void)fwscanf_s(file, L"%s", file_read_buf, 255);
+  //     strKey = file_read_buf;
+  //
+  //     (void)fwscanf_s(file, L"%s", file_read_buf, 255);
+  //     strRelativePath = file_read_buf;
+  //
+  //     if (strKey != L"None") {
+  //       atlas_ = AssetManager::Get()->LoadTexture(strKey, strRelativePath);
+  //     }
+  //   } else if (str == L"[FRAME_DATA]") {
+  //     wchar_t frame_buffer[255] = {};
+  //
+  //     AnimationFrame frame = {};
+  //
+  //     while (true) {
+  //       if (fwscanf_s(file, L"%s", frame_buffer, 255) == EOF) {
+  //         break;
+  //       }
+  //
+  //       if (!wcscmp(L"Left_Top", frame_buffer)) {
+  //         (void)fwscanf_s(file, L"%f %f", &frame.left_top_.float_x(), &frame.left_top_.float_y());
+  //       } else if (!wcscmp(L"Offset", frame_buffer)) {
+  //         (void)fwscanf_s(file, L"%f %f", &frame.offset_.float_x(), &frame.offset_.float_y());
+  //       } else if (!wcscmp(L"Slice", frame_buffer)) {
+  //         (void)fwscanf_s(file, L"%f %f", &frame.slice_.float_x(), &frame.slice_.float_y());
+  //       } else if (!wcscmp(L"Duration", frame_buffer)) {
+  //         (void)fwscanf_s(file, L"%f", &frame.duration_);
+  //         frame_vector_.push_back(frame);
+  //       }
+  //     }
+  //   }
+  // }
+  //
+  // (void)fclose(file);
 }
 
 /**

@@ -19,14 +19,14 @@ void AssetManager::Init() {}
  * @param relative_path
  * @return Texture* / nullptr
  */
-Texture* AssetManager::LoadTexture(const wstring& key, const wstring& relative_path) {
+Texture* AssetManager::LoadTexture(const string& key, const string& relative_path) {
   Texture* texture_ptr = FindTexture(key);
 
   if (texture_ptr != nullptr)
     return texture_ptr;
 
   // TODO(KHJ): path 불러올 수 있도록 처리할 것
-  wstring file_path = L"foo";
+  string file_path = "foo";
   file_path.append(relative_path);
 
   // path를 가지고 직접 load 해보고 불가능하다면 nullptr 반환
@@ -52,7 +52,7 @@ Texture* AssetManager::LoadTexture(const wstring& key, const wstring& relative_p
  * @param key
  * @return Texture* / nullptr
  */
-Texture* AssetManager::FindTexture(const wstring& key) {
+Texture* AssetManager::FindTexture(const string& key) {
   auto const iter = texture_hash_.find(key);
   if (iter == texture_hash_.end())
     return nullptr;
@@ -66,7 +66,7 @@ Texture* AssetManager::FindTexture(const wstring& key) {
  * @param height
  * @return Texture* / nullptr
  */
-Texture* AssetManager::CreateTexture(const wstring& key, int width, int height) {
+Texture* AssetManager::CreateTexture(const string& key, int width, int height) {
   Texture* texture = FindTexture(key);
   // Create는 존재하지 않는 Texture를 만들기 위한 메서드
   assert(texture == nullptr);
@@ -86,14 +86,14 @@ Texture* AssetManager::CreateTexture(const wstring& key, int width, int height) 
  * @return Sound* / nullptr
  * TODO(KHJ): Template로 변경할 수 있다면 시도 후 테스트 해보는 것도 괜찮을 듯
  */
-Sound* AssetManager::LoadSound(const wstring& key, const wstring& relative_path) {
+Sound* AssetManager::LoadSound(const string& key, const string& relative_path) {
   Sound* sound_ptr = FindSound(key);
 
   if (sound_ptr != nullptr)
     return sound_ptr;
 
   // TODO(KHJ): path 불러올 수 있도록 처리할 것
-  wstring file_path = L"foo";
+  string file_path = "foo";
   file_path.append(relative_path);
 
   // path를 가지고 직접 load 해보고 불가능하다면 nullptr 반환
@@ -118,7 +118,7 @@ Sound* AssetManager::LoadSound(const wstring& key, const wstring& relative_path)
  * @param key
  * @return Sound* / nullptr
  */
-Sound *AssetManager::FindSound(const wstring &key) {
+Sound *AssetManager::FindSound(const string &key) {
   auto const iter = sound_hash_.find(key);
   if (iter == sound_hash_.end())
     return nullptr;

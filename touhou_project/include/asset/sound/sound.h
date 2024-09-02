@@ -24,7 +24,7 @@ class Sound : public Asset {
   void PlayToBGM(bool loop = false);
   void Stop(bool reset = false) const;
 
-  int Load(const wstring& file_path) override;
+  int Load(const string& file_path) override;
 
   // Setter
   void set_volume(float volume);
@@ -33,7 +33,7 @@ class Sound : public Asset {
   void SetPosition(float position) const;   // 0 ~ 100
 
  private:
-  bool LoadWaveSound(const wstring &file_path);
+  bool LoadWaveSound(const string &file_path);
 };
 
 #endif // TOUHOU_SOUND_H_

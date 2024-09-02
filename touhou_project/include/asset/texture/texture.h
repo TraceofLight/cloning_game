@@ -31,7 +31,7 @@ class Texture : public Asset {
 
  private:
   int Create(int width, int height);
-  int Load(const wstring&file_path) override;
+  int Load(const string& file_path) override;
 };
 
 #endif // TOUHOU_TEXTURE_H_

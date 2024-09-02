@@ -10,8 +10,8 @@
 
 class Asset : public Base {
  private:
-  wstring key_;
-  wstring relative_path_;
+  string key_;
+  string relative_path_;
 
  public:
   CLONE_DISABLE(Asset)
@@ -19,16 +19,16 @@ class Asset : public Base {
   virtual ~Asset() override = default;
 
   // Getter & Setter
-  const wstring& key() { return key_; }
+  const string& key() { return key_; }
 
-  const wstring& relative_path() { return relative_path_; }
+  const string& relative_path() { return relative_path_; }
 
-  void set_key(const wstring& key) { key_ = key; }
+  void set_key(const string& key) { key_ = key; }
 
-  void set_relative_path(const wstring& relative_path) { relative_path_ = relative_path; }
+  void set_relative_path(const string& relative_path) { relative_path_ = relative_path; }
 
  private:
-  virtual int Load(const wstring& file_path) = 0;
+  virtual int Load(const string& file_path) = 0;
 };
 
 #endif // TOUHOU_ASSET_H_

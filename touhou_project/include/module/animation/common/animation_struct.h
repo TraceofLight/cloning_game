@@ -11,7 +11,7 @@
 class Texture;
 
 struct AnimationDescription {
-  wstring name_;
+  string name_;
   Texture* atlas_;
   Vector2 start_left_top_;
   Vector2 slice_size_;

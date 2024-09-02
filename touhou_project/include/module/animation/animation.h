@@ -29,8 +29,8 @@ class Animation : public Base {
   void FinalTick();
   void Render() const;
 
-  void Save(const wstring& folder_path) const;
-  void Load(const wstring& file_path);
+  void Save(const string& folder_path) const;
+  void Load(const string& file_path);
 
   void Create(const AnimationDescription& info);
   void Reset();

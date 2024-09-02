@@ -40,37 +40,44 @@ int Texture::Create(const int width, const int height) {
   return S_OK;
 }
 
-int Texture::Load(const wstring& file_path) {
-  // TODO(KHJ): 파일 이름이 길어지면 사이즈를 늘려야 한다.
-  wchar_t szExt[50];
-  _wsplitpath_s(file_path.c_str(), nullptr, 0, nullptr, 0, nullptr, 0, szExt, 50);
+int Texture::Load(const string& file_path) {
+  filesystem::path path(file_path);
+  string extension = path.extension().string();
 
-  if (!wcscmp(szExt, L".bmp") || !wcscmp(szExt, L".BMP")) {
-    // 지정된 경로로부터 비트맵 이미지를 메모리에 로딩하고 핸들값을 받아둠
-    bitmap_handle_ = static_cast<HBITMAP>(LoadImage(nullptr, file_path.c_str(), IMAGE_BITMAP, 0, 0,
-                                                    LR_LOADFROMFILE | LR_CREATEDIBSECTION));
+  // Convert extension to lowercase for case-insensitive comparison
+  transform(extension.begin(), extension.end(), extension.begin(),
+            [](const unsigned char c) { return tolower(c); });
 
-    // 로딩이 정상적으로 되었는지 비트맵 핸들값을 확인
+  // bmp 타입 처리
+  if (extension == ".bmp") {
+    wstring wide_path = wstring(file_path.begin(), file_path.end());
+    bitmap_handle_ = static_cast<HBITMAP>(LoadImageW(nullptr, wide_path.c_str(), IMAGE_BITMAP,
+                                                     0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION));
     if (bitmap_handle_ == nullptr) {
-      const DWORD err = GetLastError();
-      wchar_t buffer[256] = {};
-      (void)swprintf_s(buffer, 256, L"Texture Load Failure@nError Code : %d", err);
-      MessageBox(nullptr, buffer, L"에러 발생", MB_OK);
-
-      return E_FAIL;
+      DWORD err = GetLastError();
+      throw runtime_error("Texture Load Failure. Error Code: " + to_string(err));
     }
-  }
-
-  else if (!wcscmp(szExt, L".png") || !wcscmp(szExt, L".PNG")) {
+    // png 타입 처리
+  } else if (extension == ".png") {
     ULONG_PTR gdiplustoken = 0;
-    const GdiplusStartupInput input = {};
+    GdiplusStartupInput input;
     GdiplusStartup(&gdiplustoken, &input, nullptr);
 
-    Image* image = Image::FromFile(file_path.c_str());
-    Bitmap* bitmap = reinterpret_cast<Bitmap*>(image->Clone());
-    delete image;
+    wstring wide_path = wstring(file_path.begin(), file_path.end());
+    unique_ptr<Image> image(Image::FromFile(wide_path.c_str()));
 
-    bitmap->GetHBITMAP(Color(0, 0, 0, 0), &bitmap_handle_);
+    if (!image) {
+      throw runtime_error("Failed to load image: " + file_path);
+    }
+
+    unique_ptr<Bitmap> bitmap(static_cast<Bitmap*>(image->Clone()));
+    Color background_color(0, 0, 0, 0);
+    bitmap->GetHBITMAP(background_color, &bitmap_handle_);
+    GdiplusShutdown(gdiplustoken);
+
+    // 유효하지 않은 타입의 파일 처리
+  } else {
+    throw runtime_error("Unsupported file format: " + extension);
   }
 
   device_context_handle_ = CreateCompatibleDC(Engine::Get()->device_context());

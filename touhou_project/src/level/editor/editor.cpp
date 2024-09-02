@@ -10,7 +10,7 @@
 #include "include/object/ui/button/button.h"
 
 void SampleFunction() {
-  printf("this function is sample");
+  printf("this function is sample\n");
 }
 
 EditorLevel::EditorLevel() : Level() {

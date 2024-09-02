@@ -7,83 +7,114 @@
 #include "include/asset/sound/sound.h"
 #include "include/core/engine/engine.h"
 
-int Sound::Load(const wstring& file_path) {
+int Sound::Load(const string& file_path) {
   // assert(SoundManager::Get()->GetSoundDevice() != nullptr);
 
-  wchar_t szExt[10] = {0};
-  _wsplitpath_s(file_path.c_str(), nullptr, 0, nullptr, 0, nullptr, 0, szExt, 10);
+  filesystem::path path(file_path);
+  string extension = path.extension().string();
 
-  if (!wcscmp(szExt, L".wav")) {
-    if (false == LoadWaveSound(file_path))
-      assert(nullptr);
-  } else
-    assert(nullptr);
+  // Convert extension to lowercase for case-insensitive comparison
+  transform(extension.begin(), extension.end(), extension.begin(),
+            [](const unsigned char c) { return tolower(c); });
+
+  if (extension == ".wav") {
+    if (!LoadWaveSound(file_path)) {
+      throw std::runtime_error("Failed to load WAV file: " + file_path);
+    }
+  } else {
+    throw std::runtime_error("Unsupported file format: " + extension);
+  }
 
   return true;
 }
 
-bool Sound::LoadWaveSound(const wstring& file_path) {
+bool Sound::LoadWaveSound(const string& file_path) {
+  std::wstring wide_path(file_path.begin(), file_path.end());
 
-  // Open File
-  const HMMIO file_handle = mmioOpen(const_cast<wchar_t*>(file_path.c_str()), nullptr, MMIO_READ);
-
-  // Fail Assert
+  // File load
+  HMMIO file_handle = mmioOpenW(const_cast<wchar_t*>(wide_path.c_str()), nullptr, MMIO_READ);
   if (file_handle == nullptr) {
-    MessageBox(nullptr, L"사운드 로딩 실패", L"에러", MB_OK);
-    return false;
+    throw std::runtime_error("Failed to open sound file: " + file_path);
   }
 
-  // Chunk, wave 파일 구조 분석
-  MMCKINFO parent;
-  memset(&parent, 0, sizeof(parent));
-  parent.fccType = mmioFOURCC('W', 'A', 'V', 'E');
-  mmioDescend(file_handle, &parent, nullptr, MMIO_FINDRIFF);
+  try {
+    // Analyze File Structure
+    MMCKINFO parent = {};
+    parent.fccType = mmioFOURCC('W', 'A', 'V', 'E');
+    if (mmioDescend(file_handle, &parent, nullptr, MMIO_FINDRIFF) != MMSYSERR_NOERROR) {
+      throw std::runtime_error("Failed to find WAVE chunk");
+    }
 
-  MMCKINFO child;
-  memset(&child, 0, sizeof(child));
-  child.ckid = mmioFOURCC('f', 'm', 't', ' ');
-  mmioDescend(file_handle, &child, &parent, MMIO_FINDCHUNK);
+    MMCKINFO child = {};
+    child.ckid = mmioFOURCC('f', 'm', 't', ' ');
+    if (mmioDescend(file_handle, &child, &parent, MMIO_FINDCHUNK) != MMSYSERR_NOERROR) {
+      throw std::runtime_error("Failed to find fmt chunk");
+    }
 
-  WAVEFORMATEX wft;
-  memset(&wft, 0, sizeof(wft));
-  mmioRead(file_handle, reinterpret_cast<char*>(&wft), sizeof(wft));
+    WAVEFORMATEX wft = {};
+    if (mmioRead(file_handle, reinterpret_cast<char*>(&wft), sizeof(wft)) != sizeof(wft)) {
+      throw std::runtime_error("Failed to read WAVEFORMATEX");
+    }
 
-  mmioAscend(file_handle, &child, 0);
-  child.ckid = mmioFOURCC('d', 'a', 't', 'a');
-  mmioDescend(file_handle, &child, &parent, MMIO_FINDCHUNK);
+    if (mmioAscend(file_handle, &child, 0) != MMSYSERR_NOERROR) {
+      throw std::runtime_error("Failed to ascend from fmt chunk");
+    }
 
-  memset(&buffer_info_, 0, sizeof(DSBUFFERDESC));
-  buffer_info_.dwBufferBytes = child.cksize;
-  buffer_info_.dwSize = sizeof(DSBUFFERDESC);
-  buffer_info_.dwFlags = DSBCAPS_STATIC | DSBCAPS_LOCSOFTWARE | DSBCAPS_CTRLVOLUME;
-  buffer_info_.lpwfxFormat = &wft;
+    child.ckid = mmioFOURCC('d', 'a', 't', 'a');
+    if (mmioDescend(file_handle, &child, &parent, MMIO_FINDCHUNK) != MMSYSERR_NOERROR) {
+      throw std::runtime_error("Failed to find data chunk");
+    }
 
-  // TODO SoundManager 개발 시 처리할 것
-  // if (FAILED(SoundManager::Get()->GetSoundDevice()->CreateSoundBuffer(
-  //         &buffer_info_, &sound_buffer_, NULL))) {
-  //   MessageBox(NULL, L"웨이브 파일 로딩 실패", L"에러", MB_OK);
-  //   return false;
-  // }
+    buffer_info_ = {};
+    buffer_info_.dwBufferBytes = child.cksize;
+    buffer_info_.dwSize = sizeof(DSBUFFERDESC);
+    buffer_info_.dwFlags = DSBCAPS_STATIC | DSBCAPS_LOCSOFTWARE | DSBCAPS_CTRLVOLUME;
+    buffer_info_.lpwfxFormat = &wft;
 
-  void* write1 = nullptr;
-  void* write2 = nullptr;
-  DWORD dwlength1, dwlength2;
+    // TODO: SoundManager 개발 시 처리할 것
+    // if (FAILED(SoundManager::Get()->GetSoundDevice()->CreateSoundBuffer(
+    //         &buffer_info_, &sound_buffer_, nullptr))) {
+    //     throw std::runtime_error("Failed to create sound buffer");
+    // }
 
-  sound_buffer_->Lock(0, child.cksize, &write1, &dwlength1, &write2, &dwlength2, 0L);
+    void* write1 = nullptr;
+    void* write2 = nullptr;
+    DWORD length1 = 0;
+    DWORD length2 = 0;
 
-  if (write1 != nullptr)
-    mmioRead(file_handle, static_cast<char*>(write1), static_cast<LONG>(dwlength1));
-  if (write2 != nullptr)
-    mmioRead(file_handle, static_cast<char*>(write2), static_cast<LONG>(dwlength2));
+    if (FAILED(sound_buffer_->Lock(0, child.cksize, &write1, &length1, &write2, &length2, 0L))) {
+      throw std::runtime_error("Failed to lock sound buffer");
+    }
 
-  sound_buffer_->Unlock(write1, dwlength1, write2, dwlength2);
+    if (write1 && mmioRead(file_handle, static_cast<char*>(write1), static_cast<LONG>(length1)) !=
+        static_cast<LONG>(length1)) {
+      sound_buffer_->Unlock(write1, length1, write2, length2);
+      throw std::runtime_error("Failed to read first part of sound data");
+    }
 
-  mmioClose(file_handle, 0);
+    if (write2 && mmioRead(file_handle, static_cast<char*>(write2), static_cast<LONG>(length2)) !=
+        static_cast<LONG>(length2)) {
+      sound_buffer_->Unlock(write1, length1, write2, length2);
+      throw std::runtime_error("Failed to read second part of sound data");
+    }
 
-  // Default
-  SetSoundBufferVolume(50.f);
+    if (FAILED(sound_buffer_->Unlock(write1, length1, write2, length2))) {
+      throw std::runtime_error("Failed to unlock sound buffer");
+    }
 
-  return true;
+    mmioClose(file_handle, 0);
+
+    // Set Default
+    SetSoundBufferVolume(50.f);
+
+    return true;
+  } catch (const std::exception& e) {
+    cerr << "Exception caught in LoadWaveSound: " << e.what() << "\n";
+    if (file_handle) {
+      mmioClose(file_handle, 0);
+    }
+    throw;
+  }
 }
 
 /**
@@ -159,6 +190,5 @@ void Sound::set_volume(float volume) {
 
   if (decibel_volume < -10000)
     decibel_volume = -10000;
-	volume_ = decibel_volume;
+  volume_ = decibel_volume;
 }
-
