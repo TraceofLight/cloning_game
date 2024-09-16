@@ -53,15 +53,13 @@
   brush_list_[static_cast<int>(BrushColor)] = CreateSolidBrush(RGB(R, G, B))
 
 #define LOG(level, message)                                                                        \
-  wstring function_name;                                                                           \
-  string str(__FUNCTION__);                                                                        \
-  function_name = wstring(str.begin(), str.end());                                                 \
-  wchar_t szBuff[255] = {};                                                                        \
-  swprintf_s(szBuff, 255, L"Name: %s, { Line: %d }, %s", function_name.c_str(), __LINE__,          \
-             message);                                                                             \
+  string function_name = __FUNCTION__;                                                             \
+  ostringstream ss;                                                                                \
+  ss << "Name: " << function_name << ", Line: " << __LINE__ << " | " << (message);                 \
+  string formatted_message = ss.str();                                                             \
   if ((level) == LOG_LEVEL::STATUS)                                                                \
-    DebugManager::Get()->AddLog(LogInfo{szBuff, level, 2.5});                                      \
+    DebugManager::Get()->AddLog(LogInfo{formatted_message, level, 2.5});                           \
   else                                                                                             \
-    DebugManager::Get()->AddLog(LogInfo{szBuff, level, 0});
+    DebugManager::Get()->AddLog(LogInfo{formatted_message, level, 0});
 
 #endif // TOUHOU_MACRO_H_

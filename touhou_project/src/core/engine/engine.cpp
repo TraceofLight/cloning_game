@@ -6,6 +6,7 @@
 #include "include/core/engine/engine.h"
 
 #include "common/drawing_handle/drawing_handle.h"
+#include "include/manager/asset_manager.h"
 #include "include/manager/debug_manager.h"
 #include "include/manager/key_manager.h"
 #include "include/manager/level_manager.h"
@@ -109,3 +110,5 @@ void Engine::GDIInit() {
   brush_list_[static_cast<int>(BRUSH_TYPE::HOLLOW)]
       = static_cast<HBRUSH>(GetStockObject(HOLLOW_BRUSH));
 }
+
+// end of engine.cpp

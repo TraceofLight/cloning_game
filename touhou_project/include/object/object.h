@@ -49,9 +49,11 @@ class Object : public Base {
    * @param component 컴포넌트의 ptr
    */
   template <typename T>
-  void set_component(T* component) {
+  inline T* set_component(T* component) {
     component_vector_.push_back(move(component));
     component->set_owner(this);
+
+    return component;
   }
 
   /**

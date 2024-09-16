@@ -95,8 +95,9 @@ void DebugManager::Render() {
     }
 
     SetBkMode(Engine::Get()->GetBackDC(), TRANSPARENT);
+    wstring wide_string(iter->log_text.begin(), iter->log_text.end());
     TextOut(Engine::Get()->GetBackDC(), static_cast<int>(log_position.x()),
-            static_cast<int>(log_position.y()), iter->log_text.c_str(),
+            static_cast<int>(log_position.y()), wide_string.c_str(),
             static_cast<int>(iter->log_text.length()));
 
     // 로그의 수명이 다 끝났으면 제거할 리스트에 올려둠

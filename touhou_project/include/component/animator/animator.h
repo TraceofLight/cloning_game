@@ -11,8 +11,8 @@
 
 class Animator : public Component {
  private:
-  map<string, Animation*> animation_map_;
-  Animation* current_animation_;
+  map<string, Animation *> animation_map_;
+  Animation *current_animation_;
   bool is_repeat_;
 
  public:

@@ -1,0 +1,42 @@
+﻿[ANIMATION_NAME] idle
+[ATLAS_TEXTURE] reimu \player\reimu.png
+[FRAME_DATA]
+Left_Top 0 0
+Offset 0 0
+Slice 32 48
+Duration 0.1
+
+Left_Top 32 0
+Offset 0 0
+Slice 32 48
+Duration 0.1
+
+Left_Top 64 0
+Offset 0 0
+Slice 32 48
+Duration 0.1
+
+Left_Top 96 0
+Offset 0 0
+Slice 32 48
+Duration 0.1
+
+Left_Top 128 0
+Offset 0 0
+Slice 32 48
+Duration 0.1
+
+Left_Top 160 0
+Offset 0 0
+Slice 32 48
+Duration 0.1
+
+Left_Top 192 0
+Offset 0 0
+Slice 32 48
+Duration 0.1
+
+Left_Top 224 0
+Offset 0 0
+Slice 32 48
+Duration 0.1

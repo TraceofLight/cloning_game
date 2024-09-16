@@ -40,9 +40,8 @@ int Texture::Create(const int width, const int height) {
   return S_OK;
 }
 
-int Texture::Load(const string& file_path) {
-  filesystem::path path(file_path);
-  string extension = path.extension().string();
+int Texture::Load(const filesystem::path& file_path) {
+  string extension = file_path.extension().string();
 
   // Convert extension to lowercase for case-insensitive comparison
   transform(extension.begin(), extension.end(), extension.begin(),
@@ -50,8 +49,7 @@ int Texture::Load(const string& file_path) {
 
   // bmp 타입 처리
   if (extension == ".bmp") {
-    wstring wide_path = wstring(file_path.begin(), file_path.end());
-    bitmap_handle_ = static_cast<HBITMAP>(LoadImageW(nullptr, wide_path.c_str(), IMAGE_BITMAP,
+    bitmap_handle_ = static_cast<HBITMAP>(LoadImageW(nullptr, file_path.c_str(), IMAGE_BITMAP,
                                                      0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION));
     if (bitmap_handle_ == nullptr) {
       DWORD err = GetLastError();
@@ -63,14 +61,11 @@ int Texture::Load(const string& file_path) {
     GdiplusStartupInput input;
     GdiplusStartup(&gdiplustoken, &input, nullptr);
 
-    wstring wide_path = wstring(file_path.begin(), file_path.end());
-    unique_ptr<Image> image(Image::FromFile(wide_path.c_str()));
+    Bitmap *bitmap = Bitmap::FromFile(file_path.c_str());
 
-    if (!image) {
-      throw runtime_error("Failed to load image: " + file_path);
-    }
+    if (!bitmap)
+      throw runtime_error("Failed to load image: " + file_path.string());
 
-    unique_ptr<Bitmap> bitmap(static_cast<Bitmap*>(image->Clone()));
     Color background_color(0, 0, 0, 0);
     bitmap->GetHBITMAP(background_color, &bitmap_handle_);
     GdiplusShutdown(gdiplustoken);

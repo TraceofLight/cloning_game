@@ -5,6 +5,8 @@
 
 #include "include/manager/asset_manager.h"
 #include "include/asset/texture/texture.h"
+#include "include/manager/path_manager.h"
+#include "include/asset/sound/sound.h"
 
 AssetManager::AssetManager() = default;
 AssetManager::~AssetManager() = default;
@@ -25,15 +27,15 @@ Texture* AssetManager::LoadTexture(const string& key, const string& relative_pat
   if (texture_ptr != nullptr)
     return texture_ptr;
 
-  // TODO(KHJ): path 불러올 수 있도록 처리할 것
-  string file_path = "foo";
-  file_path.append(relative_path);
+  filesystem::path file_path = PathManager::Get()->asset_base_path();
+  file_path += relative_path;
 
   // path를 가지고 직접 load 해보고 불가능하다면 nullptr 반환
   // TODO(KHJ): 임시 Texture를 반환하는 방법은 없을까?
-  std::unique_ptr<Texture, HandleObjectDeleterWrapper> unique_texture_ptr(
-      new Texture, HandleObjectDeleterWrapper());
-  if (FAILED(texture_ptr->Load(file_path))) {
+  std::unique_ptr<Texture, HandleObjectDeleterWrapper>
+      unique_texture_ptr(new Texture, HandleObjectDeleterWrapper());
+
+  if (FAILED(unique_texture_ptr->Load(file_path))) {
     return nullptr;
   }
 
@@ -92,9 +94,8 @@ Sound* AssetManager::LoadSound(const string& key, const string& relative_path) {
   if (sound_ptr != nullptr)
     return sound_ptr;
 
-  // TODO(KHJ): path 불러올 수 있도록 처리할 것
-  string file_path = "foo";
-  file_path.append(relative_path);
+  filesystem::path file_path = PathManager::Get()->asset_base_path();
+  file_path += relative_path;
 
   // path를 가지고 직접 load 해보고 불가능하다면 nullptr 반환
   unique_ptr<Sound, HandleObjectDeleterWrapper> unique_sound_ptr(new Sound,
@@ -118,9 +119,11 @@ Sound* AssetManager::LoadSound(const string& key, const string& relative_path) {
  * @param key
  * @return Sound* / nullptr
  */
-Sound *AssetManager::FindSound(const string &key) {
+Sound* AssetManager::FindSound(const string& key) {
   auto const iter = sound_hash_.find(key);
   if (iter == sound_hash_.end())
     return nullptr;
   return iter->second.get();
 }
+
+// end of asset_manager.cpp

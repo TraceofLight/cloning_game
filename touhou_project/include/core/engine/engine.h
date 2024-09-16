@@ -22,8 +22,11 @@ class Engine {
 
  public:
   void Init(HWND main_handle, UINT width, UINT height);
+
   void Progress() const;
+
   void ChangeResolution(UINT width, UINT height);
+
   HDC GetBackDC() const;
 
   HWND main_handle() const { return main_handle_; }
@@ -33,6 +36,8 @@ class Engine {
   HPEN pen(PEN_TYPE type) const { return pen_list_[static_cast<int>(type)]; }
 
   HBRUSH brush(BRUSH_TYPE type) const { return brush_list_[static_cast<int>(type)]; }
+
+  Vector2 resolution() const { return resolution_; }
 
  private:
   void Render() const;

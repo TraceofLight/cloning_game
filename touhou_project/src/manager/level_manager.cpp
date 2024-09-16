@@ -11,8 +11,7 @@ LevelManager::LevelManager() = default;
 
 LevelManager::~LevelManager() {
   for (const auto single_level : level_arr_) {
-    if (single_level != nullptr)
-      delete single_level;
+    delete single_level;
   }
 }
 

@@ -11,22 +11,23 @@
 #include "include/component/animator/animator.h"
 #include "include/core/engine/engine.h"
 #include "include/manager/time_manager.h"
+#include "include/manager/asset_manager.h"
 
 Animation::Animation()
-    : owner_(nullptr),
-      atlas_(nullptr),
-      current_idx_(0),
-      accumulated_time_(0.f),
-      is_finish_(false) {}
+  : owner_(nullptr),
+    atlas_(nullptr),
+    current_idx_(0),
+    accumulated_time_(0.f),
+    is_finish_(false) {}
 
 Animation::Animation(const Animation& other)
-    : Base(other),
-      owner_(nullptr),
-      frame_vector_(other.frame_vector_),
-      atlas_(other.atlas_),
-      current_idx_(other.current_idx_),
-      accumulated_time_(other.accumulated_time_),
-      is_finish_(other.is_finish_) {}
+  : Base(other),
+    owner_(nullptr),
+    frame_vector_(other.frame_vector_),
+    atlas_(other.atlas_),
+    current_idx_(other.current_idx_),
+    accumulated_time_(other.accumulated_time_),
+    is_finish_(other.is_finish_) {}
 
 Animation::~Animation() = default;
 
@@ -65,34 +66,36 @@ void Animation::Render() const {
   // Animation을 소유한 오브젝트의 위치
   const Vector2 position = owner_->owner()->position();
 
-  TransparentBlt(device_context,
-                 static_cast<int>(position.x() -
-                                  static_cast<float>(frame_vector_[current_idx_].slice_.x()) / 2.f +
-                                  frame_vector_[current_idx_].offset_.x()),
-                 static_cast<int>(position.y() - frame_vector_[current_idx_].slice_.y() / 2.f +
-                                  frame_vector_[current_idx_].offset_.y()),
-                 static_cast<int>(frame_vector_[current_idx_].slice_.x()),
-                 static_cast<int>(frame_vector_[current_idx_].slice_.y()), atlas_->dc_handle(),
-                 static_cast<int>(frame_vector_[current_idx_].left_top_.x()),
-                 static_cast<int>(frame_vector_[current_idx_].left_top_.y()),
-                 static_cast<int>(frame_vector_[current_idx_].slice_.x()),
-                 static_cast<int>(frame_vector_[current_idx_].slice_.y()), RGB(255, 0, 255));
+  BLENDFUNCTION bf = {AC_SRC_OVER, 0, 255, AC_SRC_ALPHA};
+  const AnimationFrame& current_frame = frame_vector_[current_idx_];
+
+  AlphaBlend(device_context,
+             static_cast<int>(position.x()
+                              - current_frame.slice_.x() / 2.f + current_frame.offset_.x()),
+             static_cast<int>(position.y()
+                              - current_frame.slice_.y() / 2.f + current_frame.offset_.y()),
+             static_cast<int>(current_frame.slice_.x()),
+             static_cast<int>(current_frame.slice_.y()),
+             atlas_->dc_handle(),
+             static_cast<int>(current_frame.left_top_.x()),
+             static_cast<int>(current_frame.left_top_.y()),
+             static_cast<int>(current_frame.slice_.x()),
+             static_cast<int>(current_frame.slice_.y()),
+             bf);
 }
 
 /**
  * @brief 파일에 애니메이션 정보를 기록하는 메서드
  * @param folder_path
- * TODO(KHJ): File IO 과정 전반 개선할 것
  * TODO(KHJ): IO Manager를 따로 만들어서 로드만 시키는 것도 괜찮을 듯?
  */
-void Animation::Save(const string& folder_path) const {
-  // TODO(KHJ): name 받아올 수 있도록 할 것
-  const string animation_name = "foo";
-  filesystem::path file_path = filesystem::path(folder_path) / (animation_name + ".animation");
+void Animation::Save(const filesystem::path& folder_path) {
+  string animation_name = name();
+  filesystem::path file_path = folder_path / (animation_name + ".animation");
 
-  std::ofstream file(file_path, std::ios::out | std::ios::binary);
+  ofstream file(file_path, ios::out | ios::binary);
   if (!file) {
-    throw std::runtime_error("Failed to open file for writing: " + file_path.string());
+    throw runtime_error("Failed to open file for writing: " + file_path.string());
   }
 
   // UTF-8 BOM 추가
@@ -119,27 +122,29 @@ void Animation::Save(const string& folder_path) const {
 
   for (size_t i = 0; i < frame_vector_.size(); ++i) {
     file << "Frame_Index " << i << "\n";
-    file << std::fixed << std::setprecision(6);  // 부동 소수점 정밀도 설정
-    file << "Left_Top    " << frame_vector_[i].left_top_.x() << " " << frame_vector_[i].left_top_.y() << "\n";
-    file << "Offset      " << frame_vector_[i].offset_.x() << " " << frame_vector_[i].offset_.y() << "\n";
-    file << "Slice       " << frame_vector_[i].slice_.x() << " " << frame_vector_[i].slice_.y() << "\n";
+    file << fixed << setprecision(6); // 부동 소수점 정밀도 설정
+    file << "Left_Top    " << frame_vector_[i].left_top_.x()
+        << " " << frame_vector_[i].left_top_.y() << "\n";
+    file << "Offset      " << frame_vector_[i].offset_.x()
+        << " " << frame_vector_[i].offset_.y() << "\n";
+    file << "Slice       " << frame_vector_[i].slice_.x()
+        << " " << frame_vector_[i].slice_.y() << "\n";
     file << "Duration    " << frame_vector_[i].duration_ << "\n\n";
   }
 
   if (!file) {
-    throw std::runtime_error("Error occurred while writing to file: " + file_path.string());
+    throw runtime_error("Error occurred while writing to file: " + file_path.string());
   }
 }
 
 /**
  * @brief 파일로부터 애니메이션 정보를 불러오는 메서드
  * @param file_path
- * TODO(KHJ): File IO 과정 전반 개선할 것
  */
-void Animation::Load(const string& file_path) {
-  ifstream file(file_path, std::ios::in | std::ios::binary);
+void Animation::Load(const filesystem::path& file_path) {
+  ifstream file(file_path, ios::in | ios::binary);
   if (!file) {
-    throw std::runtime_error("Failed to open file: " + file_path);
+    throw runtime_error("Failed to open file: " + file_path.string());
   }
 
   string line;
@@ -149,94 +154,48 @@ void Animation::Load(const string& file_path) {
       line.erase(0, 3);
     }
 
-    std::istringstream iss(line);
-    std::string key;
+    istringstream iss(line);
+    string key;
     iss >> key;
 
     if (key == "[ANIMATION_NAME]") {
-      std::string name;
+      string name;
       iss >> name;
       set_name(name);
-    }
-    else if (key == "[ATLAS_TEXTURE]") {
-      std::string key, relative_path;
-      iss >> key >> relative_path;
-      if (key != "None") {
-        atlas_ = AssetManager::Get()->LoadTexture(key, relative_path);
+    } else if (key == "[ATLAS_TEXTURE]") {
+      string texture_key;
+      string relative_path;
+      iss >> texture_key >> relative_path;
+      if (texture_key != "None") {
+        atlas_ = AssetManager::Get()->LoadTexture(texture_key, relative_path);
       }
-    }
-    else if (key == "[FRAME_DATA]") {
+    } else if (key == "[FRAME_DATA]") {
       AnimationFrame frame;
-      while (std::getline(file, line) && !line.empty()) {
-        std::istringstream frame_iss(line);
-        std::string frame_key;
+      while (getline(file, line) && !line.empty()) {
+        istringstream frame_iss(line);
+        string frame_key;
         frame_iss >> frame_key;
+        float temp_x, temp_y;
 
         if (frame_key == "Left_Top") {
-          frame_iss >> frame.left_top_.float_x() >> frame.left_top_.float_y();
-        }
-        else if (frame_key == "Offset") {
-          frame_iss >> frame.offset_.float_x() >> frame.offset_.float_y();
-        }
-        else if (frame_key == "Slice") {
-          frame_iss >> frame.slice_.float_x() >> frame.slice_.float_y();
-        }
-        else if (frame_key == "Duration") {
+          frame_iss >> temp_x >> temp_y;
+          frame.left_top_.set_x(temp_x);
+          frame.left_top_.set_y(temp_y);
+        } else if (frame_key == "Offset") {
+          frame_iss >> temp_x >> temp_y;
+          frame.offset_.set_x(temp_x);
+          frame.offset_.set_y(temp_y);
+        } else if (frame_key == "Slice") {
+          frame_iss >> temp_x >> temp_y;
+          frame.slice_.set_x(temp_x);
+          frame.slice_.set_y(temp_y);
+        } else if (frame_key == "Duration") {
           frame_iss >> frame.duration_;
           frame_vector_.push_back(frame);
         }
       }
     }
   }
-  // FILE* file = nullptr;
-  // _wfopen_s(&file, file_path.c_str(), L"r");
-  //
-  // wchar_t file_read_buf[255] = {};
-  // while (true) {
-  //   if (fwscanf_s(file, L"%s", file_read_buf, 255) == EOF)
-  //     break;
-  //
-  //   wstring str = file_read_buf;
-  //
-  //   if (str == L"[ANIMATION_NAME]") {
-  //     (void)fwscanf_s(file, L"%s", file_read_buf, 255);
-  //     set_name(file_read_buf);
-  //   } else if (str == L"[ATLAS_TEXTURE]") {
-  //     wstring strKey, strRelativePath;
-  //     (void)fwscanf_s(file, L"%s", file_read_buf, 255);
-  //     strKey = file_read_buf;
-  //
-  //     (void)fwscanf_s(file, L"%s", file_read_buf, 255);
-  //     strRelativePath = file_read_buf;
-  //
-  //     if (strKey != L"None") {
-  //       atlas_ = AssetManager::Get()->LoadTexture(strKey, strRelativePath);
-  //     }
-  //   } else if (str == L"[FRAME_DATA]") {
-  //     wchar_t frame_buffer[255] = {};
-  //
-  //     AnimationFrame frame = {};
-  //
-  //     while (true) {
-  //       if (fwscanf_s(file, L"%s", frame_buffer, 255) == EOF) {
-  //         break;
-  //       }
-  //
-  //       if (!wcscmp(L"Left_Top", frame_buffer)) {
-  //         (void)fwscanf_s(file, L"%f %f", &frame.left_top_.float_x(), &frame.left_top_.float_y());
-  //       } else if (!wcscmp(L"Offset", frame_buffer)) {
-  //         (void)fwscanf_s(file, L"%f %f", &frame.offset_.float_x(), &frame.offset_.float_y());
-  //       } else if (!wcscmp(L"Slice", frame_buffer)) {
-  //         (void)fwscanf_s(file, L"%f %f", &frame.slice_.float_x(), &frame.slice_.float_y());
-  //       } else if (!wcscmp(L"Duration", frame_buffer)) {
-  //         (void)fwscanf_s(file, L"%f", &frame.duration_);
-  //         frame_vector_.push_back(frame);
-  //       }
-  //     }
-  //   }
-  // }
-  //
-  // (void)fclose(file);
 }
 
 /**
@@ -249,8 +208,7 @@ void Animation::Create(const AnimationDescription& info) {
 
   for (int i = 0; i < info.frame_count_; ++i) {
     AnimationFrame frame = {};
-    frame.left_top_.set_x(static_cast<float>(info.start_left_top_.x() +
-      info.slice_size_.x() * i));
+    frame.left_top_.set_x(static_cast<float>(info.start_left_top_.x() + info.slice_size_.x() * i));
     frame.left_top_.set_y(static_cast<float>(info.start_left_top_.y()));
     frame.slice_ = info.slice_size_;
     frame.duration_ = 1.f / static_cast<float>(info.fps_);
@@ -266,3 +224,5 @@ void Animation::Reset() {
   accumulated_time_ = 0.f;
   current_idx_ = 0;
 }
+
+// end of animation.cpp

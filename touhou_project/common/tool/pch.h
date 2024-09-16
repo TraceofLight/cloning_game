@@ -41,6 +41,7 @@
 #include <vector>
 #include <deque>
 #include <filesystem>
+#include <sstream>
 
 using namespace std;
 

@@ -6,11 +6,6 @@
 #ifndef TOUHOU_STRUCT_H_
 #define TOUHOU_STRUCT_H_
 
-#include <cassert>
-#include <valarray>
-#include "enum.h"
-#include "function.h"
-#include "windef.h"
 
 class Vector2 {
  private:
@@ -33,7 +28,7 @@ class Vector2 {
     y_ /= length;
   }
 
-  double Distance(const Vector2& other) const {
+  double Distance(const Vector2 &other) const {
     return std::sqrt(pow(x_ - other.x(), 2) + pow(y_ - other.y(), 2));
   }
 
@@ -43,12 +38,12 @@ class Vector2 {
     return *this;
   }
 
-  void operator+=(const Vector2& other) {
+  void operator+=(const Vector2 &other) {
     x_ += other.x();
     y_ += other.y();
   }
 
-  bool operator==(const Vector2& other) const {
+  bool operator==(const Vector2 &other) const {
     if (IsSame(x_, other.x()) && IsSame(y_, other.y()))
       return true;
     return false;
@@ -89,7 +84,7 @@ struct HandleListDeleterWrapper {
   }
 
   template <typename T>
-  void operator()(T* object) const {
+  void operator()(T *object) const {
     HandleListDeleter(object);
   }
 };
@@ -99,7 +94,7 @@ struct HandleListDeleterWrapper {
  */
 struct HandleObjectDeleterWrapper {
   template <typename T>
-  void operator()(T* object) const {
+  void operator()(T *object) const {
     DeleteObject(object);
   }
 };
@@ -115,7 +110,7 @@ struct DebugShapeInfo {
 };
 
 struct LogInfo {
-  wstring log_text; // 출력할 메세지
+  string log_text; // 출력할 메세지
   LOG_LEVEL log_level; // 로그 수준
   float time; // 현재 시간
 };

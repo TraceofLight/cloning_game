@@ -7,10 +7,14 @@
 #include "include/manager/path_manager.h"
 
 Animator::Animator()
-    : Component(COMPONENT_TYPE::ANIMATOR), current_animation_(nullptr), is_repeat_(false) {}
+  : Component(COMPONENT_TYPE::ANIMATOR),
+    current_animation_(nullptr),
+    is_repeat_(false) {}
 
 Animator::Animator(const Animator& other)
-    : Component(other), current_animation_(nullptr), is_repeat_(other.is_repeat_) {
+  : Component(other),
+    current_animation_(nullptr),
+    is_repeat_(other.is_repeat_) {
   for (auto iter = other.animation_map_.begin(); iter != other.animation_map_.end(); ++iter) {
     Animation* clone_animation = iter->second->Clone();
 
@@ -92,8 +96,8 @@ void Animator::CreateAnimation(const AnimationDescription& info) {
  * 해당 경로에 animation을 저장하는 함수
  * @param relative_path 프로젝트 path 기준 상대 경로
  */
-void Animator::SaveAnimation(const string &relative_path) {
-  filesystem::path file_path = PathManager::Get()->content_path();
+void Animator::SaveAnimation(const string& relative_path) {
+  filesystem::path file_path = PathManager::Get()->animation_base_path();
   file_path += relative_path;
 
   for (auto iter = animation_map_.begin(); iter != animation_map_.end(); ++iter)
@@ -104,14 +108,16 @@ void Animator::SaveAnimation(const string &relative_path) {
  * 해당 경로에 위치한 animation을 불러오는 함수
  * @param relative_path 프로젝트 path 기준 상대 경로
  */
-void Animator::LoadAnimation(const string&relative_path) {
-  filesystem::path file_path = PathManager::Get()->content_path();
+void Animator::LoadAnimation(const string& relative_path) {
+  filesystem::path file_path = PathManager::Get()->animation_base_path();
   file_path += relative_path;
 
-  Animation *new_animation = new Animation;
+  Animation* new_animation = new Animation;
   new_animation->Load(file_path.string());
   assert(!FindAnimation(new_animation->name()));
 
   new_animation->owner_ = this;
   animation_map_.insert({new_animation->name(), new_animation});
 }
+
+// end of animator.cpp

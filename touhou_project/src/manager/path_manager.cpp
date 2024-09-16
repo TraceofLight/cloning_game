@@ -11,12 +11,13 @@ PathManager::~PathManager() = default;
 
 void PathManager::Init() {
   const filesystem::path current_path = filesystem::current_path();
-  content_path_ = current_path.parent_path();
-  content_path_ /= "content";
+  // TODO(KHJ): release 버전에서 따로 인식할 수 있도록 혹은 자동으로 세팅할 수 있도록 할 것
+  asset_base_path_ = current_path.parent_path() / R"(touhou_project\common\asset)";
+  animation_base_path_ = current_path.parent_path() /  R"(touhou_project\common\animation)";
 
   try {
-    if (!exists(content_path_))
-      create_directory(content_path_);
+    if (!exists(asset_base_path_))
+      create_directory(asset_base_path_);
   } catch (const filesystem::filesystem_error& e) {
     cerr << "FILE SYSTEM ERROR: " << e.what() << "\n";
   }

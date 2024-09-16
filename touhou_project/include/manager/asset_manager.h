@@ -7,8 +7,8 @@
 #define TOUHOU_ASSET_MANAGER_H_
 
 #include "common/common_utility.h"
-#include "include/asset/sound/sound.h"
-#include "include/asset/texture/texture.h"
+// #include "include/asset/sound/sound.h"
+// #include "include/asset/texture/texture.h"
 
 class Texture;
 class Sound;

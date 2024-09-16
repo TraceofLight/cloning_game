@@ -3,7 +3,7 @@
  * @brief
  */
 
-#include "..\..\include\object\object.h"
+#include "include/object/object.h"
 #include "common/drawing_handle/drawing_handle.h"
 #include "include/core/engine/engine.h"
 
@@ -15,7 +15,9 @@ Object::Object() = default;
  * component 포인터들도 복사하여 복사된 객체에 넣어준다
  */
 Object::Object(const Object& other)
-    : Base(other), position_(other.position()), scale_(other.scale()) {
+  : Base(other),
+    position_(other.position()),
+    scale_(other.scale()) {
   for (int i = 0; i < static_cast<int>(component_vector_.size()); ++i) {
     component_vector_.emplace_back(other.component_vector_[i]->Clone());
   }
@@ -53,3 +55,5 @@ void Object::Render() {
             static_cast<int>(position().x() + (scale_.x() / 2.f)),
             static_cast<int>(position().y() + (scale_.y() / 2.f)));
 }
+
+// end of object.cpp

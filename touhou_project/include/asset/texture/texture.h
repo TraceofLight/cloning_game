@@ -7,7 +7,8 @@
 #define TOUHOU_TEXTURE_H_
 
 #include "include/asset/asset.h"
-#include "include/manager/asset_manager.h"
+
+class AssetManager;
 
 class Texture : public Asset {
  private:
@@ -31,7 +32,7 @@ class Texture : public Asset {
 
  private:
   int Create(int width, int height);
-  int Load(const string& file_path) override;
+  int Load(const filesystem::path& file_path) override;
 };
 
 #endif // TOUHOU_TEXTURE_H_

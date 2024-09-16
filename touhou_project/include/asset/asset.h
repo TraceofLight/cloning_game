@@ -8,6 +8,12 @@
 
 #include "common/base/base.h"
 
+namespace std {
+namespace filesystem {
+  class path;
+}
+}
+
 class Asset : public Base {
  private:
   string key_;
@@ -28,7 +34,7 @@ class Asset : public Base {
   void set_relative_path(const string& relative_path) { relative_path_ = relative_path; }
 
  private:
-  virtual int Load(const string& file_path) = 0;
+  virtual int Load(const std::filesystem::path& file_path) = 0;
 };
 
 #endif // TOUHOU_ASSET_H_

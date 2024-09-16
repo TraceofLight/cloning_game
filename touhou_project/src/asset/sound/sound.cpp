@@ -7,7 +7,7 @@
 #include "include/asset/sound/sound.h"
 #include "include/core/engine/engine.h"
 
-int Sound::Load(const string& file_path) {
+int Sound::Load(const filesystem::path& file_path) {
   // assert(SoundManager::Get()->GetSoundDevice() != nullptr);
 
   filesystem::path path(file_path);
@@ -19,7 +19,7 @@ int Sound::Load(const string& file_path) {
 
   if (extension == ".wav") {
     if (!LoadWaveSound(file_path)) {
-      throw std::runtime_error("Failed to load WAV file: " + file_path);
+      throw std::runtime_error("Failed to load WAV file: " + file_path.string());
     }
   } else {
     throw std::runtime_error("Unsupported file format: " + extension);
@@ -28,13 +28,11 @@ int Sound::Load(const string& file_path) {
   return true;
 }
 
-bool Sound::LoadWaveSound(const string& file_path) {
-  std::wstring wide_path(file_path.begin(), file_path.end());
-
-  // File load
-  HMMIO file_handle = mmioOpenW(const_cast<wchar_t*>(wide_path.c_str()), nullptr, MMIO_READ);
+bool Sound::LoadWaveSound(const filesystem::path& file_path) {
+  // File Load
+  HMMIO file_handle = mmioOpenW(const_cast<wchar_t*>(file_path.c_str()), nullptr, MMIO_READ);
   if (file_handle == nullptr) {
-    throw std::runtime_error("Failed to open sound file: " + file_path);
+    throw std::runtime_error("Failed to open sound file: " + file_path.string());
   }
 
   try {

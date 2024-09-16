@@ -61,7 +61,7 @@ void UIManager::Tick() {
       priority_ui->LeftButtonClickedAction();
 
       // 마우스 클릭 Log 출력
-      LOG(LOG_LEVEL::STATUS, L"Mouse Clicked")
+      LOG(LOG_LEVEL::STATUS, "Mouse Clicked")
     }
 
     if (was_clicked) {

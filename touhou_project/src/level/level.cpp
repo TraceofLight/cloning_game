@@ -41,3 +41,5 @@ void Level::DeleteAllObjects() {
     DeleteObjects(static_cast<LAYER_TYPE>(i));
   }
 }
+
+// end of level.cpp

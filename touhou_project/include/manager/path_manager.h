@@ -11,10 +11,12 @@
 class PathManager {
   SINGLE(PathManager)
  private:
-  filesystem::path content_path_;
+  filesystem::path asset_base_path_;
+  filesystem::path animation_base_path_;
 
  public:
-  filesystem::path& content_path() { return content_path_; }
+  filesystem::path& asset_base_path() { return asset_base_path_; }
+  filesystem::path& animation_base_path() { return animation_base_path_; }
   void Init();
 };
 

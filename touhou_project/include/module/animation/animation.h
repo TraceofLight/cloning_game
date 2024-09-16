@@ -6,8 +6,8 @@
 #ifndef TOUHOU_MODULE_ANIMATION_H_
 #define TOUHOU_MODULE_ANIMATION_H_
 
-#include "common/animation_struct.h"
 #include "common/base/base.h"
+#include "common/animation_struct.h"
 
 class Animation : public Base {
   friend class Animator;
@@ -29,8 +29,8 @@ class Animation : public Base {
   void FinalTick();
   void Render() const;
 
-  void Save(const string& folder_path) const;
-  void Load(const string& file_path);
+  void Save(const filesystem::path& folder_path);
+  void Load(const filesystem::path& file_path);
 
   void Create(const AnimationDescription& info);
   void Reset();
