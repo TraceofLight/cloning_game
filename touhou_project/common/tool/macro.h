@@ -52,7 +52,7 @@
 #define ADD_BRUSH(BrushColor, R, G, B)                                                             \
   brush_list_[static_cast<int>(BrushColor)] = CreateSolidBrush(RGB(R, G, B))
 
-#define LOG(level, message)                                                                        \
+#define LOG(level, message) {                                                                      \
   string function_name = __FUNCTION__;                                                             \
   ostringstream ss;                                                                                \
   ss << "Name: " << function_name << ", Line: " << __LINE__ << " | " << (message);                 \
@@ -60,6 +60,7 @@
   if ((level) == LOG_LEVEL::STATUS)                                                                \
     DebugManager::Get()->AddLog(LogInfo{formatted_message, level, 2.5});                           \
   else                                                                                             \
-    DebugManager::Get()->AddLog(LogInfo{formatted_message, level, 0});
+    DebugManager::Get()->AddLog(LogInfo{formatted_message, level, 0});                             \
+}
 
 #endif // TOUHOU_MACRO_H_

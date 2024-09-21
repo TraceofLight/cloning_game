@@ -25,13 +25,12 @@ void UIManager::Tick() {
     return;
   }
 
-  // 직전 click이었는지 판단
-  const bool was_clicked = is_left_button_clicked_;
+  // click 상태 확인
+  SetClickStatus();
 
-  // current status check
-  SetMouseState();
-  vector<UI*>& ui_vector = reinterpret_cast<vector<UI*>&>(LevelManager::Get()
-                                                         ->current_level()->layer(LAYER_TYPE::UI));
+  vector<UI*>& ui_vector = reinterpret_cast<vector<UI*>&>(
+    LevelManager::Get()->current_level()->layer(LAYER_TYPE::UI)
+  );
 
   // case1 - 타깃 없음: 부모 UI로부터 재탐색
   // case2 - TAP: 단순 TAP만으로 판단 불가능한 동작이 있으므로 다음 Tick Action Check
@@ -46,30 +45,9 @@ void UIManager::Tick() {
       continue;
     }
 
-    // TODO(KHJ): Action들 여기서 처리하는 게 맞는지?
-    if (is_left_button_down_) {
-      priority_ui->set_left_button_down(true);
-      priority_ui->LeftButtonDownAction();
-
-      // ui_vector.erase((parent_ui + 1).base());
-      // ui_vector.push_back(priority_ui);
-    }
-
-    if (is_left_button_clicked_) {
-      priority_ui->set_left_button_down(false);
-      priority_ui->set_left_button_clicked(true);
-      priority_ui->LeftButtonClickedAction();
-
-      // 마우스 클릭 Log 출력
-      LOG(LOG_LEVEL::STATUS, "Mouse Clicked")
-    }
-
-    if (was_clicked) {
-      priority_ui->set_left_button_clicked(false);
-      priority_ui->LeftButtonUpAction();
-    }
-
-    // ResetUI(priority_ui);
+    // mouse 세팅 기반의 ui action 실행
+    priority_ui->UpdateMouseStatus(mouse_status_flag_);
+    priority_ui->Action();
     break;
   }
 }
@@ -92,14 +70,6 @@ UI* UIManager::GetPriorityUI(UI* parent_ui) {
 
     if (check_ui->is_mouse_on())
       result_ui = check_ui;
-
-    // mouse event 반영
-    if (!check_ui->is_mouse_on_previous() && check_ui->is_mouse_on())
-      check_ui->BeginHoverAction();
-    else if (check_ui->is_mouse_on_previous() && check_ui->is_mouse_on())
-      check_ui->OnHoverAction();
-    else if (check_ui->is_mouse_on_previous() && !check_ui->is_mouse_on())
-      check_ui->EndHoverAction();
 
     for (auto each_child : check_ui->child_vector())
       process_list_.push_back(each_child);
@@ -125,11 +95,8 @@ void UIManager::ResetUI(UI* parent_ui) {
     for (auto each_child : target_ui->child_vector())
       process_list_.push_back(each_child);
 
-    // 버튼 관련 눌린 정보가 존재하는 경우 초기화
-    if (target_ui->is_left_button_down())
-      target_ui->set_left_button_down(false);
-    if (target_ui->is_left_button_clicked())
-      target_ui->set_left_button_clicked(false);
+    // mouse 정보 초기화
+    target_ui->Reset();
   }
 }
 
@@ -144,20 +111,28 @@ void UIManager::ResetUI(UI* parent_ui) {
  * Mouse Position은 Parent UI로부터의 위치를 반영해야 하므로 여기서 state setting하지 않음
  * TODO(KHJ): NONE에서 click만 풀고 있는데 TAP에서 바로 RELEASE 없이 NONE으로 올 수 있는지 체크할 것
  */
-void UIManager::SetMouseState() {
-  KEY_STATE left_button_state = KeyManager::Get()->key_state(KEY::LBTN);
+void UIManager::SetClickStatus() {
+  mouse_status_flag_ = 0;
 
-  // 아무 상태도 아님
-  if (left_button_state == KEY_STATE::NONE) {
-    is_left_button_clicked_ = false;
-
-    // 눌러지기 시작한 시점
-  } else if (left_button_state == KEY_STATE::TAP) {
-    is_left_button_down_ = true;
-
-    // 클릭 시점
-  } else if (left_button_state == KEY_STATE::RELEASED) {
-    is_left_button_clicked_ = true;
-    is_left_button_down_ = false;
+  switch (KeyManager::Get()->key_state(KEY::LBTN)) {
+    // 눌리지 않은 상태
+    case KEY_STATE::NONE:
+      mouse_status_flag_ |= kLeftButtonNone;
+      break;
+    // 눌리기 시작한 시점
+    case KEY_STATE::TAP:
+      mouse_status_flag_ |= kLeftButtonTap;
+      LOG(LOG_LEVEL::STATUS, "Mouse Clicked")
+      break;
+    // 클릭한 시점
+    case KEY_STATE::PRESSED:
+      mouse_status_flag_ |= kLeftButtonPressed;
+      break;
+    // 클릭을 푼 시점
+    case KEY_STATE::RELEASED:
+      mouse_status_flag_ |= kLeftButtonReleased;
+      break;
   }
 }
+
+// end of ui_manager.cpp

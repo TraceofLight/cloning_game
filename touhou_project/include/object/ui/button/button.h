@@ -6,6 +6,8 @@
 #ifndef TOUHOU_OBJECT_UI_BUTTON_H_
 #define TOUHOU_OBJECT_UI_BUTTON_H_
 
+#include <functional>
+
 #include "include/object/ui/ui.h"
 
 class Button : public UI {
@@ -30,16 +32,18 @@ class Button : public UI {
 
   void RenderSelf() override;
 
-  void LeftButtonDownAction() override {}
+  void LeftButtonTappedAction() override {}
 
   void LeftButtonClickedAction() override;
 
   // Setter
   void set_call_back(void (*call_back_ptr)(void)) { call_back_ptr_ = call_back_ptr; }
 
-  void set_delegate(Base* instance, void (Base::*base_function)(void)) {
-    instance_ = instance;
-    base_function_ptr_ = base_function;
+  // Base를 상속 받은 클래스의 인스턴스가 일을 직접하도록 만드는 함수
+  template<typename T>
+  void set_delegate(T* instance, void (T::*base_function)()) {
+    instance_ = static_cast<Base *>(instance);
+    base_function_ptr_ =  reinterpret_cast<void (Base::*)()>(base_function);
   }
 };
 

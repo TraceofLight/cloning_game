@@ -4,7 +4,6 @@
  **/
 
 #include "include/object/ui/ui.h"
-
 #include "common/drawing_handle/drawing_handle.h"
 #include "include/core/engine/engine.h"
 #include "include/manager/key_manager.h"
@@ -15,9 +14,10 @@ UI::~UI() {
   ReleaseVector(child_vector_);
 }
 
-UI::UI(const UI& other) : Object(other) {
+UI::UI(const UI& other)
+  : Object(other) {
   for (const auto iter : other.child_vector())
-    add_child(iter->Clone());
+    AddChild(iter->Clone());
 }
 
 /**
@@ -30,7 +30,7 @@ void UI::Tick() {
   if (parent_)
     final_position_ += parent_->final_position();
 
-  CheckMouseOn();
+  UpdateMouseHoveringInfo();
   TickSelf();
 
   for (auto child_ui : child_vector_)
@@ -59,9 +59,9 @@ void UI::Render() {
 void UI::RenderSelf() {
   PEN_TYPE pen_type = PEN_TYPE::GREEN;
 
-  if (is_mouse_on_)
+  if (is_mouse_on())
     pen_type = PEN_TYPE::BLUE;
-  if (is_left_button_down_)
+  if (is_left_button_pressed())
     pen_type = PEN_TYPE::RED;
 
   DrawingHandle pen_handle(Engine::Get()->GetBackDC(), pen_type);
@@ -75,21 +75,56 @@ void UI::RenderSelf() {
 }
 
 /**
- * @brief 마우스 커서의 위치를 확인하고 커서가 위에 위치하는 경우라면 멤버 변수에 반영하는 함수
+ * @brief 마우스 상태를 ui manager로부터 받아온 뒤, mouse hovering 정보까지 세팅하는 함수
+ * @param status_flag ui manager가 들고 있던 flag 정보
  */
-void UI::CheckMouseOn() {
-  is_mouse_on_previous_ = is_mouse_on_;
-
-  const Vector2 mouse_position = KeyManager::Get()->mouse_position();
-  const Vector2 scale = Object::scale();
-
-  const bool is_in_condition = final_position_.x() <= mouse_position.x() &&
-                               mouse_position.x() <= final_position_.x() + scale.x() &&
-                               final_position_.y() <= mouse_position.y() &&
-                               mouse_position.y() <= final_position_.y() + scale.y();
-
-  if (is_in_condition)
-    is_mouse_on_ = true;
-  else
-    is_mouse_on_ = false;
+void UI::UpdateMouseStatus(uint8_t status_flag) {
+  // click 정보 갱신
+  mouse_status_flag_ = (mouse_status_flag_ & 0xF0) | status_flag;
+  // hovering 정보 갱신
+  UpdateMouseHoveringInfo();
 }
+
+/**
+ * @brief mouse cursor의 위치를 확인하고 hovering 체크를 진행하는 함수
+ */
+void UI::UpdateMouseHoveringInfo() {
+  // previous 정보 업데이트
+  if (is_mouse_on())
+    set_mouse_on_previous();
+  else
+    set_mouse_off_previous();
+
+  Vector2 mouse_position = KeyManager::Get()->mouse_position();
+  Vector2 scale = Object::scale();
+
+  // hovering 정보 세팅
+  if (final_position_.x() <= mouse_position.x()
+      && mouse_position.x() <= final_position_.x() + scale.x()
+      && final_position_.y() <= mouse_position.y()
+      && mouse_position.y() <= final_position_.y() + scale.y())
+    set_mouse_on();
+  else {
+    set_mouse_off();
+  }
+}
+
+void UI::Action() {
+  // hover action
+  if (!is_mouse_on_previous() && is_mouse_on())
+    BeginHoverAction();
+  else if (is_mouse_on_previous() && is_mouse_on())
+    OnHoverAction();
+  else if (is_mouse_on_previous() && !is_mouse_on())
+    EndHoverAction();
+
+  // tap action
+  if (is_left_button_tapped())
+    LeftButtonTappedAction();
+
+  // click action
+  if (is_left_button_clicked())
+    LeftButtonClickedAction();
+}
+
+// end of ui.cpp

@@ -11,10 +11,10 @@
 class Base {
  private:
   // 프로그램 전역에서 관리하는 값
-  static UINT global_serial_number_;
+  static uint32_t global_serial_number_;
 
   // 각 인스턴스가 발급 받는 값
-  const UINT id_;
+  uint32_t id_;
   string name_;
 
  public:
@@ -25,9 +25,9 @@ class Base {
 
   // Getter & Setter
   const string& name() { return name_; }
+  uint32_t id() const { return id_; }
 
   void set_name(const string& name) { name_ = name; }
-  UINT id() const { return id_; }
 };
 
 #endif // TOUHOU_BASE_H_

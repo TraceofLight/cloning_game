@@ -12,12 +12,10 @@ void Button::RenderSelf() {
   PEN_TYPE pen_type = PEN_TYPE::GREEN;
   BRUSH_TYPE brush_type = BRUSH_TYPE::BLUE;
 
-  if (is_mouse_on()) {
-    pen_type = PEN_TYPE::BLUE;
-  }
-  if (is_left_button_down()) {
+  if (is_mouse_on())
+    pen_type = PEN_TYPE::YELLOW;
+  if (is_left_button_pressed())
     pen_type = PEN_TYPE::RED;
-  }
 
   DrawingHandle drawing_pen(Engine::Get()->GetBackDC(), pen_type);
   DrawingHandle drawing_brush(Engine::Get()->GetBackDC(), brush_type);
