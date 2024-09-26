@@ -7,6 +7,7 @@
 #define TOUHOU_ENUM_H_
 
 enum class PEN_TYPE {
+  BLACK,
   RED,
   GREEN,
   BLUE,

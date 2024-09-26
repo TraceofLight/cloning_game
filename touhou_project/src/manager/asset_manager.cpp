@@ -21,7 +21,7 @@ void AssetManager::Init() {}
  * @param relative_path
  * @return Texture* / nullptr
  */
-Texture* AssetManager::LoadTexture(const string& key, const string& relative_path) {
+Texture* AssetManager::LoadTexture(const string& key, const filesystem::path& relative_path) {
   Texture* texture_ptr = FindTexture(key);
 
   if (texture_ptr != nullptr)
@@ -39,10 +39,9 @@ Texture* AssetManager::LoadTexture(const string& key, const string& relative_pat
     return nullptr;
   }
 
-  // 여기서 hash_로 unique_ptr의 소유권이 넘어간다.
-  unique_texture_ptr->set_key(key);
-  unique_texture_ptr->set_relative_path(relative_path);
-  texture_hash_.emplace(key, std::move(unique_texture_ptr));
+  unique_texture_ptr->set_name(key);
+  unique_texture_ptr->set_relative_path(relative_path.string());
+  texture_hash_.insert({key, std::move(unique_texture_ptr)});
 
   // 새로 Find를 진행해서 받아온 원시 포인터를 반환
   texture_ptr = FindTexture(key);
@@ -63,18 +62,19 @@ Texture* AssetManager::FindTexture(const string& key) {
 
 /**
  * @brief 파라미터로 받은 크기의 Texture를 생성하는 함수
- * @param key
+ * @param name
  * @param width
  * @param height
  * @return Texture* / nullptr
  */
-Texture* AssetManager::CreateTexture(const string& key, int width, int height) {
-  Texture* texture = FindTexture(key);
+Texture* AssetManager::CreateTexture(const string& name, uint32_t width, uint32_t height) {
+  Texture* texture = FindTexture(name);
   // Create는 존재하지 않는 Texture를 만들기 위한 메서드
   assert(texture == nullptr);
 
   texture = new Texture;
   texture->Create(width, height);
+  texture->set_name(name);
 
   return texture;
 }
@@ -105,7 +105,7 @@ Sound* AssetManager::LoadSound(const string& key, const string& relative_path) {
   }
 
   // 여기서 hash_로 unique_ptr의 소유권이 넘어간다.
-  unique_sound_ptr->set_key(key);
+  unique_sound_ptr->set_name(key);
   unique_sound_ptr->set_relative_path(relative_path);
   sound_hash_.emplace(key, std::move(unique_sound_ptr));
 

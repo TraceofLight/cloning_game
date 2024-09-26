@@ -164,6 +164,7 @@
         <ClInclude Include="include\module\animation\common\animation_struct.h"/>
         <ClInclude Include="include\object\object.h"/>
         <ClInclude Include="include\object\player\player.h"/>
+        <ClInclude Include="include\object\ui\rendering_box\rendering_box.h" />
         <ClInclude Include="include\object\ui\ui.h" />
     </ItemGroup>
     <ItemGroup>
@@ -262,6 +263,7 @@
         <ClCompile Include="src\object\object.cpp" />
         <ClCompile Include="src\object\player\player.cpp" />
         <ClCompile Include="src\object\ui\button\button.cpp" />
+        <ClCompile Include="src\object\ui\rendering_box\rendering_box.cpp" />
         <ClCompile Include="src\object\ui\ui.cpp" />
     </ItemGroup>
     <ItemGroup>

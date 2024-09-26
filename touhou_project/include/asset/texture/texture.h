@@ -25,13 +25,11 @@ class Texture : public Asset {
 
   // Getter & Setter
   HDC dc_handle() const { return device_context_handle_; }
-
-  UINT width() const { return bitmap_info_.bmWidth; }
-
-  UINT height() const { return bitmap_info_.bmHeight; }
+  uint32_t width() const { return bitmap_info_.bmWidth; }
+  uint32_t height() const { return bitmap_info_.bmHeight; }
 
  private:
-  int Create(int width, int height);
+  int Create(uint32_t width, uint32_t height);
   int Load(const filesystem::path& file_path) override;
 };
 

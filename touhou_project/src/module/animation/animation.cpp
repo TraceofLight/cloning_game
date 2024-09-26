@@ -108,7 +108,7 @@ void Animation::Save(const filesystem::path& folder_path) {
   // 참조하던 아틀라스 텍스쳐 정보 기재
   file << "[ATLAS_TEXTURE]\n";
   if (atlas_) {
-    file << atlas_->key() << "\n";
+    file << atlas_->name() << "\n";
     file << atlas_->relative_path() << "\n";
   } else {
     file << "None\n";

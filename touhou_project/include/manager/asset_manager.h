@@ -7,8 +7,6 @@
 #define TOUHOU_ASSET_MANAGER_H_
 
 #include "common/common_utility.h"
-// #include "include/asset/sound/sound.h"
-// #include "include/asset/texture/texture.h"
 
 class Texture;
 class Sound;
@@ -22,9 +20,9 @@ class AssetManager {
  public:
   void Init();
 
-  Texture* LoadTexture(const string& key, const string& relative_path);
+  Texture* LoadTexture(const string& key, const filesystem::path& relative_path);
   Texture* FindTexture(const string& key);
-  Texture* CreateTexture(const string& key, int width, int height);
+  Texture* CreateTexture(const string& name, uint32_t width, uint32_t height);
   Sound* LoadSound(const string& key, const string& relative_path);
   Sound* FindSound(const string& key);
 };

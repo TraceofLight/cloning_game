@@ -37,13 +37,12 @@
   static constexpr COMPONENT_TYPE type_ = COMPONENT_TYPE::ComponentName;
 
 // Key Checker
-// TIP: 통짜 구현과 이중 매크로가 차이가 날지라도 컴파일 타임 성능에만 영향을
-// 미친다
-// TODO(KHJ): 이중 매크로 쓰려고 했는데 컴파일 오류, 전처리기 처리 순서 확인해볼
-// 것 #define KEY_TAP(key)		KEY_CHECK(key, KEY_STATE::TAP) #define
-// KEY_PRESSED(key)	KEY_CHECK(key, KEY_STATE::PRESSED) #define
-// KEY_RELEASED(key)	KEY_CHECK(key, KEY_STATE::RELEASED) #define
-// KEY_NONE(key)		KEY_CHECK(key, KEY_STATE::NONE)
+// TIP: 통짜 구현과 이중 매크로가 차이가 날지라도 컴파일 타임 성능에만 영향을 미친다
+// TODO(KHJ): 이중 매크로 쓰려고 했는데 컴파일 오류, 전처리기 처리 순서 확인해볼 것
+// #define KEY_TAP(key)		KEY_CHECK(key, KEY_STATE::TAP)
+// #define KEY_PRESSED(key)	KEY_CHECK(key, KEY_STATE::PRESSED)
+// #define KEY_RELEASED(key)	KEY_CHECK(key, KEY_STATE::RELEASED)
+// #define KEY_NONE(key)		KEY_CHECK(key, KEY_STATE::NONE)
 #define KEY_CHECK(key, state) KeyManager::Get()->key_state(key) == state
 
 // GDI Macro

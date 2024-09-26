@@ -23,7 +23,7 @@ Texture::~Texture() {
  * @param height
  * @return load status를 반환
  */
-int Texture::Create(const int width, const int height) {
+int Texture::Create(const uint32_t width, const uint32_t height) {
   const HDC device_context = Engine::Get()->device_context();
 
   // BackBuffer 및 Device Context 생성
@@ -49,12 +49,14 @@ int Texture::Load(const filesystem::path& file_path) {
 
   // bmp 타입 처리
   if (extension == ".bmp") {
+    // TODO(KHJ): 메모리 관리 측면에서 사이즈 없이 info 받아온 뒤 버리고 새로 사이즈 지정해서 받아오는 건?
     bitmap_handle_ = static_cast<HBITMAP>(LoadImageW(nullptr, file_path.c_str(), IMAGE_BITMAP,
                                                      0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION));
     if (bitmap_handle_ == nullptr) {
       DWORD err = GetLastError();
       throw runtime_error("Texture Load Failure. Error Code: " + to_string(err));
     }
+
     // png 타입 처리
   } else if (extension == ".png") {
     ULONG_PTR gdiplustoken = 0;

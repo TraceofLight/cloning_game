@@ -28,15 +28,15 @@ void Engine::Init(HWND main_handle, UINT width, UINT height) {
   ChangeResolution(width, height);
   GDIInit();
 
-  // BackBuffer Texture 생성
-  back_buffer_ = AssetManager::Get()->CreateTexture("BackBufferTexture", static_cast<int>(width),
-                                                    static_cast<int>(height));
-
   // Manager 초기화
   PathManager::Get()->Init();
+  AssetManager::Get()->Init();
   TimeManager::Get()->Init();
   KeyManager::Get()->Init();
   LevelManager::Get()->Init();
+
+  // BackBuffer Texture 생성
+  back_buffer_ = AssetManager::Get()->CreateTexture("back_buffer_texture", width, height);
 }
 
 void Engine::Progress() const {
@@ -94,6 +94,7 @@ void Engine::GDIInit() {
   pen_list_.reset(new HPEN[static_cast<int>(PEN_TYPE::END)]);
   brush_list_.reset(new HBRUSH[static_cast<int>(BRUSH_TYPE::END)]);
 
+  ADD_PEN(PEN_TYPE::BLACK, 0, 0, 0);
   ADD_PEN(PEN_TYPE::RED, 255, 0, 0);
   ADD_PEN(PEN_TYPE::GREEN, 0, 255, 0);
   ADD_PEN(PEN_TYPE::BLUE, 0, 0, 255);

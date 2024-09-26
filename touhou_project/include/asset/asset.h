@@ -16,7 +16,6 @@ namespace filesystem {
 
 class Asset : public Base {
  private:
-  string key_;
   string relative_path_;
 
  public:
@@ -25,12 +24,7 @@ class Asset : public Base {
   virtual ~Asset() override = default;
 
   // Getter & Setter
-  const string& key() { return key_; }
-
   const string& relative_path() { return relative_path_; }
-
-  void set_key(const string& key) { key_ = key; }
-
   void set_relative_path(const string& relative_path) { relative_path_ = relative_path; }
 
  private:
